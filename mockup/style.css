@@ -86,7 +86,8 @@ html, body {
     border-radius: 113px;
     border: 2px solid #00f;
     overflow: hidden;
-    background-size: contain;
+    background-size: 100%;
+    background-repeat: no-repeat;
 }
 
 .app-person-profile-header {

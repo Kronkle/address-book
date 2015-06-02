@@ -52,14 +52,14 @@ directoryView.prototype.initDirectory = function () {
 					workExperience.title = result.people[i].workExperience[0].title;
 
 					// Render profile for selected person
-					me.renderProfile(val.name, education, workExperience);    			
+					me.renderProfile(val.name, education, workExperience, val.picture);    			
 				}
 			});	
 	    });   
     });
 };
 
-directoryView.prototype.renderProfile = function(displayName, education, workExperience) {
+directoryView.prototype.renderProfile = function(displayName, education, workExperience, picture) {
 
 	// Set profile on right-hand side to proper info
 	$(".app-person-profile-header").find("h2").text(displayName);
@@ -83,6 +83,9 @@ directoryView.prototype.renderProfile = function(displayName, education, workExp
 	// Populate email address field, including URL when clicked
 	$(".app-person-profile-email").find("a").text(displayEmail);
 	$(".app-person-profile-email").find("a").attr("href", displayURL);
+
+	// Render profile picture
+	$(".app-person-profile-photo").attr("style", "background-image: url(" + picture + ")");
 };
 
 

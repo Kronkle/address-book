@@ -17,7 +17,8 @@
                     "startYear": 2001,
                     "title": "Software Developer"
                 }
-            ]
+            ],
+            "picture": "http://stevensegallery.com/g/200/300"
         },
         {
             "name": "Alex Watson",
@@ -36,7 +37,8 @@
                     "startYear": 2012,
                     "title": "Barista"
                 }
-            ]
+            ],
+            "picture": "/mockup/images/pup.png"
         },
         {
             "name": "Blair Michaels",
@@ -55,7 +57,8 @@
                     "startYear": 2007,
                     "title": "Business Analyst"
                 }
-            ]
+            ],
+            "picture": "/mockup/images/mustache.png"
         },
         {
             "name": "Brent Edwards",
@@ -74,7 +77,8 @@
                     "startYear": 1992,
                     "title": "Hardware Engineer"
                 }
-            ]
+            ],
+            "picture": "/mockup/images/billmurr.png"
         },
         {
             "name": "Charles Nelson",
@@ -93,7 +97,8 @@
                     "startYear": 2001,
                     "title": "Manager, Software Testing"
                 }
-            ]
+            ],
+            "picture": "/mockup/images/godzilla.png"
         },
         {
             "name": "Chris Matthews",
@@ -112,7 +117,8 @@
                     "startYear": 1998,
                     "title": "Manager, HR"
                 }
-            ]
+            ],
+            "picture": "/mockup/images/pineapple.png"
         },
         {
             "name": "Damien Tyson",
@@ -131,7 +137,8 @@
                     "startYear": 2004,
                     "title": "Software Engineer"
                 }
-            ]
+            ],
+            "picture": "/mockup/images/stick.png"
         },
         {
             "name": "Daniel Boone",
@@ -150,16 +157,17 @@
                     "startYear": 2011,
                     "title": "Software Test Engineer"
                 }
-            ]
+            ],
+            "picture": "/mockup/images/boone.png"
         },
         {
-            "name": "Derek Edwards",
+            "name": "Donald Draper",
             "education": [
                 {
                     "institution": "Davidson College",
                     "startYear": 2003,
                     "endYear": 2007,
-                    "degree": "Bachelor's, Fine Art"
+                    "degree": "Bachelor's, Advertising"
                 }
             ],
 
@@ -167,9 +175,10 @@
                 {
                     "institution": "Bandwidth",
                     "startYear": 2010,
-                    "title": "Graphic Designer"
+                    "title": "Head of Advertising"
                 }
-            ]
+            ],
+            "picture": "/mockup/images/donald.png"
         },
         {
             "name": "Drake Johnson",
@@ -188,7 +197,8 @@
                     "startYear": 2012,
                     "title": "Software Engineer"
                 }
-            ]
+            ],
+            "picture": "/mockup/images/cage.png"
         },
         {
             "name": "Joe Manfrey",
@@ -207,7 +217,8 @@
                     "startYear": 1998,
                     "title": "Web Developer"
                 }
-            ]
+            ],
+            "picture": "/mockup/images/marnie.png"
         },
         {
             "name": "Douglas Cho",
@@ -226,7 +237,8 @@
                     "startYear": 1998,
                     "title": "Software Developer"
                 }
-            ]
+            ],
+            "picture": "/mockup/images/bacon.png"
         },
         {
             "name": "Allison Murray",
@@ -245,7 +257,8 @@
                     "startYear": 2005,
                     "title": "Director of IT"
                 }
-            ]
+            ],
+            "picture": "/mockup/images/adam.png"
         }
     ]
 }
