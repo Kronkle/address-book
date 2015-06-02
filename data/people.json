@@ -1,0 +1,251 @@
+{
+    "people": [
+        {
+            "name": "Adam Wright",
+            "education": [
+                {
+                    "institution": "NC State University",
+                    "startYear": 2001,
+                    "endYear": 2004,
+                    "degree": "Bachelor's, Computer Science"
+                }
+            ],
+
+            "workExperience": [
+                {
+                    "institution": "Megacorp",
+                    "startYear": 2001,
+                    "title": "Software Developer"
+                }
+            ]
+        },
+        {
+            "name": "Alex Watson",
+            "education": [
+                {
+                    "institution": "Georgia Tech",
+                    "startYear": 2008,
+                    "endYear": 2012,
+                    "degree": "Bachelor's, Philosophy"
+                }
+            ],
+
+            "workExperience": [
+                {
+                    "institution": "Starbucks",
+                    "startYear": 2012,
+                    "title": "Barista"
+                }
+            ]
+        },
+        {
+            "name": "Blair Michaels",
+            "education": [
+                {
+                    "institution": "Princeton University",
+                    "startYear": 2002,
+                    "endYear": 2006,
+                    "degree": "Bachelor's, Business"
+                }
+            ],
+
+            "workExperience": [
+                {
+                    "institution": "Bronto Software",
+                    "startYear": 2007,
+                    "title": "Business Analyst"
+                }
+            ]
+        },
+        {
+            "name": "Brent Edwards",
+            "education": [
+                {
+                    "institution": "Cornell University",
+                    "startYear": 1980,
+                    "endYear": 1984,
+                    "degree": "Bachelor's, Mathematics"
+                }
+            ],
+
+            "workExperience": [
+                {
+                    "institution": "IBM",
+                    "startYear": 1992,
+                    "title": "Hardware Engineer"
+                }
+            ]
+        },
+        {
+            "name": "Charles Nelson",
+            "education": [
+                {
+                    "institution": "Duke University",
+                    "startYear": 1998,
+                    "endYear": 2002,
+                    "degree": "Bachelor's, Economics"
+                }
+            ],
+
+            "workExperience": [
+                {
+                    "institution": "Citrix",
+                    "startYear": 2001,
+                    "title": "Manager, Software Testing"
+                }
+            ]
+        },
+        {
+            "name": "Chris Matthews",
+            "education": [
+                {
+                    "institution": "University of Wisconsin",
+                    "startYear": 1975,
+                    "endYear": 1979,
+                    "degree": "Bachelor's, English"
+                }
+            ],
+
+            "workExperience": [
+                {
+                    "institution": "NetApp",
+                    "startYear": 1998,
+                    "title": "Manager, HR"
+                }
+            ]
+        },
+        {
+            "name": "Damien Tyson",
+            "education": [
+                {
+                    "institution": "University of Florida",
+                    "startYear": 2000,
+                    "endYear": 2004,
+                    "degree": "Bachelor's, Computer Science"
+                }
+            ],
+
+            "workExperience": [
+                {
+                    "institution": "A Small Orange",
+                    "startYear": 2004,
+                    "title": "Software Engineer"
+                }
+            ]
+        },
+        {
+            "name": "Daniel Boone",
+            "education": [
+                {
+                    "institution": "University of Missouri",
+                    "startYear": 2007,
+                    "endYear": 2011,
+                    "degree": "Bachelor's, Physics"
+                }
+            ],
+
+            "workExperience": [
+                {
+                    "institution": "WebAssign",
+                    "startYear": 2011,
+                    "title": "Software Test Engineer"
+                }
+            ]
+        },
+        {
+            "name": "Derek Edwards",
+            "education": [
+                {
+                    "institution": "Davidson College",
+                    "startYear": 2003,
+                    "endYear": 2007,
+                    "degree": "Bachelor's, Fine Art"
+                }
+            ],
+
+            "workExperience": [
+                {
+                    "institution": "Bandwidth",
+                    "startYear": 2010,
+                    "title": "Graphic Designer"
+                }
+            ]
+        },
+        {
+            "name": "Drake Johnson",
+            "education": [
+                {
+                    "institution": "Amherst College",
+                    "startYear": 2005,
+                    "endYear": 2009,
+                    "degree": "Bachelor's, Software Engineering"
+                }
+            ],
+
+            "workExperience": [
+                {
+                    "institution": "Adroit Digital",
+                    "startYear": 2012,
+                    "title": "Software Engineer"
+                }
+            ]
+        },
+        {
+            "name": "Joe Manfrey",
+            "education": [
+                {
+                    "institution": "Clemson University",
+                    "startYear": 1990,
+                    "endYear": 1995,
+                    "degree": "Bachelor's, Computer Science"
+                }
+            ],
+
+            "workExperience": [
+                {
+                    "institution": "Blackfish",
+                    "startYear": 1998,
+                    "title": "Web Developer"
+                }
+            ]
+        },
+        {
+            "name": "Douglas Cho",
+            "education": [
+                {
+                    "institution": "University of NC, Chapel Hill",
+                    "startYear": 1990,
+                    "endYear": 1995,
+                    "degree": "Marketing"
+                }
+            ],
+
+            "workExperience": [
+                {
+                    "institution": "Food Inc.",
+                    "startYear": 1998,
+                    "title": "Software Developer"
+                }
+            ]
+        },
+        {
+            "name": "Allison Murray",
+            "education": [
+                {
+                    "institution": "University of Southern California",
+                    "startYear": 2001,
+                    "endYear": 2005,
+                    "degree": "Bachelor's, Computer Engineering"
+                }
+            ],
+
+            "workExperience": [
+                {
+                    "institution": "United Products",
+                    "startYear": 2005,
+                    "title": "Director of IT"
+                }
+            ]
+        }
+    ]
+}
