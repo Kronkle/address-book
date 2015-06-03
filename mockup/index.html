@@ -7,9 +7,9 @@
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
     <!-- Latest compiled and minified JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="lookup.js"></script>
     <link rel="stylesheet" type="text/css" href="style.css" />
     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans:300,400,700" />
@@ -21,6 +21,10 @@
         <!-- LEFT COLUMN -->
         <div class="app-directory-container">
             <!-- DIRECTORY COMPONENT -->
+            <div class="app-directory-dash">
+                <button type="button" class="btn btn-primary app-directory-home">Home</button>
+                <button type="button" class="btn btn-primary">Sort Z-A</button>
+            </div>
             <div class="app-directory">
                 <div class="app-directory-separator">A</div>
                 
@@ -37,7 +41,14 @@
         </div>
 
         <!-- RIGHT COLUMN -->
-        <div class="app-person-profile-container">
+        <div class="app-directory-intro">
+            <h2>Employee Directory</h2>
+            <br>
+            <p>Brunch letterpress McSweeney's, crucifix biodiesel twee master cleanse DIY. Polaroid put a bird on it pork belly, forage raw denim wayfarers pug Kickstarter letterpress twee chambray cliche cred. Artisan skateboard Banksy tilde, mlkshk actually Truffaut. Kickstarter cronut kitsch typewriter, leggings 90's Banksy Wes Anderson 3 wolf moon synth artisan actually Vice. Flexitarian McSweeney's Vice, whatever bicycle rights organic YOLO heirloom. Mlkshk bitters kale chips fanny pack tousled stumptown Helvetica distillery. Vinyl VHS art party squid, beard put a bird on it fanny pack meggings seitan PBR&B 90's DIY.</p>
+            <br>
+            <p>Kitsch gluten-free PBR&B, hashtag narwhal food truck plaid Marfa roof party synth swag Carles tote bag pop-up. Tattooed artisan lomo, taxidermy Intelligentsia synth literally lumbersexual selfies skateboard irony. Wolf keffiyeh deep v, pork belly small batch typewriter bespoke kale chips. Swag fingerstache Godard Vice next level mlkshk synth. Four dollar toast Blue Bottle tousled, sustainable Portland vegan cardigan Schlitz Truffaut Helvetica Banksy before they sold out drinking vinegar. Brunch meditation trust fund lo-fi chillwave. Try-hard raw denim messenger bag, chambray roof party readymade gentrify selfies ugh hella.</p>
+        </div>
+        <div class="app-person-profile-container" style="display:none">
             <!-- PERSON PROFILE COMPONENT -->
             <div class="app-person-profile docs-highlight docs-blue" data-intro="Person Profile" data-position="bottom">
                 <!-- PERSON PROFILE HEADER -->

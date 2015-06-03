@@ -25,6 +25,12 @@ directoryView.prototype.initDirectory = function () {
 
 	var me = this; 
 
+	// Render introductory text and hide current profile if shown
+	$( ".app-directory-home" ).on( "click", function ( event ) {			
+		$(".app-person-profile-container").hide();
+		$(".app-directory-intro").show();
+	});
+
 	$(".app-directory-item").on("click", function() {
 
 		// Object literals to represent JSON sub-objects for a person
@@ -86,6 +92,10 @@ directoryView.prototype.renderProfile = function(displayName, education, workExp
 
 	// Render profile picture
 	$(".app-person-profile-photo").attr("style", "background-image: url(" + picture + ")");
+
+	// Render profile and hide introductory text if shown
+	$(".app-directory-intro").hide();
+	$(".app-person-profile-container").show();
 };
 
 

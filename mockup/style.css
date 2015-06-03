@@ -42,6 +42,12 @@ html, body {
     overflow: auto;
 }
 
+.app-directory-dash button {
+    display: block;
+    width: 95%;
+    margin: 5px;
+}
+
 .app-directory-separator,
 .app-directory-item {
     padding: 2px 10px;
@@ -61,14 +67,24 @@ html, body {
     cursor: pointer;
 }
 
-/* the detailed view of person profile */
-.app-person-profile-container {
+/* the detailed view of person profile and directory intro */
+.app-person-profile-container, .app-directory-intro {
     position: absolute;
     left: 200px;
     right: 0;
     top: 0;
     bottom: 0;
     overflow: auto;
+}
+
+/* position intro text away from directory component */
+.app-directory-intro {
+    margin-left: 20px;
+}
+
+/* introductory paragraphs in right section */
+.app-directory-intro p {
+    margin-right: 35%;
 }
 
 .app-person-profile {
