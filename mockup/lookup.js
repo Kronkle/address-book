@@ -3,7 +3,7 @@
  *
  *  	directoryView: 
  *		new           - retrieves people data and populates directory component with names
- *  	initDirectory - defines click behavior for names within directory components
+ *  	initDirectory - defines click behavior for names and buttons within directory components
  *		renderProfile - renders person profile associated with directory component name clicked
  */
 
@@ -26,9 +26,25 @@ directoryView.prototype.initDirectory = function () {
 	var me = this; 
 
 	// Render introductory text and hide current profile if shown
-	$( ".app-directory-home" ).on( "click", function ( event ) {			
+	$(".app-directory-home").on( "click", function ( event ) {			
 		$(".app-person-profile-container").hide();
 		$(".app-directory-intro").show();
+	});
+
+	// Sort directory names properly when Sort button is pressed
+	$(".app-directory-sorter").on( "click", function ( event ) {
+
+		/* TODO - finish this sort, complete corresponding A-Z sort
+		var zToADivs = $("div.app-directory-separator").sort(function (a, b) {
+			return $(a).text() - $(b).text();
+		});
+		console.log(zToADivs);
+		$("div.app-directory").html(zToADivs);
+		*/
+
+		$(this).text(function(i, text){
+			return text === "Sort Z-A" ? "Sort A-Z" : "Sort Z-A";
+		});
 	});
 
 	$(".app-directory-item").on("click", function() {
