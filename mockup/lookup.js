@@ -25,28 +25,6 @@ directoryView.prototype.initDirectory = function () {
 
 	var me = this; 
 
-	// Render introductory text and hide current profile if shown
-	$(".app-directory-home").on( "click", function ( event ) {			
-		$(".app-person-profile-container").hide();
-		$(".app-directory-intro").show();
-	});
-
-	// Sort directory names properly when Sort button is pressed
-	$(".app-directory-sorter").on( "click", function ( event ) {
-
-		/* TODO - finish this sort, complete corresponding A-Z sort
-		var zToADivs = $("div.app-directory-separator").sort(function (a, b) {
-			return $(a).text() - $(b).text();
-		});
-		console.log(zToADivs);
-		$("div.app-directory").html(zToADivs);
-		*/
-
-		$(this).text(function(i, text){
-			return text === "Sort Z-A" ? "Sort A-Z" : "Sort Z-A";
-		});
-	});
-
 	$(".app-directory-item").on("click", function() {
 
 		// Object literals to represent JSON sub-objects for a person
@@ -74,11 +52,80 @@ directoryView.prototype.initDirectory = function () {
 					workExperience.title = result.people[i].workExperience[0].title;
 
 					// Render profile for selected person
-					me.renderProfile(val.name, education, workExperience, val.picture);    			
+					me.renderProfile(val.name, education, workExperience, val.picture);  			
 				}
 			});	
-	    });   
-    });
+	    });
+	});
+
+	    // Render introductory text and hide current profile if shown
+		$(".app-directory-home").on( "click", function ( event ) {			
+			$(".app-person-profile-container").hide();
+			$(".app-directory-intro").show();
+		});
+
+		// Sort directory names properly when Sort button is pressed
+		$(".app-directory-sorter").on( "click", function ( event ) {
+
+			if ($(this).text() === "Sort Z-A") {
+				$(this).text("Sort A-Z");
+
+				var zToADivs = $("div.app-directory-separator, div.app-directory-item").sort(function (a, b) {
+					return $(a).text() < $(b).text();
+				});
+				$("div.app-directory").html(zToADivs);
+
+			} else {
+				$(this).text("Sort Z-A");
+
+				var aToZDivs = $("div.app-directory-separator, div.app-directory-item").sort(function (a, b) {	
+					return $(a).text() > $(b).text();	
+				});
+				$("div.app-directory").html(aToZDivs);
+			
+			}	
+
+			/* Reinitialize onClick behavior for each directory item. TEMP WORKAROUND */
+			me.initDirectorySort();
+		});   
+};
+
+directoryView.prototype.initDirectorySort = function () {
+
+	var me = this;
+
+	$(".app-directory-item").on("click", function() {
+
+			// Object literals to represent JSON sub-objects for a person
+			var education = {"institution": "", "startYear": "", "endYear": "", "degree": ""};
+			var workExperience = {"institution": "", "startYear": "", "title": ""};
+
+			// Return value of clicked name without extra whitespace
+			var clickedName = $(this).text().trim();
+
+			// Retrieve selected person's JSON data
+			$.getJSON("/api/people", function(result){
+		        	
+				$.each(result.people, function(i, val){
+					if (val.name === clickedName){
+						
+						// Populate education from JSON sub-object
+						education.institution = result.people[i].education[0].institution;
+						education.startYear = result.people[i].education[0].startYear;
+						education.endYear = result.people[i].education[0].endYear;
+						education.degree = result.people[i].education[0].degree;
+
+						// Populate work experience from JSON sub-object
+						workExperience.institution = result.people[i].workExperience[0].institution;
+						workExperience.startYear = result.people[i].workExperience[0].startYear;	
+						workExperience.title = result.people[i].workExperience[0].title;
+
+						// Render profile for selected person
+						me.renderProfile(val.name, education, workExperience, val.picture);  			
+					}
+				});	
+		    });
+		});
 };
 
 directoryView.prototype.renderProfile = function(displayName, education, workExperience, picture) {
