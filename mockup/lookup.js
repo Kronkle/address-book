@@ -70,11 +70,22 @@ directoryView.prototype.initDirectory = function () {
 			if ($(this).text() === "Sort Z-A") {
 				$(this).text("Sort A-Z");
 
-				var zToADivs = $("div.app-directory-separator, div.app-directory-item").sort(function (a, b) {
+				var zToADivs = $("div.app-directory-item").sort(function (a, b) {
 					return $(a).text() < $(b).text();
 				});
 				$("div.app-directory").html(zToADivs);
 
+				var letterSeen = {};
+				$("div.app-directory-item").each(function() {
+					var firstLetter = $(this).text().charAt(0);
+					if (letterSeen[firstLetter]) {
+						// do nothing if first letter has already been seen - separator has already been created
+					} else {
+						letterSeen[firstLetter] = true;
+						$(this).before("<div class=\"app-directory-separator\">" + $(this).text().charAt(0) + "</div>");
+					}
+				});
+				
 			} else {
 				$(this).text("Sort Z-A");
 
