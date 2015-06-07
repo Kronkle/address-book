@@ -1,0 +1,119 @@
+<!-- New (unfinished) index page. Features will include:
+    -Topbar instead of sidebar for directory component
+    -Search bar for searching by name
+    -Dropdown for searching by department
+    -List/Table-like view with relevant details for profile search results below topbar (defaults to all)
+    -"Detailed" view for each individual employee
+-->
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Address Book</title>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <!-- Latest compiled and minified CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="newstyle.css" />
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans:300,400,700" />
+    
+</head>
+
+<body>
+    <div class="app-address-book">
+        <!-- LEFT COLUMN -->
+        <div class="app-directory-container">
+            <p> New directory component here</p>
+            <br>
+            <p>New search here</p>
+            <!-- DIRECTORY COMPONENT -->
+            <!--<div class="app-directory-dash">
+                <button type="button" class="btn btn-primary app-directory-home">Home</button>
+                <button type="button" class="btn btn-primary app-directory-sorter">Sort Z-A</button>
+            </div>
+            <div class="app-directory">
+                <div class="app-directory-separator">A</div>
+                
+                <div class="app-directory-separator">B</div>
+                
+                <div class="app-directory-separator">C</div>
+                
+                <div class="app-directory-separator">D</div>
+
+                <div class="app-directory-separator">J</div>
+                
+                </div>
+            </div>-->
+        </div>
+
+        <!-- RIGHT COLUMN -->
+        <div class="app-person-profile-container">
+            <!-- PERSON PROFILE COMPONENT -->
+            <div class="app-person-profile docs-highlight docs-blue" data-intro="Person Profile" data-position="bottom">
+                <!-- PERSON PROFILE HEADER -->
+                <div class="app-person-profile-header">
+                    <!-- PHOTO -->
+                    <div class="app-person-profile-photo" style="background-image: url(/mockup/images/adam.png)"></div>
+
+                    <h2>Allison Murray</h2>
+                    <div class="app-person-profile-department">
+                        Strategic Sales
+                    </div>
+                    <div class="app-person-profile-phone-number">
+                        919-555-5555
+                    </div>
+                    <div class="app-person-profile-email">
+                        <a href="mailto:allison.murray@mycompany.com">allison.murray@unitedproducts.com</a>
+                    </div>
+                </div>
+
+                <!-- EDUCATION SECTION -->
+                <div class="app-section">
+                    <div class="app-section-header">
+                        <h3>Education</h3>
+                    </div>
+                    <div class="app-section-body">
+                        <div class="app-history-item">
+                        </div>
+                        <div class="app-history-item">
+                            <div class="app-history-item-dates-edu">
+                                2001-2005
+                            </div>
+                            <div class="app-history-item-body">
+                                <div class="app-history-item-title-edu">University of Southern California</div>
+                                <div class="app-history-item-degree">Bachelor's, Computer Engineering</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- WORK HISTORY SECTION -->
+                <div class="app-section">
+                    <div class="app-section-header">
+                        <h3>Experience</h3>
+                    </div>
+                    <div class="app-section-body">
+                        <div class="app-history-item">
+                        </div>
+                        <div class="app-history-item">
+                            <div class="app-history-item-dates-work">
+                                2005-Present
+                            </div>
+                            <div class="app-history-item-body">
+                                <div class="app-history-item-title-work">United Products</div>
+                                <div class="app-history-item-position">Director of IT</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

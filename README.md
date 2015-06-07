@@ -8,7 +8,7 @@ http://localhost:8080/mockup/
 		http://localhost:8080/api/people
 
 Current Objectives: 
-* Display intro text on homepage instead of static profile - DONE
-* Button in directory component for sorting names
+* Display intro text on homepage instead of static profile - DONE (6/3/15)
+* Button in directory component for sorting names - DONE (6/6/15)
 * Extra styling via Bootstrap
 

@@ -7,6 +7,7 @@ var app = express();
 
 
 app.use('/mockup/', express.static(path.join(__dirname, 'mockup')));
+app.use('/newmockup/', express.static(path.join(__dirname, 'newmockup')));
 app.get('/api/people', function(req, res) {
     res.end(JSON.stringify(people, null, '    '));
 });
@@ -21,5 +22,6 @@ app.listen(HTTP_PORT, function(err) {
     console.log(('HTTP server listening on port ' + HTTP_PORT).green);
 
     console.log('Mockup:'.bold + ' http://localhost:' + HTTP_PORT + '/mockup/');
+    console.log('New Mockup:'.bold + ' http://localhost:' + HTTP_PORT + '/newmockup/');
     console.log('People data:'.bold + ' http://localhost:' + HTTP_PORT + '/api/people');
 });
