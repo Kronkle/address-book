@@ -14,6 +14,12 @@ html, body {
     box-sizing: border-box;
 }
 
+
+h4 {
+    color: #FFFFFF;
+    background-color: #0074D9;
+}
+
 .app-person-profile h2,
 .app-person-profile h3,
 .app-person-profile h4 {
@@ -22,15 +28,13 @@ html, body {
 
 /* the Address Book container */
 .app-address-book {
-    position: absolute;
-    width: 100%;
-    height: 100%;
+   width: 800px;
+   margin: 0 auto;
 }
 
 /* the alphabetical list of people */
 .app-directory-container {
     position: block;
-    border-right: 2px solid #666;
 }
 
 .app-directory {
