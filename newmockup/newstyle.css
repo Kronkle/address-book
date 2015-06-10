@@ -8,12 +8,12 @@ html, body {
     overflow: hidden;
 }
 
+/* Padding and border of elements don't increase width */
 * {
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
 }
-
 
 h4 {
     color: #FFFFFF;
@@ -22,6 +22,16 @@ h4 {
 
 form {
     display: inline-block;
+}
+
+.alphabet-links {
+    max-width: 350px;
+    margin: auto;
+}
+
+.app-search-form {
+    display: inline-block;
+    margin-left: 85px;
 }
 
 .app-person-profile h2,
@@ -106,8 +116,14 @@ form {
 }
 
 .app-person-profile-header {
-    min-height: 145px;
+    /*min-height: 145px;*/
     margin-left: 145px;
+    display: inline-block;
+}
+
+.app-section {
+    display: inline-block;
+    margin-left:22px;
 }
 
 .app-person-profile h2 {
@@ -116,17 +132,11 @@ form {
     color: #008;
 }
 
-.app-history-item {
-    display: flex;
-    flex-direction: row;
-    margin-bottom: 10px;
-}
-
 .app-history-item-dates-edu, .app-history-item-dates-work {
     flex: none;
-    padding-right: 20px;
+    padding-right: 5px;
     font-weight: bold;
-    width: 125px;
+    width: 80px;
 }
 
 .app-history-item-body-edu, .app-history-item-body-work {
