@@ -14,22 +14,21 @@ directoryView.prototype.initDirectory = function () {
 
 	var me = this;
 
-	// Find alphabet and make each letter a link for searching
+	// Select empty heading within alphabet-links
 	var alphabetLinks = $( ".alphabet-links > h5" ).text();
-	console.log( alphabetLinks );
 
-	// Iterate through structure, making each element a link (skip whitespaces here)
-	// See if there is a jquery selector for iterating through a string like this - otherwise, try createElement/insertBefore
-	for (var i = 0; i < alphabetLinks.length; i++) {
-		console.log(alphabetLinks[i]);
-		//$("alphabetLinks[i]").wrap("<a href=\"www.google.com\"></a>");
-	}
-
-	/*
-	$(".alphabet-links > h5").each(function (i) {
-		
+	// Create array of letters wrapped within link tags for name searching
+	var links = jQuery.map(('ABCDEFGHIJKLMNOPQRSTUVWXYZ').split(''), function(i) {
+		return '<a href="' + i + '">' + i + '</a>&nbsp';
 	});
-	*/
+	console.log(links);
+
+	// Populate empty heading with links
+	$(".alphabet-links > h5").html(links);
+
+	// Add an "All" link to the set of links
+	$(".alphabet-links > h5").append('<a href="All">All</a>');
+	
 };
 
 // Initialize directory view
