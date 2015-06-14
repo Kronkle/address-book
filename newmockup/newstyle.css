@@ -8,6 +8,10 @@ html, body {
     overflow: hidden;
 }
 
+body {
+    overflow-y: scroll;
+}
+
 /* Padding and border of elements don't increase width */
 * {
     -moz-box-sizing: border-box;
@@ -117,13 +121,18 @@ form {
 
 .app-person-profile-header {
     /*min-height: 145px;*/
+    vertical-align: bottom;
+    margin-bottom: 25px;
     margin-left: 145px;
     display: inline-block;
+    width: 225px;
 }
 
 .app-section {
+    vertical-align: top;
     display: inline-block;
     margin-left:22px;
+    width: 180px;
 }
 
 .app-person-profile h2 {

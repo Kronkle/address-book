@@ -26,9 +26,84 @@ directoryView.prototype.initDirectory = function () {
 	// Populate empty heading with links
 	$(".alphabet-links > h5").html(links);
 
+
 	// Add an "All" link to the set of links
 	$(".alphabet-links > h5").append('<a href="All">All</a>');
+
+	/* Populate initial search results with all employees */
+
+	// Object literals to represent JSON sub-objects for a person
+	var education = {"institution": "", "startYear": "", "endYear": "", "degree": ""};
+	var workExperience = {"institution": "", "startYear": "", "title": ""};
+
+	// Retrieve all employee JSON data
+	$.getJSON("/api/people", function(result) {
+        	
+		$.each(result.people, function(i, val) {
+				
+			// Populate education from JSON sub-object
+			education.institution = result.people[i].education[0].institution;
+			education.startYear = result.people[i].education[0].startYear;
+			education.endYear = result.people[i].education[0].endYear;
+			education.degree = result.people[i].education[0].degree;
+
+			// Populate work experience from JSON sub-object
+			workExperience.institution = result.people[i].workExperience[0].institution;
+			workExperience.startYear = result.people[i].workExperience[0].startYear;	
+			workExperience.title = result.people[i].workExperience[0].title;
+
+			// Render profile for selected person
+			me.renderProfile(val.name, education, workExperience, val.picture);  			
+			
+		});	
+    });
 	
+};
+
+// Append employee file to homepage results TODO: use jquery .clone() and/or html templates to make this easier instead of manual appends below
+directoryView.prototype.renderProfile = function(displayName, education, workExperience, picture) {
+	
+	// Setup container divs for employee
+	$(".app-search-results").last().append("<div class=\"app-person-profile-container\"></div>");
+	$(".app-person-profile-container").last().append("<div class=\"app-person-profile docs-highlight docs-blue\" data-intro=\"Person Profile\" data-position=\"bottom\"></div>");
+
+	// Setup person profile header
+	$("div.app-person-profile.docs-highlight.docs-blue").last().append("<div class=\"app-person-profile-header\"></div>");
+	$(".app-person-profile-header").last().append("<div class=\"app-person-profile-photo\" style=\"background-image: url(" + picture + ")\"></div>");
+	$(".app-person-profile-header").last().append("<h2>" + displayName + "</h2>");
+	$(".app-person-profile-header").last().append("<div class=\"app-person-profile-department\">Strategic Sales</div><div class=\"app-person-profile-phone-number\">919-555-5555</div>")
+
+
+	// Format display and work names for rendering of email address
+	var emailName = displayName.toLowerCase().replace(" ",".");
+	var workEmail = workExperience.institution.toLowerCase().replace(" ","").replace(".","");
+	var displayEmail = emailName + "@" + workEmail + ".com"
+	var displayURL = "mailto:" + displayEmail;
+
+	$(".app-person-profile-header").last().append("<div class=\"app-person-profile-email\"><a href=" + displayURL + "\">" + displayEmail + "</a></div>");
+
+	// Populate education info
+	$("div.app-person-profile.docs-highlight.docs-blue").last().append("<div class=\"app-section\"></div>");
+	$(".app-section").last().append("<div class=\"app-section-header\"><h3>Education</h3></div>");
+	$(".app-section").last().append("<div class=\"app-section-body\"></div>");
+	$(".app-section-body").last().append("<div class=\"app-history-item\"></div>");
+	$(".app-section-body").last().append("<div class=\"app-history-item\"></div>");
+	$(".app-history-item").last().append("<div class=\"app-history-item-dates-edu\">" + education.startYear + "-" + education.endYear + "</div>");
+	$(".app-history-item").last().append("<div class=\"app-history-item-body\"></div>");
+	$(".app-history-item-body").last().append("<div class=\"app-history-item-title-edu\">" + education.institution + "</div>");
+	$(".app-history-item-body").last().append("<div class=\"app-history-item-degree\">" + education.degree + "</div>");
+
+	// Populate work experience info
+	$("div.app-person-profile.docs-highlight.docs-blue").last().append("<div class=\"app-section\"></div>");
+	$(".app-section").last().append("<div class=\"app-section-header\"><h3>Experience</h3></div>");
+	$(".app-section").last().append("<div class=\"app-section-body\"></div>");
+	$(".app-section-body").last().append("<div class=\"app-history-item\"></div>");
+	$(".app-section-body").last().append("<div class=\"app-history-item\"></div>");
+	$(".app-history-item").last().append("<div class=\"app-history-item-dates-work\">" + workExperience.startYear + "-Present</div>");
+	$(".app-section-body").last().append("<div class=\"app-history-item-body\"></div>");
+	$(".app-history-item-body").last().append("<div class=\"app-history-item-title-work\">" + workExperience.institution + "</div>");
+	$(".app-history-item-body").last().append("<div class=\"app-history-item-position\">" + workExperience.title + "</div>");
+
 };
 
 // Initialize directory view
