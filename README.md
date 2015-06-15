@@ -1,8 +1,11 @@
 Working example of using jQuery, Express, and Node to provide an address book interface that polls
 a JSON file for employee information.
 
-**Mockup:**
+**Mockup:** (Completed first version)
 http://localhost:8080/mockup/
+
+**NewMockup:** (Style redesign, in progress)
+http://localhost:8080/newmockup/
 
 **Employee Data:**
 		http://localhost:8080/api/people
