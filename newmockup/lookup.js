@@ -1,6 +1,10 @@
 /* 
- *  lookup.js - under construction
+ *  lookup.js - Defines and instantiates directory view for homepage
  *
+ *  	directoryView: 
+ *  	initDirectory - retrieves people data and populates directory component with all names initially
+ *		renderProfile - renders employee profile associated with 
+ *		populateLinks - calls renderProfile on all names that begin with the search letter selected
  */
 
 var directoryView = function () {
@@ -19,7 +23,7 @@ directoryView.prototype.initDirectory = function () {
 
 	// Create array of letters wrapped within link tags for name searching
 	var links = jQuery.map(('ABCDEFGHIJKLMNOPQRSTUVWXYZ').split(''), function(i) {
-		return '<a href="' + i + '">' + i + '</a>&nbsp';
+		return '<a class=\"name-link\">' + i + '</a>&nbsp';
 	});
 	console.log(links);
 
@@ -28,9 +32,10 @@ directoryView.prototype.initDirectory = function () {
 
 
 	// Add an "All" link to the set of links
-	$(".alphabet-links > h5").append('<a href="All">All</a>');
+	$(".alphabet-links > h5").append('<a class=\"all-link\" href="All">All</a>');
 
-	/* Populate initial search results with all employees */
+	/* TODO: Convert the initial population below of all employees to a method that populates all 
+	employees either via the homepage or an "All" search */
 
 	// Object literals to represent JSON sub-objects for a person
 	var education = {"institution": "", "startYear": "", "endYear": "", "degree": ""};
@@ -57,7 +62,48 @@ directoryView.prototype.initDirectory = function () {
 			
 		});	
     });
+
+    $(".name-link").on("click", function() {
+    	// Return value of clicked letter without extra whitespace
+		var clickedLetter = $(this).text().trim();
+
+		me.populateLinks(clickedLetter);
+    });
 	
+};
+
+directoryView.prototype.populateLinks = function (clickedLetter) {
+
+	var me = this;
+
+	// Object literals to represent JSON sub-objects for a person
+	var education = {"institution": "", "startYear": "", "endYear": "", "degree": ""};
+	var workExperience = {"institution": "", "startYear": "", "title": ""};
+
+	// Clear previous search results
+	$(".app-search-results").empty();
+
+	// Retrieve all employee JSON data
+	$.getJSON("/api/people", function(result) {
+        	
+		$.each(result.people, function(i, val) {
+			if (val.name.charAt(0) === clickedLetter){
+			// Populate education from JSON sub-object
+			education.institution = result.people[i].education[0].institution;
+			education.startYear = result.people[i].education[0].startYear;
+			education.endYear = result.people[i].education[0].endYear;
+			education.degree = result.people[i].education[0].degree;
+
+			// Populate work experience from JSON sub-object
+			workExperience.institution = result.people[i].workExperience[0].institution;
+			workExperience.startYear = result.people[i].workExperience[0].startYear;	
+			workExperience.title = result.people[i].workExperience[0].title;
+
+			// Render profile for selected person
+			me.renderProfile(val.name, education, workExperience, val.picture);  	
+			}			
+		});	
+    });
 };
 
 // Append employee file to homepage results TODO: use jquery .clone() and/or html templates to make this easier instead of manual appends below

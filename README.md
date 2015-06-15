@@ -10,5 +10,5 @@ http://localhost:8080/mockup/
 Current Objectives: 
 * Display intro text on homepage instead of static profile - DONE (6/3/15)
 * Button in directory component for sorting names - DONE (6/6/15)
-* Styling redesign via Bootstrap - IN PROGRESS
+* Styling redesign via Bootstrap with same functionality as previous version - IN PROGRESS
 
