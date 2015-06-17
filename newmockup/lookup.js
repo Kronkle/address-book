@@ -93,6 +93,9 @@ directoryView.prototype.populateAllLinks = function () {
 
 	var me = this;
 
+	// Clear previous search results
+	$(".app-search-results").empty();
+	
 	// Object literals to represent JSON sub-objects for a person
 	var education = {"institution": "", "startYear": "", "endYear": "", "degree": ""};
 	var workExperience = {"institution": "", "startYear": "", "title": ""};

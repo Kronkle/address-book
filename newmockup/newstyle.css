@@ -30,11 +30,16 @@ form {
 
 .alphabet-links {
     max-width: 350px;
-    margin: auto;
+    margin: 0 auto;
+}
+
+.search-forms {
+    position: block; 
 }
 
 .app-search-form {
-    display: inline-block;
+    margin: 0 auto;
+    width: 250px;
     margin-left: 85px;
 }
 
