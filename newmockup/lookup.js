@@ -6,6 +6,7 @@
  *		renderProfile - renders employee profile
  *		populateLinks - calls renderProfile on all names that begin with the search letter selected
  *		populateAllLinks - calls renderProfile on all employees
+ *		searchByName - calls renderProfile on all employees that contain search string in their names
  */
 
 var directoryView = function () {
@@ -51,6 +52,12 @@ directoryView.prototype.initDirectory = function () {
     // TODO: reload all employees in order
     $(".all-link").on("click", function() {
     	me.populateAllLinks();
+    });
+
+    // When "Search by Name" is clicked, repopulate directory with employees that have searched name
+    $(".nameSearch").on("click", function() {
+    	me.searchByName($("#nameSearchInput").val());
+    	$("#nameSearchInput").val('');
     });
 	
 };
@@ -121,6 +128,45 @@ directoryView.prototype.populateAllLinks = function () {
 			
 		});	
     });
+};
+
+directoryView.prototype.searchByName = function (name) {
+
+	var me = this;
+	var name = name;
+	// Clear previous search results
+	$(".app-search-results").empty();
+	
+	// Object literals to represent JSON sub-objects for a person
+	var education = {"institution": "", "startYear": "", "endYear": "", "degree": ""};
+	var workExperience = {"institution": "", "startYear": "", "title": ""};
+
+	// Retrieve all employee JSON data
+	$.getJSON("/api/people", function(result) {
+        	
+		$.each(result.people, function(i, val) {
+
+			// TODO: find out why 'contains' is working but 'includes' isn't
+			if (val.name.contains(name)) {
+				
+				// Populate education from JSON sub-object
+				education.institution = result.people[i].education[0].institution;
+				education.startYear = result.people[i].education[0].startYear;
+				education.endYear = result.people[i].education[0].endYear;
+				education.degree = result.people[i].education[0].degree;
+
+				// Populate work experience from JSON sub-object
+				workExperience.institution = result.people[i].workExperience[0].institution;
+				workExperience.startYear = result.people[i].workExperience[0].startYear;	
+				workExperience.title = result.people[i].workExperience[0].title;
+
+				// Render profile for selected person
+				me.renderProfile(val.name, education, workExperience, val.picture);  			
+			}
+		});	
+    });
+
+
 };
 
 // Append employee file to homepage results 
