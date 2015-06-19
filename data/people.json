@@ -18,7 +18,8 @@
                     "title": "Software Developer"
                 }
             ],
-            "picture": "http://stevensegallery.com/g/200/300"
+            "picture": "http://stevensegallery.com/g/200/300",
+            "department": "Development"
         },
         {
             "name": "Alex Watson",
@@ -38,7 +39,8 @@
                     "title": "Barista"
                 }
             ],
-            "picture": "/mockup/images/pup.png"
+            "picture": "/mockup/images/pup.png",
+            "department": "Sales"
         },
         {
             "name": "Blair Michaels",
@@ -58,7 +60,8 @@
                     "title": "Business Analyst"
                 }
             ],
-            "picture": "/mockup/images/mustache.png"
+            "picture": "/mockup/images/mustache.png",
+            "department": "Development"
         },
         {
             "name": "Brent Edwards",
@@ -78,7 +81,8 @@
                     "title": "Hardware Engineer"
                 }
             ],
-            "picture": "/mockup/images/billmurr.png"
+            "picture": "/mockup/images/billmurr.png",
+            "department": "Development"
         },
         {
             "name": "Charles Nelson",
@@ -98,7 +102,8 @@
                     "title": "Manager, Software Testing"
                 }
             ],
-            "picture": "/mockup/images/godzilla.png"
+            "picture": "/mockup/images/godzilla.png",
+            "department": "Test Development"
         },
         {
             "name": "Chris Matthews",
@@ -118,7 +123,8 @@
                     "title": "Manager, HR"
                 }
             ],
-            "picture": "/mockup/images/pineapple.png"
+            "picture": "/mockup/images/pineapple.png",
+            "department": "Human Relations"
         },
         {
             "name": "Damien Tyson",
@@ -138,7 +144,8 @@
                     "title": "Software Engineer"
                 }
             ],
-            "picture": "/mockup/images/stick.png"
+            "picture": "/mockup/images/stick.png",
+            "department": "Development"
         },
         {
             "name": "Daniel Boone",
@@ -158,7 +165,8 @@
                     "title": "Software Test Engineer"
                 }
             ],
-            "picture": "/mockup/images/boone.png"
+            "picture": "/mockup/images/boone.png",
+            "department": "Test Development"
         },
         {
             "name": "Donald Draper",
@@ -178,7 +186,8 @@
                     "title": "Head of Advertising"
                 }
             ],
-            "picture": "/mockup/images/donald.png"
+            "picture": "/mockup/images/donald.png",
+            "department": "Development"
         },
         {
             "name": "Drake Johnson",
@@ -198,7 +207,8 @@
                     "title": "Software Engineer"
                 }
             ],
-            "picture": "/mockup/images/cage.png"
+            "picture": "/mockup/images/cage.png",
+            "department": "Development"
         },
         {
             "name": "Joe Manfrey",
@@ -218,7 +228,8 @@
                     "title": "Web Developer"
                 }
             ],
-            "picture": "/mockup/images/marnie.png"
+            "picture": "/mockup/images/marnie.png",
+            "department": "Development"
         },
         {
             "name": "Douglas Cho",
@@ -238,7 +249,8 @@
                     "title": "Software Developer"
                 }
             ],
-            "picture": "/mockup/images/bacon.png"
+            "picture": "/mockup/images/bacon.png",
+            "department": "Marketing"
         },
         {
             "name": "Allison Murray",
@@ -258,7 +270,8 @@
                     "title": "Director of IT"
                 }
             ],
-            "picture": "/mockup/images/adam.png"
+            "picture": "/mockup/images/adam.png",
+            "department": "Development"
         }
     ]
 }

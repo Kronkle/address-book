@@ -7,6 +7,7 @@
  *		populateLinks - calls renderProfile on all names that begin with the search letter selected
  *		populateAllLinks - calls renderProfile on all employees
  *		searchByName - calls renderProfile on all employees that contain search string in their names
+ *		searchByDept - calls renderProfile on all employees that contain search string in their departments
  */
 
 var directoryView = function () {
@@ -59,6 +60,24 @@ directoryView.prototype.initDirectory = function () {
     	me.searchByName($("#nameSearchInput").val());
     	$("#nameSearchInput").val('');
     });
+
+    $(".nameSearchForm").submit(function(event) {
+    	event.preventDefault();
+    	me.searchByName($("#nameSearchInput").val());
+    	$("#nameSearchInput").val('');
+    });
+
+    // When "Search By Department" is clicked, repopulate directory with employees that have searched department
+    $(".deptSearch").on("click", function() {
+    	me.searchByDept($("#deptSearchInput").val());
+    	$("#deptSearchInput").val('');
+    });
+
+     $(".deptSearchForm").submit(function(event) {
+     	event.preventDefault();
+    	me.searchByDept($("#deptSearchInput").val());
+    	$("#deptSearchInput").val('');
+    });
 	
 };
 
@@ -90,7 +109,7 @@ directoryView.prototype.populateLinks = function (clickedLetter) {
 			workExperience.title = result.people[i].workExperience[0].title;
 
 			// Render profile for selected person
-			me.renderProfile(val.name, education, workExperience, val.picture);  	
+			me.renderProfile(val.name, education, workExperience, val.picture, val.department);  	
 			}			
 		});	
     });
@@ -124,7 +143,7 @@ directoryView.prototype.populateAllLinks = function () {
 			workExperience.title = result.people[i].workExperience[0].title;
 
 			// Render profile for selected person
-			me.renderProfile(val.name, education, workExperience, val.picture);  			
+			me.renderProfile(val.name, education, workExperience, val.picture, val.department);  			
 			
 		});	
     });
@@ -161,17 +180,52 @@ directoryView.prototype.searchByName = function (name) {
 				workExperience.title = result.people[i].workExperience[0].title;
 
 				// Render profile for selected person
-				me.renderProfile(val.name, education, workExperience, val.picture);  			
+				me.renderProfile(val.name, education, workExperience, val.picture, val.department);  			
 			}
 		});	
     });
+};
 
+directoryView.prototype.searchByDept = function (dept) {
 
+	var me = this;
+	var dept = dept;
+	// Clear previous search results
+	$(".app-search-results").empty();
+	
+	// Object literals to represent JSON sub-objects for a person
+	var education = {"institution": "", "startYear": "", "endYear": "", "degree": ""};
+	var workExperience = {"institution": "", "startYear": "", "title": ""};
+
+	// Retrieve all employee JSON data
+	$.getJSON("/api/people", function(result) {
+        	
+		$.each(result.people, function(i, val) {
+
+			// TODO: find out why 'contains' is working but 'includes' isn't
+			if (val.department.contains(dept)) {
+				
+				// Populate education from JSON sub-object
+				education.institution = result.people[i].education[0].institution;
+				education.startYear = result.people[i].education[0].startYear;
+				education.endYear = result.people[i].education[0].endYear;
+				education.degree = result.people[i].education[0].degree;
+
+				// Populate work experience from JSON sub-object
+				workExperience.institution = result.people[i].workExperience[0].institution;
+				workExperience.startYear = result.people[i].workExperience[0].startYear;	
+				workExperience.title = result.people[i].workExperience[0].title;
+
+				// Render profile for selected person
+				me.renderProfile(val.name, education, workExperience, val.picture, val.department);  			
+			}
+		});	
+    });
 };
 
 // Append employee file to homepage results 
 // TODO: use jquery .clone() on template html to be populated and/or an html templating tool to make this easier instead of manual appends below
-directoryView.prototype.renderProfile = function(displayName, education, workExperience, picture) {
+directoryView.prototype.renderProfile = function(displayName, education, workExperience, picture, dept) {
 	
 	// Setup container divs for employee
 	$(".app-search-results").last().append("<div class=\"app-person-profile-container\"></div>");
@@ -181,7 +235,7 @@ directoryView.prototype.renderProfile = function(displayName, education, workExp
 	$("div.app-person-profile.docs-highlight.docs-blue").last().append("<div class=\"app-person-profile-header\"></div>");
 	$(".app-person-profile-header").last().append("<div class=\"app-person-profile-photo\" style=\"background-image: url(" + picture + ")\"></div>");
 	$(".app-person-profile-header").last().append("<h2>" + displayName + "</h2>");
-	$(".app-person-profile-header").last().append("<div class=\"app-person-profile-department\">Strategic Sales</div><div class=\"app-person-profile-phone-number\">919-555-5555</div>")
+	$(".app-person-profile-header").last().append("<div class=\"app-person-profile-department\">" + dept + "</div><div class=\"app-person-profile-phone-number\">919-555-5555</div>")
 
 
 	// Format display and work names for rendering of email address
