@@ -2,39 +2,34 @@
  *  lookup.js - Defines and instantiates directory view for homepage
  *
  *  	directoryView: 
- *  	initDirectory - retrieves people data and populates directory component with all names initially
- *		renderProfile - renders employee profile
- *		populateLinks - calls renderProfile on all names that begin with the search letter selected
- *		populateAllLinks - calls renderProfile on all employees
- *		searchByName - calls renderProfile on all employees that contain search string in their names
- *		searchByDept - calls renderProfile on all employees that contain search string in their departments
+ *  	initDirectory - retrieves people data and populates directory component with all names
+ *	renderProfile - renders employee profile on the directory 
+ *	populateLinks - calls renderProfile on all names that begin with the search letter selected
+ *	populateAllLinks - calls renderProfile on all employees
+ *	searchByName - calls renderProfile on all employees that contain search string in their names
+ *	searchByDept - calls renderProfile on all employees that contain search string in their departments
  */
 
 var directoryView = function () {
-
 	var me = this;
 	me.initDirectory();
-
 };
 
 directoryView.prototype.initDirectory = function () {
-
 	var me = this;
 
-	// Select empty heading within alphabet-links
+	// Select empty heading which will contain search letters
 	var alphabetLinks = $( ".alphabet-links > h5" ).text();
 
 	// Create array of letters wrapped within link tags for name searching
 	var links = jQuery.map(('ABCDEFGHIJKLMNOPQRSTUVWXYZ').split(''), function(i) {
 		return '<a class=\"name-link\">' + i + '</a>&nbsp';
 	});
-	console.log(links);
 
-	// Populate empty heading with links
+	// Populate empty heading with search letters
 	$(".alphabet-links > h5").html(links);
 
-
-	// Add an "All" link to the set of links
+	// Add an "All" link to the set of search letters
 	$(".alphabet-links > h5").append('<a class=\"all-link\">All</a>');
 
 	// Populate all employees upon first loading the directory
@@ -85,14 +80,14 @@ directoryView.prototype.populateLinks = function (clickedLetter) {
 
 	var me = this;
 
-	// Object literals to represent JSON sub-objects for a person
+	// Object literals to represent JSON sub-objects for an employee
 	var education = {"institution": "", "startYear": "", "endYear": "", "degree": ""};
 	var workExperience = {"institution": "", "startYear": "", "title": ""};
 
-	// Clear previous search results
+	// Clear previous search results from directory
 	$(".app-search-results").empty();
 
-	// Retrieve all employee JSON data
+	// Retrieve employee JSON data for all employees that match the search letter
 	$.getJSON("/api/people", function(result) {
         	
 		$.each(result.people, function(i, val) {
@@ -119,7 +114,7 @@ directoryView.prototype.populateAllLinks = function () {
 
 	var me = this;
 
-	// Clear previous search results
+	// Clear previous search results from directory
 	$(".app-search-results").empty();
 	
 	// Object literals to represent JSON sub-objects for a person
@@ -153,14 +148,15 @@ directoryView.prototype.searchByName = function (name) {
 
 	var me = this;
 	var name = name;
-	// Clear previous search results
+
+	// Clear previous search results from directory 
 	$(".app-search-results").empty();
 	
 	// Object literals to represent JSON sub-objects for a person
 	var education = {"institution": "", "startYear": "", "endYear": "", "degree": ""};
 	var workExperience = {"institution": "", "startYear": "", "title": ""};
 
-	// Retrieve all employee JSON data
+	// Retrieve all employee JSON data that match search name
 	$.getJSON("/api/people", function(result) {
         	
 		$.each(result.people, function(i, val) {
@@ -197,7 +193,7 @@ directoryView.prototype.searchByDept = function (dept) {
 	var education = {"institution": "", "startYear": "", "endYear": "", "degree": ""};
 	var workExperience = {"institution": "", "startYear": "", "title": ""};
 
-	// Retrieve all employee JSON data
+	// Retrieve all employee JSON data that match search department
 	$.getJSON("/api/people", function(result) {
         	
 		$.each(result.people, function(i, val) {
