@@ -266,5 +266,18 @@ directoryView.prototype.renderProfile = function(displayName, education, workExp
 
 };
 
+directoryView.prototype.sortProfiles = function(displayName, education, workExperience, picture, dept) {
+
+	var aToZDivs = $("div.app-directory-separator, div.app-directory-item").sort(function (a, b) {	
+		return $(a).text() > $(b).text();	
+				});
+	$("div.app-directory").html(aToZDivs);
+				
+
+	/* Reinitialize onClick behavior for each directory item. TEMP WORKAROUND */
+	//me.initDirectorySort();
+		
+};
+
 // Initialize directory view
 var directoryView = new directoryView;
