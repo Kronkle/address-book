@@ -2,12 +2,13 @@
  *  lookup.js - Defines and instantiates directory view for homepage
  *
  *  	directoryView: 
+ *
  *  	initDirectory - retrieves people data and populates directory component with all names
- *	renderProfile - renders employee profile on the directory 
- *	populateLinks - calls renderProfile on all names that begin with the search letter selected
- *	populateAllLinks - calls renderProfile on all employees
- *	searchByName - calls renderProfile on all employees that contain search string in their names
- *	searchByDept - calls renderProfile on all employees that contain search string in their departments
+ *		renderProfile - renders employee profile on the directory 
+ *		populateLinks - calls renderProfile on all names that begin with the search letter selected
+ *		populateAllLinks - calls renderProfile on all employees
+ *		searchByName - calls renderProfile on all employees that contain search string in their names
+ *		searchByDept - calls renderProfile on all employees that contain search string in their departments
  */
 
 var directoryView = function () {
@@ -52,26 +53,38 @@ directoryView.prototype.initDirectory = function () {
 
     // When "Search by Name" is clicked, repopulate directory with employees that have searched name
     $(".nameSearch").on("click", function() {
-    	me.searchByName($("#nameSearchInput").val());
+
+    	// Ensure that a proper search has been run
+    	if ($("#nameSearchInput").val() == '') {
+    		alert("Please enter at least one letter to run a search");
+    	} else {
+    		me.searchByName($("#nameSearchInput").val());
+    	}
+
     	$("#nameSearchInput").val('');
     });
 
+    // Don't refresh the page when name search is run
     $(".nameSearchForm").submit(function(event) {
     	event.preventDefault();
-    	me.searchByName($("#nameSearchInput").val());
-    	$("#nameSearchInput").val('');
     });
 
     // When "Search By Department" is clicked, repopulate directory with employees that have searched department
     $(".deptSearch").on("click", function() {
-    	me.searchByDept($("#deptSearchInput").val());
+
+    	// Ensure that a proper search has been run
+    	if ($("#deptSearchInput").val() == '') {
+    		alert("Please enter at least one letter to run a search");
+    	} else {
+    		me.searchByDept($("#deptSearchInput").val());
+    	}
+
     	$("#deptSearchInput").val('');
     });
 
-     $(".deptSearchForm").submit(function(event) {
+    // Don't refresh the page when dept search is run
+    $(".deptSearchForm").submit(function(event) {
      	event.preventDefault();
-    	me.searchByDept($("#deptSearchInput").val());
-    	$("#deptSearchInput").val('');
     });
 	
 };
