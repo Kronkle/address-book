@@ -9,6 +9,7 @@
  *		populateAllLinks - calls renderProfile on all employees
  *		searchByName - calls renderProfile on all employees that contain search string in their names
  *		searchByDept - calls renderProfile on all employees that contain search string in their departments
+ *		getExperience - retrieves education and work experience info from JSON object
  */
 
 var directoryView = function () {
@@ -93,9 +94,8 @@ directoryView.prototype.populateLinks = function (clickedLetter) {
 
 	var me = this;
 
-	// Object literals to represent JSON sub-objects for an employee
-	var education = {"institution": "", "startYear": "", "endYear": "", "degree": ""};
-	var workExperience = {"institution": "", "startYear": "", "title": ""};
+	// Object to represent both education and work experience
+	var experience;
 
 	// Clear previous search results from directory
 	$(".app-search-results").empty();
@@ -105,19 +105,11 @@ directoryView.prototype.populateLinks = function (clickedLetter) {
         	
 		$.each(result.people, function(i, val) {
 			if (val.name.charAt(0) === clickedLetter){
-			// Populate education from JSON sub-object
-			education.institution = result.people[i].education[0].institution;
-			education.startYear = result.people[i].education[0].startYear;
-			education.endYear = result.people[i].education[0].endYear;
-			education.degree = result.people[i].education[0].degree;
-
-			// Populate work experience from JSON sub-object
-			workExperience.institution = result.people[i].workExperience[0].institution;
-			workExperience.startYear = result.people[i].workExperience[0].startYear;	
-			workExperience.title = result.people[i].workExperience[0].title;
+			
+			experience = me.getExperience(result, i);
 
 			// Render profile for selected person
-			me.renderProfile(val.name, education, workExperience, val.picture, val.department);  	
+			me.renderProfile(val.name, experience.education, experience.workExperience, val.picture, val.department);  	
 			}			
 		});	
     });
@@ -130,28 +122,18 @@ directoryView.prototype.populateAllLinks = function () {
 	// Clear previous search results from directory
 	$(".app-search-results").empty();
 	
-	// Object literals to represent JSON sub-objects for a person
-	var education = {"institution": "", "startYear": "", "endYear": "", "degree": ""};
-	var workExperience = {"institution": "", "startYear": "", "title": ""};
+	// Object to represent both education and work experience
+	var experience;
 
 	// Retrieve all employee JSON data
 	$.getJSON("/api/people", function(result) {
         	
 		$.each(result.people, function(i, val) {
 				
-			// Populate education from JSON sub-object
-			education.institution = result.people[i].education[0].institution;
-			education.startYear = result.people[i].education[0].startYear;
-			education.endYear = result.people[i].education[0].endYear;
-			education.degree = result.people[i].education[0].degree;
-
-			// Populate work experience from JSON sub-object
-			workExperience.institution = result.people[i].workExperience[0].institution;
-			workExperience.startYear = result.people[i].workExperience[0].startYear;	
-			workExperience.title = result.people[i].workExperience[0].title;
+			experience = me.getExperience(result, i);
 
 			// Render profile for selected person
-			me.renderProfile(val.name, education, workExperience, val.picture, val.department);  			
+			me.renderProfile(val.name, experience.education, experience.workExperience, val.picture, val.department);  			
 			
 		});	
     });
@@ -165,9 +147,8 @@ directoryView.prototype.searchByName = function (name) {
 	// Clear previous search results from directory 
 	$(".app-search-results").empty();
 	
-	// Object literals to represent JSON sub-objects for a person
-	var education = {"institution": "", "startYear": "", "endYear": "", "degree": ""};
-	var workExperience = {"institution": "", "startYear": "", "title": ""};
+	// Object to represent both education and work experience
+	var experience;
 
 	// Retrieve all employee JSON data that match search name
 	$.getJSON("/api/people", function(result) {
@@ -177,19 +158,10 @@ directoryView.prototype.searchByName = function (name) {
 			// TODO: find out why 'contains' is working but 'includes' isn't
 			if (val.name.contains(name)) {
 				
-				// Populate education from JSON sub-object
-				education.institution = result.people[i].education[0].institution;
-				education.startYear = result.people[i].education[0].startYear;
-				education.endYear = result.people[i].education[0].endYear;
-				education.degree = result.people[i].education[0].degree;
-
-				// Populate work experience from JSON sub-object
-				workExperience.institution = result.people[i].workExperience[0].institution;
-				workExperience.startYear = result.people[i].workExperience[0].startYear;	
-				workExperience.title = result.people[i].workExperience[0].title;
+				experience = me.getExperience(result, i);
 
 				// Render profile for selected person
-				me.renderProfile(val.name, education, workExperience, val.picture, val.department);  			
+				me.renderProfile(val.name, experience.education, experience.workExperience, val.picture, val.department);  			
 			}
 		});	
     });
@@ -202,9 +174,8 @@ directoryView.prototype.searchByDept = function (dept) {
 	// Clear previous search results
 	$(".app-search-results").empty();
 	
-	// Object literals to represent JSON sub-objects for a person
-	var education = {"institution": "", "startYear": "", "endYear": "", "degree": ""};
-	var workExperience = {"institution": "", "startYear": "", "title": ""};
+	// Object to represent both education and work experience
+	var experience;
 
 	// Retrieve all employee JSON data that match search department
 	$.getJSON("/api/people", function(result) {
@@ -213,23 +184,36 @@ directoryView.prototype.searchByDept = function (dept) {
 
 			// TODO: find out why 'contains' is working but 'includes' isn't
 			if (val.department.contains(dept)) {
+
+				experience = me.getExperience(result, i);
 				
-				// Populate education from JSON sub-object
-				education.institution = result.people[i].education[0].institution;
-				education.startYear = result.people[i].education[0].startYear;
-				education.endYear = result.people[i].education[0].endYear;
-				education.degree = result.people[i].education[0].degree;
-
-				// Populate work experience from JSON sub-object
-				workExperience.institution = result.people[i].workExperience[0].institution;
-				workExperience.startYear = result.people[i].workExperience[0].startYear;	
-				workExperience.title = result.people[i].workExperience[0].title;
-
 				// Render profile for selected person
-				me.renderProfile(val.name, education, workExperience, val.picture, val.department);  			
+				me.renderProfile(val.name, experience.education, experience.workExperience, val.picture, val.department);  			
 			}
 		});	
     });
+};
+
+directoryView.prototype.getExperience = function(result, i) {
+
+	var education = workExperience = {};
+
+	// Populate education from JSON sub-object
+	education.institution = result.people[i].education[0].institution;
+	education.startYear = result.people[i].education[0].startYear;
+	education.endYear = result.people[i].education[0].endYear;
+	education.degree = result.people[i].education[0].degree;
+
+	// Populate work experience from JSON sub-object
+	workExperience.institution = result.people[i].workExperience[0].institution;
+	workExperience.startYear = result.people[i].workExperience[0].startYear;	
+	workExperience.title = result.people[i].workExperience[0].title;
+
+	// Return an object containing both education and work experience info
+	return {
+		education: education,
+		workExperience: workExperience
+	};
 };
 
 // Append employee file to homepage results 
@@ -246,7 +230,7 @@ directoryView.prototype.renderProfile = function(displayName, education, workExp
 	$(".app-person-profile-header").last().append("<h2>" + displayName + "</h2>");
 	$(".app-person-profile-header").last().append("<div class=\"app-person-profile-department\">" + dept + "</div><div class=\"app-person-profile-phone-number\">919-555-5555</div>")
 
-
+	console.log(education);
 	// Format display and work names for rendering of email address
 	var emailName = displayName.toLowerCase().replace(" ",".");
 	var workEmail = workExperience.institution.toLowerCase().replace(" ","").replace(".","");
