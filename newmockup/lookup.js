@@ -10,6 +10,7 @@
  *		searchByName - calls renderProfile on all employees that contain search string in their names
  *		searchByDept - calls renderProfile on all employees that contain search string in their departments
  *		getExperience - retrieves education and work experience info from JSON object
+ *      sortProfiles - sorts rendered employee profiles by first name in ascending profile
  */
 
 var directoryView = function () {
@@ -112,6 +113,7 @@ directoryView.prototype.populateLinks = function (clickedLetter) {
 			me.renderProfile(val.name, experience.education, experience.workExperience, val.picture, val.department);  	
 			}			
 		});	
+		me.sortProfiles();
     });
 };
 
@@ -133,10 +135,11 @@ directoryView.prototype.populateAllLinks = function () {
 			experience = me.getExperience(result, i);
 
 			// Render profile for selected person
-			me.renderProfile(val.name, experience.education, experience.workExperience, val.picture, val.department);  			
-			
+			me.renderProfile(val.name, experience.education, experience.workExperience, val.picture, val.department);  				
 		});	
+		me.sortProfiles();
     });
+    
 };
 
 directoryView.prototype.searchByName = function (name) {
@@ -164,6 +167,7 @@ directoryView.prototype.searchByName = function (name) {
 				me.renderProfile(val.name, experience.education, experience.workExperience, val.picture, val.department);  			
 			}
 		});	
+		me.sortProfiles();
     });
 };
 
@@ -190,7 +194,8 @@ directoryView.prototype.searchByDept = function (dept) {
 				// Render profile for selected person
 				me.renderProfile(val.name, experience.education, experience.workExperience, val.picture, val.department);  			
 			}
-		});	
+		});
+		me.sortProfiles();
     });
 };
 
@@ -263,17 +268,13 @@ directoryView.prototype.renderProfile = function(displayName, education, workExp
 
 };
 
-directoryView.prototype.sortProfiles = function(displayName, education, workExperience, picture, dept) {
+directoryView.prototype.sortProfiles = function() {
 
-	var aToZDivs = $("div.app-directory-separator, div.app-directory-item").sort(function (a, b) {	
-		return $(a).text() > $(b).text();	
-				});
-	$("div.app-directory").html(aToZDivs);
-				
+	var aToZDivs = $("div.app-person-profile").sort(function (a, b) {	
+		return $(a).find("h2").text() > $(b).find("h2").text();	
+	});
 
-	/* Reinitialize onClick behavior for each directory item. TEMP WORKAROUND */
-	//me.initDirectorySort();
-		
+	$("div.app-search-results").html(aToZDivs);
 };
 
 // Initialize directory view
