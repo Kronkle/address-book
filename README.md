@@ -18,5 +18,6 @@ Current Objectives:
 * Consistent ordering of employees for both homepage and search results - DONE (6/25/15)
 * User login system with editable contact lists for each user account 
 * Improved name and department searches
+* Make renderProfile more efficient
 
 

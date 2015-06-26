@@ -88,7 +88,6 @@ directoryView.prototype.initDirectory = function () {
     $(".deptSearchForm").submit(function(event) {
      	event.preventDefault();
     });
-	
 };
 
 directoryView.prototype.populateLinks = function (clickedLetter) {
@@ -232,7 +231,7 @@ directoryView.prototype.renderProfile = function(displayName, education, workExp
 	// Setup person profile header
 	$("div.app-person-profile.docs-highlight.docs-blue").last().append("<div class=\"app-person-profile-header\"></div>");
 	$(".app-person-profile-header").last().append("<div class=\"app-person-profile-photo\" style=\"background-image: url(" + picture + ")\"></div>");
-	$(".app-person-profile-header").last().append("<h2>" + displayName + "</h2>");
+	$(".app-person-profile-header").last().append("<h2 href=\"#\" data-toggle=\"popover\" title=\"Popover Title\" data-content=\"Popover content here\">" + displayName + "</h2>");
 	$(".app-person-profile-header").last().append("<div class=\"app-person-profile-department\">" + dept + "</div><div class=\"app-person-profile-phone-number\">919-555-5555</div>")
 
 	console.log(education);
@@ -275,6 +274,9 @@ directoryView.prototype.sortProfiles = function() {
 	});
 
 	$("div.app-search-results").html(aToZDivs);
+
+	// Name headers reveal a popover when clicked
+	$('[data-toggle="popover"]').popover();
 };
 
 // Initialize directory view
