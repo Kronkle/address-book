@@ -19,7 +19,8 @@
                 }
             ],
             "picture": "http://stevensegallery.com/g/200/300",
-            "department": "Development"
+            "department": "Development",
+            "description": "sriracha art party squid cillum gentrify four dollar toast anim Banksy minim. Sapiente ut American Apparel cray, sunt duis nisi four dollar toast +1. Crucifix retro forage ugh mustache, next level yr Carles Bushwick."
         },
         {
             "name": "Alex Watson",
@@ -40,7 +41,8 @@
                 }
             ],
             "picture": "/mockup/images/pup.png",
-            "department": "Sales"
+            "department": "Sales",
+            "description": "sriracha art party squid cillum gentrify four dollar toast anim Banksy minim. Sapiente ut American Apparel cray, sunt duis nisi four dollar toast +1. Crucifix retro forage ugh mustache, next level yr Carles Bushwick."
         },
         {
             "name": "Blair Michaels",
@@ -61,7 +63,8 @@
                 }
             ],
             "picture": "/mockup/images/mustache.png",
-            "department": "Development"
+            "department": "Development",
+            "description": "sriracha art party squid cillum gentrify four dollar toast anim Banksy minim. Sapiente ut American Apparel cray, sunt duis nisi four dollar toast +1. Crucifix retro forage ugh mustache, next level yr Carles Bushwick."
         },
         {
             "name": "Brent Edwards",
@@ -82,7 +85,8 @@
                 }
             ],
             "picture": "/mockup/images/billmurr.png",
-            "department": "Development"
+            "department": "Development",
+            "description": "sriracha art party squid cillum gentrify four dollar toast anim Banksy minim. Sapiente ut American Apparel cray, sunt duis nisi four dollar toast +1. Crucifix retro forage ugh mustache, next level yr Carles Bushwick."
         },
         {
             "name": "Charles Nelson",
@@ -103,7 +107,8 @@
                 }
             ],
             "picture": "/mockup/images/godzilla.png",
-            "department": "Test Development"
+            "department": "Test Development",
+            "description": "sriracha art party squid cillum gentrify four dollar toast anim Banksy minim. Sapiente ut American Apparel cray, sunt duis nisi four dollar toast +1. Crucifix retro forage ugh mustache, next level yr Carles Bushwick."
         },
         {
             "name": "Chris Matthews",
@@ -124,7 +129,8 @@
                 }
             ],
             "picture": "/mockup/images/pineapple.png",
-            "department": "Human Relations"
+            "department": "Human Relations",
+            "description": "sriracha art party squid cillum gentrify four dollar toast anim Banksy minim. Sapiente ut American Apparel cray, sunt duis nisi four dollar toast +1. Crucifix retro forage ugh mustache, next level yr Carles Bushwick."
         },
         {
             "name": "Damien Tyson",
@@ -145,7 +151,8 @@
                 }
             ],
             "picture": "/mockup/images/stick.png",
-            "department": "Development"
+            "department": "Development",
+            "description": "sriracha art party squid cillum gentrify four dollar toast anim Banksy minim. Sapiente ut American Apparel cray, sunt duis nisi four dollar toast +1. Crucifix retro forage ugh mustache, next level yr Carles Bushwick."
         },
         {
             "name": "Daniel Boone",
@@ -166,7 +173,8 @@
                 }
             ],
             "picture": "/mockup/images/boone.png",
-            "department": "Test Development"
+            "department": "Test Development",
+            "description": "sriracha art party squid cillum gentrify four dollar toast anim Banksy minim. Sapiente ut American Apparel cray, sunt duis nisi four dollar toast +1. Crucifix retro forage ugh mustache, next level yr Carles Bushwick."
         },
         {
             "name": "Donald Draper",
@@ -187,7 +195,8 @@
                 }
             ],
             "picture": "/mockup/images/donald.png",
-            "department": "Development"
+            "department": "Marketing",
+            "description": "sriracha art party squid cillum gentrify four dollar toast anim Banksy minim. Sapiente ut American Apparel cray, sunt duis nisi four dollar toast +1. Crucifix retro forage ugh mustache, next level yr Carles Bushwick."
         },
         {
             "name": "Drake Johnson",
@@ -208,7 +217,8 @@
                 }
             ],
             "picture": "/mockup/images/cage.png",
-            "department": "Development"
+            "department": "Development",
+            "description": "sriracha art party squid cillum gentrify four dollar toast anim Banksy minim. Sapiente ut American Apparel cray, sunt duis nisi four dollar toast +1. Crucifix retro forage ugh mustache, next level yr Carles Bushwick."
         },
         {
             "name": "Joe Manfrey",
@@ -229,7 +239,8 @@
                 }
             ],
             "picture": "/mockup/images/marnie.png",
-            "department": "Development"
+            "department": "Development",
+            "description": "sriracha art party squid cillum gentrify four dollar toast anim Banksy minim. Sapiente ut American Apparel cray, sunt duis nisi four dollar toast +1. Crucifix retro forage ugh mustache, next level yr Carles Bushwick."
         },
         {
             "name": "Douglas Cho",
@@ -250,7 +261,8 @@
                 }
             ],
             "picture": "/mockup/images/bacon.png",
-            "department": "Marketing"
+            "department": "Marketing",
+            "description": "sriracha art party squid cillum gentrify four dollar toast anim Banksy minim. Sapiente ut American Apparel cray, sunt duis nisi four dollar toast +1. Crucifix retro forage ugh mustache, next level yr Carles Bushwick."
         },
         {
             "name": "Allison Murray",
@@ -271,7 +283,8 @@
                 }
             ],
             "picture": "/mockup/images/adam.png",
-            "department": "Development"
+            "department": "Development",
+            "description": "sriracha art party squid cillum gentrify four dollar toast anim Banksy minim. Sapiente ut American Apparel cray, sunt duis nisi four dollar toast +1. Crucifix retro forage ugh mustache, next level yr Carles Bushwick."
         }
     ]
 }

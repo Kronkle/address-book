@@ -28,6 +28,14 @@ form {
     display: inline-block;
 }
 
+/* Styling for popover boxes that appear when a name is clicked */
+.popover {
+    max-width: 100%;
+
+    /* Hack for keeping popovers at same heigh relative to photo */
+    /* top: 0px !important;*/
+}
+
 .alphabet-links {
     max-width: 350px;
     margin: 0 auto;

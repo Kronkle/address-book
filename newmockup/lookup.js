@@ -109,7 +109,7 @@ directoryView.prototype.populateLinks = function (clickedLetter) {
 			experience = me.getExperience(result, i);
 
 			// Render profile for selected person
-			me.renderProfile(val.name, experience.education, experience.workExperience, val.picture, val.department);  	
+			me.renderProfile(val.name, experience.education, experience.workExperience, val.picture, val.department, val.description);  	
 			}			
 		});	
 		me.sortProfiles();
@@ -134,7 +134,7 @@ directoryView.prototype.populateAllLinks = function () {
 			experience = me.getExperience(result, i);
 
 			// Render profile for selected person
-			me.renderProfile(val.name, experience.education, experience.workExperience, val.picture, val.department);  				
+			me.renderProfile(val.name, experience.education, experience.workExperience, val.picture, val.department, val.description);  				
 		});	
 		me.sortProfiles();
     });
@@ -163,7 +163,7 @@ directoryView.prototype.searchByName = function (name) {
 				experience = me.getExperience(result, i);
 
 				// Render profile for selected person
-				me.renderProfile(val.name, experience.education, experience.workExperience, val.picture, val.department);  			
+				me.renderProfile(val.name, experience.education, experience.workExperience, val.picture, val.department, val.description);  			
 			}
 		});	
 		me.sortProfiles();
@@ -190,8 +190,9 @@ directoryView.prototype.searchByDept = function (dept) {
 
 				experience = me.getExperience(result, i);
 				
+				console.log(val.description);
 				// Render profile for selected person
-				me.renderProfile(val.name, experience.education, experience.workExperience, val.picture, val.department);  			
+				me.renderProfile(val.name, experience.education, experience.workExperience, val.picture, val.department, val.description);  			
 			}
 		});
 		me.sortProfiles();
@@ -222,7 +223,7 @@ directoryView.prototype.getExperience = function(result, i) {
 
 // Append employee file to homepage results 
 // TODO: use jquery .clone() on template html to be populated and/or an html templating tool to make this easier instead of manual appends below
-directoryView.prototype.renderProfile = function(displayName, education, workExperience, picture, dept) {
+directoryView.prototype.renderProfile = function(displayName, education, workExperience, picture, dept, desc) {
 	
 	// Setup container divs for employee
 	$(".app-search-results").last().append("<div class=\"app-person-profile-container\"></div>");
@@ -230,8 +231,8 @@ directoryView.prototype.renderProfile = function(displayName, education, workExp
 
 	// Setup person profile header
 	$("div.app-person-profile.docs-highlight.docs-blue").last().append("<div class=\"app-person-profile-header\"></div>");
-	$(".app-person-profile-header").last().append("<div class=\"app-person-profile-photo\" style=\"background-image: url(" + picture + ")\"></div>");
-	$(".app-person-profile-header").last().append("<h2 href=\"#\" data-toggle=\"popover\" title=\"Popover Title\" data-content=\"Popover content here\">" + displayName + "</h2>");
+	$(".app-person-profile-header").last().append("<div href=\"#\" data-trigger=\"hover\" data-toggle=\"popover\" title=\"Bio\" data-content=\"" + desc + "\" data-placement=\"right\" class=\"app-person-profile-photo\" style=\"background-image: url(" + picture + ")\"></div>");
+	$(".app-person-profile-header").last().append("<h2>" + displayName + "</h2>");
 	$(".app-person-profile-header").last().append("<div class=\"app-person-profile-department\">" + dept + "</div><div class=\"app-person-profile-phone-number\">919-555-5555</div>")
 
 	console.log(education);
@@ -276,7 +277,10 @@ directoryView.prototype.sortProfiles = function() {
 	$("div.app-search-results").html(aToZDivs);
 
 	// Name headers reveal a popover when clicked
-	$('[data-toggle="popover"]').popover();
+	$('[data-toggle="popover"]').popover({
+		placement: 'right',
+		viewport: '#viewport'
+	});
 };
 
 // Initialize directory view
