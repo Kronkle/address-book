@@ -33,7 +33,7 @@ form {
     max-width: 100%;
 
     /* Hack for keeping popovers at same heigh relative to photo */
-    /* top: 0px !important;*/
+    top: 15px !important;
 }
 
 .alphabet-links {

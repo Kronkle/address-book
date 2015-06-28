@@ -283,5 +283,21 @@ directoryView.prototype.sortProfiles = function() {
 	});
 };
 
+// TODO: to be used for iterating over relevant profiles to render in a loop
+directoryView.prototype.loadProfiles = function() {
+
+	// Create a Handlebars template (in another file) to represent an employee profile
+	var source = "<h3>Employee {{name}} Profile</h3><p>Studied at {{education.institution}}. Works as a {{workExperience.title}} at {{workExperience.institution}}.</p>";
+
+	// Compile template into a function
+	var template = Handlebars.compile(source);
+
+	// Create data for the context argument that template will accept (gather this from params later)
+	var data = { "name": "Joe Manfrey", "education": [{"institution": "UNC"}], "workplace": [{"title": "Software Engineer"}, {"institution": "Google"}] };
+
+	// Generate html using the given context
+	var result = template(data);
+}
+
 // Initialize directory view
 var directoryView = new directoryView;
