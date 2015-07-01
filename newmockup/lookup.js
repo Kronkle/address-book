@@ -130,15 +130,17 @@ directoryView.prototype.populateAllLinks = function () {
 	var experience;
 
 	// Retrieve all employee JSON data
+	console.log(performance.now());
 	$.getJSON("/api/people", function(result) {
         	
 		$.each(result.people, function(i, val) {
 				
 			experience = me.getExperience(result, i);
-			console.log(experience.education);
 			// Render profile for selected person
-			html += me.loadProfile(val.name, experience.education, experience.workExperience, val.picture, val.department, val.description);  				
+			html += me.loadProfile(val.name, experience.education, experience.workExperience, val.picture, val.department, val.description); 
+			console.log(performance.now()); 				
 		});	
+
 		me.sortProfiles(html);
     });
 };
@@ -195,7 +197,6 @@ directoryView.prototype.searchByDept = function (dept) {
 
 				experience = me.getExperience(result, i);
 
-				console.log(val.description);
 				// Render profile for selected person
 				me.loadProfile(val.name, experience.education, experience.workExperience, val.picture, val.department, val.description);  
 			
@@ -251,7 +252,6 @@ directoryView.prototype.loadProfile = function(displayName, education, workExper
 		// Generate html using the given context
 		var result = template(data);
 		html = result;
-		console.log(html);
 		}
 		
 	});
@@ -260,6 +260,7 @@ directoryView.prototype.loadProfile = function(displayName, education, workExper
 
 directoryView.prototype.sortProfiles = function(html) {
 
+	console.log(performance.now());
 	var aToZDivs = $.parseHTML(html).sort(function (a, b) {	
 		return $(a).find("h2").text() > $(b).find("h2").text();	
 	});
@@ -271,6 +272,7 @@ directoryView.prototype.sortProfiles = function(html) {
 		placement: 'right',
 		viewport: '#viewport'
 	});
+	console.log(performance.now());
 };
 
 // Initialize directory view
