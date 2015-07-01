@@ -232,29 +232,22 @@ directoryView.prototype.getExperience = function(result, i) {
 directoryView.prototype.loadProfile = function(displayName, education, workExperience, picture, dept, desc) {
 	var html;
 
-	$.ajax({
-		async: false,
-		url: 'profile.hbs', 
-		success: function (source) {
+	// Retrieve precompiled template and set to a fn
+	var template = Handlebars.templates['profile'];
 
-		// Compile template into a function
-		var template = Handlebars.compile(source);
+	// Format display and work names for rendering of email address
+	var emailName = displayName.toLowerCase().replace(" ",".");
+	var workEmail = workExperience.institution.toLowerCase().replace(" ","").replace(".","");
+	var displayEmail = emailName + "@" + workEmail + ".com"
+	var displayURL = "mailto:" + displayEmail;
 
-		// Format display and work names for rendering of email address
-		var emailName = displayName.toLowerCase().replace(" ",".");
-		var workEmail = workExperience.institution.toLowerCase().replace(" ","").replace(".","");
-		var displayEmail = emailName + "@" + workEmail + ".com"
-		var displayURL = "mailto:" + displayEmail;
+	// Create data for the context argument that template will accept (gather this from params later)
+	var data = { "education": {"startYear": education.startYear, "endYear": education.endYear, "institution": education.institution, "degree": education.degree}, "workExperience": {"startYear": workExperience.startYear, "title": workExperience.title, "institution": workExperience.institution}, "desc": desc, "picture": picture, "name": displayName, "dept": dept, "emailUrl": displayURL, "email": displayEmail };
 
-		// Create data for the context argument that template will accept (gather this from params later)
-		var data = { "education": {"startYear": education.startYear, "endYear": education.endYear, "institution": education.institution, "degree": education.degree}, "workExperience": {"startYear": workExperience.startYear, "title": workExperience.title, "institution": workExperience.institution}, "desc": desc, "picture": picture, "name": displayName, "dept": dept, "emailUrl": displayURL, "email": displayEmail };
+	// Generate html using the given context
+	var result = template(data);
+	html = result;
 
-		// Generate html using the given context
-		var result = template(data);
-		html = result;
-		}
-		
-	});
 	return html;
 };
 

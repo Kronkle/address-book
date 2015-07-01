@@ -18,5 +18,6 @@ Current Objectives:
 * "Detailed view" for each individual employee - DONE (Bio popovers for each employee - 6/28/15) 
 * Improved name and department searches
 * Make renderProfile more efficient - DONE (loadProfile for rendering via Handlebars template - 6/30/15)
+* Optimize new renderProfile - DONE (precompiled Handlebars template - 7/1/15)
 * User login system with editable contact lists for each user account
 
