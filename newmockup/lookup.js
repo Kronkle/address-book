@@ -4,11 +4,11 @@
  *  	directoryView: 
  *
  *  	initDirectory - retrieves people data and populates directory component with all names
- *		renderProfile - renders employee profile on the directory 
- *		populateLinks - calls renderProfile on all names that begin with the search letter selected
- *		populateAllLinks - calls renderProfile on all employees
- *		searchByName - calls renderProfile on all employees that contain search string in their names
- *		searchByDept - calls renderProfile on all employees that contain search string in their departments
+ *		loadProfile - renders employee profile on the directory via Handlebars template with associated context
+ *		populateLinks - calls loadProfile on all names that begin with the search letter selected
+ *		populateAllLinks - calls loadProfile on all employees
+ *		searchByName - calls loadProfile on all employees that contain search string in their names
+ *		searchByDept - calls loadProfile on all employees that contain search string in their departments
  *		getExperience - retrieves education and work experience info from JSON object
  *      sortProfiles - sorts rendered employee profiles by first name in ascending profile
  */
@@ -97,6 +97,8 @@ directoryView.prototype.populateLinks = function (clickedLetter) {
 	// Object to represent both education and work experience
 	var experience;
 
+	var html = "";
+
 	// Clear previous search results from directory
 	$(".app-search-results").empty();
 
@@ -109,16 +111,17 @@ directoryView.prototype.populateLinks = function (clickedLetter) {
 			experience = me.getExperience(result, i);
 
 			// Render profile for selected person
-			me.renderProfile(val.name, experience.education, experience.workExperience, val.picture, val.department, val.description);  	
+			html += me.loadProfile(val.name, experience.education, experience.workExperience, val.picture, val.department, val.description);  	
 			}			
 		});	
-		me.sortProfiles();
+		me.sortProfiles(html);
     });
 };
 
 directoryView.prototype.populateAllLinks = function () {
 
 	var me = this;
+	var html = "";
 
 	// Clear previous search results from directory
 	$(".app-search-results").empty();
@@ -132,19 +135,19 @@ directoryView.prototype.populateAllLinks = function () {
 		$.each(result.people, function(i, val) {
 				
 			experience = me.getExperience(result, i);
-
+			console.log(experience.education);
 			// Render profile for selected person
-			me.renderProfile(val.name, experience.education, experience.workExperience, val.picture, val.department, val.description);  				
+			html += me.loadProfile(val.name, experience.education, experience.workExperience, val.picture, val.department, val.description);  				
 		});	
-		me.sortProfiles();
+		me.sortProfiles(html);
     });
-    
 };
 
 directoryView.prototype.searchByName = function (name) {
 
 	var me = this;
 	var name = name;
+	var html = "";
 
 	// Clear previous search results from directory 
 	$(".app-search-results").empty();
@@ -163,10 +166,10 @@ directoryView.prototype.searchByName = function (name) {
 				experience = me.getExperience(result, i);
 
 				// Render profile for selected person
-				me.renderProfile(val.name, experience.education, experience.workExperience, val.picture, val.department, val.description);  			
+				html += me.loadProfile(val.name, experience.education, experience.workExperience, val.picture, val.department, val.description);  			
 			}
 		});	
-		me.sortProfiles();
+		me.sortProfiles(html);
     });
 };
 
@@ -174,6 +177,8 @@ directoryView.prototype.searchByDept = function (dept) {
 
 	var me = this;
 	var dept = dept;
+	var html = "";
+
 	// Clear previous search results
 	$(".app-search-results").empty();
 	
@@ -189,19 +194,21 @@ directoryView.prototype.searchByDept = function (dept) {
 			if (val.department.contains(dept)) {
 
 				experience = me.getExperience(result, i);
-				
+
 				console.log(val.description);
 				// Render profile for selected person
-				me.renderProfile(val.name, experience.education, experience.workExperience, val.picture, val.department, val.description);  			
+				me.loadProfile(val.name, experience.education, experience.workExperience, val.picture, val.department, val.description);  
+			
 			}
 		});
-		me.sortProfiles();
+		me.sortProfiles(html);
     });
 };
 
 directoryView.prototype.getExperience = function(result, i) {
 
-	var education = workExperience = {};
+	var education = {};
+	var workExperience = {};
 
 	// Populate education from JSON sub-object
 	education.institution = result.people[i].education[0].institution;
@@ -221,56 +228,39 @@ directoryView.prototype.getExperience = function(result, i) {
 	};
 };
 
-// Append employee file to homepage results 
-// TODO: use jquery .clone() on template html to be populated and/or an html templating tool to make this easier instead of manual appends below
-directoryView.prototype.renderProfile = function(displayName, education, workExperience, picture, dept, desc) {
-	
-	// Setup container divs for employee
-	$(".app-search-results").last().append("<div class=\"app-person-profile-container\"></div>");
-	$(".app-person-profile-container").last().append("<div class=\"app-person-profile docs-highlight docs-blue\" data-intro=\"Person Profile\" data-position=\"bottom\"></div>");
+directoryView.prototype.loadProfile = function(displayName, education, workExperience, picture, dept, desc) {
+	var html;
 
-	// Setup person profile header
-	$("div.app-person-profile.docs-highlight.docs-blue").last().append("<div class=\"app-person-profile-header\"></div>");
-	$(".app-person-profile-header").last().append("<div href=\"#\" data-trigger=\"hover\" data-toggle=\"popover\" title=\"Bio\" data-content=\"" + desc + "\" data-placement=\"right\" class=\"app-person-profile-photo\" style=\"background-image: url(" + picture + ")\"></div>");
-	$(".app-person-profile-header").last().append("<h2>" + displayName + "</h2>");
-	$(".app-person-profile-header").last().append("<div class=\"app-person-profile-department\">" + dept + "</div><div class=\"app-person-profile-phone-number\">919-555-5555</div>")
+	$.ajax({
+		async: false,
+		url: 'profile.hbs', 
+		success: function (source) {
 
-	console.log(education);
-	// Format display and work names for rendering of email address
-	var emailName = displayName.toLowerCase().replace(" ",".");
-	var workEmail = workExperience.institution.toLowerCase().replace(" ","").replace(".","");
-	var displayEmail = emailName + "@" + workEmail + ".com"
-	var displayURL = "mailto:" + displayEmail;
+		// Compile template into a function
+		var template = Handlebars.compile(source);
 
-	$(".app-person-profile-header").last().append("<div class=\"app-person-profile-email\"><a href=" + displayURL + "\">" + displayEmail + "</a></div>");
+		// Format display and work names for rendering of email address
+		var emailName = displayName.toLowerCase().replace(" ",".");
+		var workEmail = workExperience.institution.toLowerCase().replace(" ","").replace(".","");
+		var displayEmail = emailName + "@" + workEmail + ".com"
+		var displayURL = "mailto:" + displayEmail;
 
-	// Populate education info
-	$("div.app-person-profile.docs-highlight.docs-blue").last().append("<div class=\"app-section\"></div>");
-	$(".app-section").last().append("<div class=\"app-section-header\"><h3>Education</h3></div>");
-	$(".app-section").last().append("<div class=\"app-section-body\"></div>");
-	$(".app-section-body").last().append("<div class=\"app-history-item\"></div>");
-	$(".app-section-body").last().append("<div class=\"app-history-item\"></div>");
-	$(".app-history-item").last().append("<div class=\"app-history-item-dates-edu\">" + education.startYear + "-" + education.endYear + "</div>");
-	$(".app-history-item").last().append("<div class=\"app-history-item-body\"></div>");
-	$(".app-history-item-body").last().append("<div class=\"app-history-item-title-edu\">" + education.institution + "</div>");
-	$(".app-history-item-body").last().append("<div class=\"app-history-item-degree\">" + education.degree + "</div>");
+		// Create data for the context argument that template will accept (gather this from params later)
+		var data = { "education": {"startYear": education.startYear, "endYear": education.endYear, "institution": education.institution, "degree": education.degree}, "workExperience": {"startYear": workExperience.startYear, "title": workExperience.title, "institution": workExperience.institution}, "desc": desc, "picture": picture, "name": displayName, "dept": dept, "emailUrl": displayURL, "email": displayEmail };
 
-	// Populate work experience info
-	$("div.app-person-profile.docs-highlight.docs-blue").last().append("<div class=\"app-section\"></div>");
-	$(".app-section").last().append("<div class=\"app-section-header\"><h3>Experience</h3></div>");
-	$(".app-section").last().append("<div class=\"app-section-body\"></div>");
-	$(".app-section-body").last().append("<div class=\"app-history-item\"></div>");
-	$(".app-section-body").last().append("<div class=\"app-history-item\"></div>");
-	$(".app-history-item").last().append("<div class=\"app-history-item-dates-work\">" + workExperience.startYear + "-Present</div>");
-	$(".app-section-body").last().append("<div class=\"app-history-item-body\"></div>");
-	$(".app-history-item-body").last().append("<div class=\"app-history-item-title-work\">" + workExperience.institution + "</div>");
-	$(".app-history-item-body").last().append("<div class=\"app-history-item-position\">" + workExperience.title + "</div>");
-
+		// Generate html using the given context
+		var result = template(data);
+		html = result;
+		console.log(html);
+		}
+		
+	});
+	return html;
 };
 
-directoryView.prototype.sortProfiles = function() {
+directoryView.prototype.sortProfiles = function(html) {
 
-	var aToZDivs = $("div.app-person-profile").sort(function (a, b) {	
+	var aToZDivs = $.parseHTML(html).sort(function (a, b) {	
 		return $(a).find("h2").text() > $(b).find("h2").text();	
 	});
 
@@ -282,22 +272,6 @@ directoryView.prototype.sortProfiles = function() {
 		viewport: '#viewport'
 	});
 };
-
-// TODO: to be used for iterating over relevant profiles to render in a loop
-directoryView.prototype.loadProfiles = function() {
-
-	// Create a Handlebars template (in another file) to represent an employee profile
-	var source = "<h3>Employee {{name}} Profile</h3><p>Studied at {{education.institution}}. Works as a {{workExperience.title}} at {{workExperience.institution}}.</p>";
-
-	// Compile template into a function
-	var template = Handlebars.compile(source);
-
-	// Create data for the context argument that template will accept (gather this from params later)
-	var data = { "name": "Joe Manfrey", "education": [{"institution": "UNC"}], "workplace": [{"title": "Software Engineer"}, {"institution": "Google"}] };
-
-	// Generate html using the given context
-	var result = template(data);
-}
 
 // Initialize directory view
 var directoryView = new directoryView;
