@@ -16,7 +16,7 @@ Current Objectives:
 * Styling redesign via Bootstrap with same functionality as previous version - DONE (Letter, name, and department searches instead of A-Z/Z-A sort)
 * Consistent ordering of employees for both homepage and search results - DONE (6/25/15)
 * "Detailed view" for each individual employee - DONE (Bio popovers for each employee - 6/28/15) 
-* Improved name and department searches
+* Improved name and department searches (In progress - 7/2/15)
 * Make renderProfile more efficient - DONE (loadProfile for rendering via Handlebars template - 6/30/15)
 * Optimize new renderProfile - DONE (precompiled Handlebars template - 7/1/15)
 * User login system with editable contact lists for each user account

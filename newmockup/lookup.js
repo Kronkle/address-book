@@ -148,7 +148,7 @@ directoryView.prototype.populateAllLinks = function () {
 directoryView.prototype.searchByName = function (name) {
 
 	var me = this;
-	var name = name;
+	var name = name.toUpperCase();
 	var html = "";
 
 	// Clear previous search results from directory 
@@ -162,8 +162,8 @@ directoryView.prototype.searchByName = function (name) {
         	
 		$.each(result.people, function(i, val) {
 
-			// TODO: find out why 'contains' is working but 'includes' isn't
-			if (val.name.contains(name)) {
+			// NOTE - after v39 FireFox will support the "includes" function
+			if (val.name[0].contains(name[0])) {
 				
 				experience = me.getExperience(result, i);
 
@@ -178,7 +178,7 @@ directoryView.prototype.searchByName = function (name) {
 directoryView.prototype.searchByDept = function (dept) {
 
 	var me = this;
-	var dept = dept;
+	var dept = dept.toUppercase();
 	var html = "";
 
 	// Clear previous search results
@@ -192,14 +192,13 @@ directoryView.prototype.searchByDept = function (dept) {
         	
 		$.each(result.people, function(i, val) {
 
-			// TODO: find out why 'contains' is working but 'includes' isn't
-			if (val.department.contains(dept)) {
-
+			// NOTE - after v39 FireFox will support the "includes" function
+			if (val.department[0].contains(dept[0])) {
+				
 				experience = me.getExperience(result, i);
 
 				// Render profile for selected person
-				me.loadProfile(val.name, experience.education, experience.workExperience, val.picture, val.department, val.description);  
-			
+				html += me.loadProfile(val.name, experience.education, experience.workExperience, val.picture, val.department, val.description);			
 			}
 		});
 		me.sortProfiles(html);
