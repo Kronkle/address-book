@@ -148,7 +148,14 @@ directoryView.prototype.populateAllLinks = function () {
 directoryView.prototype.searchByName = function (name) {
 
 	var me = this;
-	var name = name.toUpperCase();
+	var name = name;
+
+	// Break search string into first and last names if possible here:
+
+	// Capitalize first letter and lowercase the following letters for name matching
+	name = name.substring(0,1).toUpperCase() + name.substring(1).toLowerCase();
+	console.log(name);
+
 	var html = "";
 
 	// Clear previous search results from directory 
@@ -163,7 +170,8 @@ directoryView.prototype.searchByName = function (name) {
 		$.each(result.people, function(i, val) {
 
 			// NOTE - after v39 FireFox will support the "includes" function
-			if (val.name[0].contains(name[0])) {
+			// Avoid searching for strings in the middle of a name
+			if (val.name[0].contains(name[0]) && val.name.contains(name)) {
 				
 				experience = me.getExperience(result, i);
 
@@ -178,7 +186,11 @@ directoryView.prototype.searchByName = function (name) {
 directoryView.prototype.searchByDept = function (dept) {
 
 	var me = this;
-	var dept = dept.toUppercase();
+	var dept = dept;
+
+	// Capitalize first letter and lowercase the following letters for department matching
+	dept = dept.substring(0,1).toUpperCase() + dept.substring(1).toLowerCase();
+
 	var html = "";
 
 	// Clear previous search results
@@ -193,7 +205,8 @@ directoryView.prototype.searchByDept = function (dept) {
 		$.each(result.people, function(i, val) {
 
 			// NOTE - after v39 FireFox will support the "includes" function
-			if (val.department[0].contains(dept[0])) {
+			// Avoid searching for strings in the middle of a name
+			if (val.department[0].contains(dept[0]) && val.department.contains(dept)) {
 				
 				experience = me.getExperience(result, i);
 
