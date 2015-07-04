@@ -150,11 +150,23 @@ directoryView.prototype.searchByName = function (name) {
 	var me = this;
 	var name = name;
 
-	// Break search string into first and last names if possible here:
+	// Capitalize first letter and any letters after whitespace, lowercase all other letters
+	for(i = 0; i < name.length; i++) {
 
-	// Capitalize first letter and lowercase the following letters for name matching
-	name = name.substring(0,1).toUpperCase() + name.substring(1).toLowerCase();
-	console.log(name);
+		// Capitalize the first letter
+		if (i == 0) {
+			name = name.substring(0,1).toUpperCase() + name.substring(1); 
+
+		// Capitalize the first letter after whitespace (assuming this is last name), skip past it
+		} else if (name[i] == " " && name[i+1] != " ") {
+			name = name.substring(0,i+1) + name.substring(i+1,i+2).toUpperCase() + name.substring(i+2);
+			i++;
+
+		// Lowercase all other letters
+		} else {
+			name = name.substring(0,i) + name.substring(i,i+1).toLowerCase() + name.substring(i+1);
+		}
+	}
 
 	var html = "";
 
@@ -242,6 +254,7 @@ directoryView.prototype.getExperience = function(result, i) {
 };
 
 directoryView.prototype.loadProfile = function(displayName, education, workExperience, picture, dept, desc) {
+	
 	var html;
 
 	// Retrieve precompiled template and set to a fn
