@@ -10,6 +10,7 @@
  *		searchByName - calls loadProfile on all employees that contain search string in their names
  *		searchByDept - calls loadProfile on all employees that contain search string in their departments
  *		getExperience - retrieves education and work experience info from JSON object
+ *      getSearchResults - iterate through JSON and return any employee that matches search
  *      sortProfiles - sorts rendered employee profiles by first name in ascending profile
  */
 
