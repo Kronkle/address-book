@@ -52,9 +52,15 @@ app.get('/api/people', function(req, res) {
 
 /* Remember to have a redirect for both success and failure
 app.post('/login', 
-	passport.authenticate('local'),
+	passport.authenticate('local-login'),
 	function(req, res) {
-		res.redirect('/users/' + req.user.username);
+		res.redirect('/newmockup');
+	});
+
+app.post('/register',
+	passport.authenticate('local-register'),
+	function(req, res) {
+		res.redirect('/newmockup');
 	});
 */
 

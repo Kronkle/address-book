@@ -97,6 +97,14 @@ form {
     cursor: pointer;
 }
 
+.dropdown-toggle {
+    bottom: 50px;
+}
+
+.dropdown-menu {
+    top: -1px;
+}
+
 /* the detailed view of person profile and directory intro */
 .app-person-profile-container, .app-directory-intro {
     position: block;

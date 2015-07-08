@@ -22,16 +22,43 @@
         <!-- Navbar -->
         <div class="app-directory-container">
             <h3>Employee Directory</h3>
-            
+            <ul class="nav navbar-nav navbar-right">
+                <li id="registerMenu" class="dropdown">
+                    <a class="dropdown-toggle" href="#" data-toggle="dropdown">Sign Up <strong class="caret"></strong></a>
+                    <div class="dropdown-menu" style="padding: 15px; padding-bottom: 0px;">
+                        <div style="text-align:center"><span class="glyphicon glyphicon-heart"></span></div>
+                        <br>
+                        <p class="signUpInText">Register Here:</p>
+                        <form method="post" action="login" accept-charset="UTF-8">
+                            <input style="margin-bottom: 15px;" type="text" placeholder="Username" id="usernameR" name="username">
+                            <input style="margin-bottom: 15px;" type="password" placeholder="Password" id="passwordR" name="password">
+                            <input style="margin-bottom: 15px;" type="password" placeholder="Confirm Password" id="passwordR2" name="password">
+                            <div style="text-align:center"><a id="registerBtn" href="#" class="btn btn-info">Register</a></div>             
+                        </form>
+                        <br>
+                    </div>
+                </li>
+                <li id="loginMenu" class="dropdown">
+                    <a class="dropdown-toggle" href="#" data-toggle="dropdown">Sign In <strong class="caret"></strong></a>
+                    <div class="dropdown-menu" style="padding: 15px; padding-bottom: 0px;">
+                        <div style="text-align:center"><span class="glyphicon glyphicon-thumbs-up"></span></div>
+                        <br>
+                        <p class="signUpInText">Welcome Back!</p>   
+                        <form method="post" action="login" accept-charset="UTF-8">
+                            <input style="margin-bottom: 15px;" type="text" placeholder="Username" id="usernameL" name="username">
+                            <input style="margin-bottom: 15px;" type="password" placeholder="Password" id="passwordL" name="password">
+                            <div style="text-align:center"><a id="loginBtn" href="#" class="btn btn-info">Sign In</a></div>
+                        </form>
+                        <br>
+                </div>
+                </li>
+            </ul>
             <h4>Find Staff</h4>
-
             <div class="alphabet-links">
                 <h5>
                 </h5>
             </div>
-            
             <div class="search-forms">
-                
                     <form class="nameSearchForm">
                         <div class="form-group app-search-form">
                             <input type="text" class="form-control" id="nameSearchInput">
@@ -45,7 +72,6 @@
                         </div>
                         <button type="button" class="deptSearch btn btn-default app-search-form">Search by Department</button>
                     </form>
-
             </div>
         </div>
         <!-- Results Sort Dash will be here -->
