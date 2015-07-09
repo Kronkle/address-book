@@ -11,9 +11,10 @@ var express = require('express'),
     LocalStrategy = require('passport-local'),
     people = require(path.join(__dirname, 'data/people.json'));
 
-// var config = require('./config.js'),
-//     funct = require('./functions.js');
-
+/*
+var config = require('./config.js'),
+    funct = require('./functions.js');
+*/
 var app = express();
 
 
@@ -23,7 +24,7 @@ app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: false}));
 app.use(bodyParser.json());
 app.use(methodOverride('X-HTTP-Method-Override'));
-app.use(session({secret: 'supernova', saveUnitialized: true, resave: true}));
+app.use(session({secret: 'supernova', saveUninitialized: true, resave: true}));
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -50,19 +51,18 @@ app.get('/api/people', function(req, res) {
     res.end(JSON.stringify(people, null, '    '));
 });
 
-/* Remember to have a redirect for both success and failure
+/* Remember to have a redirect for both success and failure */
 app.post('/login', 
 	passport.authenticate('local-login'),
 	function(req, res) {
-		res.redirect('/newmockup');
+		res.redirect('/newmockup/loggedin.html');
 	});
 
 app.post('/register',
 	passport.authenticate('local-register'),
 	function(req, res) {
-		res.redirect('/newmockup');
+		res.redirect('/newmockup/registered.html');
 	});
-*/
 
 var HTTP_PORT = 8080;
 
