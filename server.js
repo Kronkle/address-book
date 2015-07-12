@@ -8,10 +8,15 @@ var express = require('express'),
 
 var app = express();
 
-// Configure Express - sessions and passport
-app.use(session({secret: 'supernova', saveUninitialized: true, resave: true}));
+// Configure Passport
+app.use(session({secret: 'myPassportKey'}));
 app.use(passport.initialize());
 app.use(passport.session());
+
+/* Configure db */
+var dbConfig = require(path.join(__dirname, 'newmockup/db.js'));
+var mongoose = require('mongoose');
+mongoose.connect(dbConfig.url);
 
 /* Routes */
 app.use('/mockup/', express.static(path.join(__dirname, 'mockup')));
@@ -41,14 +46,9 @@ app.listen(HTTP_PORT, function(err) {
         throw err;
     }
 
-/* Configure db */
-var dbConfig = require('./db.js');
-var mongoose = require('mongoose');
-mongoose.connect(dbConfig.url);
+	console.log(('HTTP server listening on port ' + HTTP_PORT).green);
 
-console.log(('HTTP server listening on port ' + HTTP_PORT).green);
-
-console.log('Mockup:'.bold + ' http://localhost:' + HTTP_PORT + '/mockup/');
-console.log('New Mockup:'.bold + ' http://localhost:' + HTTP_PORT + '/newmockup/');
-console.log('People data:'.bold + ' http://localhost:' + HTTP_PORT + '/api/people');
+	console.log('Mockup:'.bold + ' http://localhost:' + HTTP_PORT + '/mockup/');
+	console.log('New Mockup:'.bold + ' http://localhost:' + HTTP_PORT + '/newmockup/');
+	console.log('People data:'.bold + ' http://localhost:' + HTTP_PORT + '/api/people');
 });
