@@ -9,9 +9,18 @@ var express = require('express'),
 var app = express();
 
 // Configure Passport
-app.use(session({secret: 'myPassportKey'}));
+//TODO look at these options later
+app.use(session({secret: 'myPassportKey', resave: true, saveUninitialized: true}));
 app.use(passport.initialize());
 app.use(passport.session());
+
+// Initialize connect-flash
+var flash = require('connect-flash');
+app.use(flash());
+
+// Initialize Passport
+var initPassport = require('./passport/init');
+initPassport(passport);
 
 /* Configure db */
 var dbConfig = require(path.join(__dirname, 'newmockup/db.js'));
@@ -25,19 +34,23 @@ app.get('/api/people', function(req, res) {
     res.end(JSON.stringify(people, null, '    '));
 });
 
-/* Remember to have a redirect for both success and failure
+/* Remember to have a redirect for both success and failure */
 app.post('/login', 
-	passport.authenticate('local-login'),
+	passport.authenticate('login'),
 	function(req, res) {
+		console.log("logging in");
 		res.redirect('/newmockup/loggedin.html');
 	});
 
 app.post('/register',
-	passport.authenticate('local-register'),
+	passport.authenticate('register'),
 	function(req, res) {
+		console.log("registering");
 		res.redirect('/newmockup/registered.html');
 	});
-*/
+
+
+
 
 var HTTP_PORT = 8080;
 

@@ -88,6 +88,15 @@ directoryView.prototype.initDirectory = function () {
     $(".deptSearchForm").submit(function(event) {
      	event.preventDefault();
     });
+
+    // Create a POST request when user attempts to register an account
+    $("#registerBtn").on("click", function(event) {
+    	console.log("I'm registering");
+    	$.ajax({
+    		method: "POST",
+    		url: "/register"
+    	});
+    });
 };
 
 directoryView.prototype.populateLinks = function (clickedLetter) {
