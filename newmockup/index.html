@@ -30,11 +30,14 @@
                         <div style="text-align:center"><span class="glyphicon glyphicon-heart"></span></div>
                         <br>
                         <p class="signUpInText">Register Here:</p>
-                        <form method="post" action="/register" accept-charset="UTF-8">
+                        <form method="post" action="/newmockup/register" accept-charset="UTF-8">
                             <input style="margin-bottom: 15px;" type="text" placeholder="Username" id="usernameR" name="username">
                             <input style="margin-bottom: 15px;" type="password" placeholder="Password" id="passwordR" name="password">
-                            <input style="margin-bottom: 15px;" type="text" placeholder="Email" id="passwordR2" name="email">
-                            <div style="text-align:center"><a id="registerBtn" href="#register" class="btn btn-info">Register</a></div>             
+                            <input style="margin-bottom: 15px;" type="text" placeholder="Email" id="emailR" name="email">
+                            <div style="text-align:center">
+                            <!--<a id="registerBtn" href="#register" class="btn btn-info">Register</a>-->
+                            <button class="btn btn-info" type="submit">Register</button>
+                            </div>             
                         </form>
                         <br>
                     </div>

@@ -42,12 +42,20 @@ app.post('/login',
 		res.redirect('/newmockup/loggedin.html');
 	});
 
-app.post('/register',
-	passport.authenticate('register'),
+app.get('/register', function(req, res){
+	res.redirect('/newmockup/loggedin.html');
+});
+
+app.post('/newmockup/register', 
+	function(req,res){
+		res.send('register text');
+	
+	/*
+	passport.authenticate('register', { failureRedirect: '/newmockup', failureFlash: true}),
 	function(req, res) {
 		console.log("registering");
-		res.redirect('/newmockup/registered.html');
-	});
+		res.redirect('/newmockup');*/
+});
 
 
 
