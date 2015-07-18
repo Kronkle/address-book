@@ -35,30 +35,35 @@ app.get('/api/people', function(req, res) {
 });
 
 /* Remember to have a redirect for both success and failure */
-app.post('/login', 
+/*app.post('/newmockup/login', 
 	passport.authenticate('login'),
 	function(req, res) {
 		console.log("logging in");
 		res.redirect('/newmockup/loggedin.html');
 	});
+*/
 
-app.get('/register', function(req, res){
-	res.redirect('/newmockup/loggedin.html');
+/*app.post('/newmockup/register', 
+	passport.authenticate('register',
+		{ failureRedirect: '/newmockup', failureFlash: true }),
+		function(req, res) {
+			console.log("Registering");
+			res.redirect('/newmockup/registered.html');
 });
+*/
 
 app.post('/newmockup/register', 
-	function(req,res){
-		res.send('register text');
-	
-	/*
-	passport.authenticate('register', { failureRedirect: '/newmockup', failureFlash: true}),
 	function(req, res) {
 		console.log("registering");
-		res.redirect('/newmockup');*/
+		res.redirect('/newmockup/registered.html');
 });
 
-
-
+/*
+app.get('/newmockup/register', function(req, res){
+	res.redirect('/newmockup');
+	res.send('Registration done');
+});
+*/
 
 var HTTP_PORT = 8080;
 
