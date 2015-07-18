@@ -22,6 +22,7 @@ module.exports = function(passport){
 						return done(null, false, req.flash('message', 'User already exists'));
 					} else {
 						// create new user with credentials
+						console.log("Creating new user");
 						var newUser = new User();
 
 						newUser.username = username;
@@ -40,6 +41,7 @@ module.exports = function(passport){
 				}
 			);
 		};
+		console.log("About to call findOrCreateUser");
 		// Delay executing findOrCreateUser until next event loop revolution
 		process.nextTick(findOrCreateUser);
 	}));
