@@ -22,17 +22,18 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 
-//TODO: why is this slowing down the app?
-//app.use(cookieParser);
+//TODO: Read documentation for this
+app.use(cookieParser());
 
 // Configure Passport
-//TODO look at these options later
-app.use(session({secret: 'myPassportKey', resave: true, saveUninitialized: true}));
+app.use(session({secret: 'desktop dog', resave: true, saveUninitialized: true}));
 app.use(passport.initialize());
 app.use(passport.session());
 
 // Initialize connect-flash
 var flash = require('connect-flash');
+
+//TODO: Display flash messages in gerneric, precompiled handlebars template for login/registration failures
 app.use(flash());
 
 // Initialize Passport
@@ -52,26 +53,19 @@ app.get('/api/people', function(req, res) {
     res.end(JSON.stringify(people, null, '    '));
 });
 
-/* Remember to have a redirect for both success and failure */
+/* Override default behavior with specific redirect options */
 app.post('/newmockup/login', passport.authenticate('login', {
-	successRedirect: '/newmockup/loggedin.html',
-	failureRedirect: '/newmockup',
+	successRedirect: '/newmockup/',
+	failureRedirect: '/newmockup/loginFailure.html',
 	failureFlash: true
 }));
 
 app.post('/newmockup/register', passport.authenticate('register', {
-	successRedirect: '/newmockup/registered.html',
-	failureRedirect: '/newmockup',
+	successRedirect: '/newmockup/',
+	failureRedirect: '/newmockup/registerFailure.html',
 	failureFlash: true
 }));
 
-/*app.post('/newmockup/register', 
-	function(req, res) {
-
-		console.log("registering");
-		res.redirect('/newmockup/registered.html');
-});
-*/
 /*
 app.get('/newmockup/register', function(req, res){
 	res.redirect('/newmockup');
