@@ -20,7 +20,9 @@ app.use(logger('dev'));
 
 //TODO: These were needed to call passport.authenticate properly. Research why:
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded());
+app.use(bodyParser.urlencoded({
+	extended: true
+}));
 
 //TODO: Read documentation for this
 app.use(cookieParser());
@@ -66,12 +68,14 @@ app.post('/newmockup/register', passport.authenticate('register', {
 	failureFlash: true
 }));
 
-/*
-app.get('/newmockup/register', function(req, res){
-	res.redirect('/newmockup');
-	res.send('Registration done');
+app.get('/newmockup/registerFailure.html', function(req, res){
+	res.send('Registration failed - test');
 });
-*/
+
+app.get('/newmockup/loginFailure.html', function(req, res){
+	res.send('Login failed - test');
+});
+
 
 var HTTP_PORT = 8080;
 
