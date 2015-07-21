@@ -48,6 +48,8 @@ var dbConfig = require(path.join(__dirname, 'newmockup/db'));
 var mongoose = require('mongoose');
 mongoose.connect(dbConfig.url);
 
+app.set('view engine', 'hbs');
+
 /* Routes */
 app.use('/mockup/', express.static(path.join(__dirname, 'mockup')));
 app.use('/newmockup/', express.static(path.join(__dirname, 'newmockup')));
@@ -58,22 +60,23 @@ app.get('/api/people', function(req, res) {
 /* Override default behavior with specific redirect options */
 app.post('/newmockup/login', passport.authenticate('login', {
 	successRedirect: '/newmockup/',
-	failureRedirect: '/newmockup/loginFailure.html',
+	failureRedirect: '/newmockup/loginFailure',
 	failureFlash: true
 }));
 
 app.post('/newmockup/register', passport.authenticate('register', {
 	successRedirect: '/newmockup/',
-	failureRedirect: '/newmockup/registerFailure.html',
+	failureRedirect: '/newmockup/registerFailure',
 	failureFlash: true
 }));
 
-app.get('/newmockup/registerFailure.html', function(req, res){
-	res.send('Registration failed - test');
+//TODO: Ensure these flash messages are getting passed in/out properly, research default view directory expectations
+app.get('/newmockup/registerFailure', function(req, res){
+	res.render('registerFailure', {error: req.flash('message')})
 });
 
-app.get('/newmockup/loginFailure.html', function(req, res){
-	res.send('Login failed - test');
+app.get('/newmockup/loginFailure', function(req, res){
+	res.render('loginFailure', {error: req.flash('message')})
 });
 
 
