@@ -8,6 +8,7 @@ module.exports = function(passport){
 	passport.use('register', new LocalStrategy({
 		passReqToCallback: true 
 	},
+	//TODO: find a way to validate that username and password fields have values on front or backend
 	function(req, username, password, done) {
 		findOrCreateUser = function(){
 			// check if username exists in mongo
@@ -15,7 +16,7 @@ module.exports = function(passport){
 				function(err, user) {
 					if (err) {
 						console.log("Error during registration" + err);
-						return done(err);
+						return done(null, false, req.flash('message', 'Unexpected error during registration'));
 					}
 					if (user) {
 						console.log('Username already exists in database: ' + username);

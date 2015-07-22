@@ -72,11 +72,11 @@ app.post('/newmockup/register', passport.authenticate('register', {
 
 //TODO: Ensure these flash messages are getting passed in/out properly, research default view directory expectations
 app.get('/newmockup/registerFailure', function(req, res){
-	res.render('registerFailure', {error: req.flash('message')})
+	res.render('registerFailure', {messages: req.flash('message')})
 });
 
 app.get('/newmockup/loginFailure', function(req, res){
-	res.render('loginFailure', {error: req.flash('message')})
+	res.render('loginFailure', {messages: req.flash('message')})
 });
 
 
