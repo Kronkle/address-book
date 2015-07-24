@@ -79,7 +79,6 @@ app.get('/newmockup/loginFailure', function(req, res){
 	res.render('loginFailure', {messages: req.flash('message')})
 });
 
-
 var HTTP_PORT = 8080;
 
 app.listen(HTTP_PORT, function(err) {
