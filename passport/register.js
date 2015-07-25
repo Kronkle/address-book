@@ -16,11 +16,11 @@ module.exports = function(passport){
 				function(err, user) {
 					if (err) {
 						console.log("Error during registration" + err);
-						return done(null, false, req.flash('message', 'Unexpected error during registration'));
+						return done(null, false, req.flash('message', 'Unexpected error occurred.'));
 					}
 					if (user) {
 						console.log('Username already exists in database: ' + username);
-						return done(null, false, req.flash('message', 'User already exists'));
+						return done(null, false, req.flash('message', 'Username already exists.'));
 					} else {
 						// create new user with credentials
 						console.log("Creating new user");

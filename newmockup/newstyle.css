@@ -28,6 +28,27 @@ form {
     display: inline-block;
 }
 
+/* Styling for login and registration buttons */
+.btn-info {
+    background-color: #0074D9;
+    border-color: #0074D9;
+    margin-bottom: 10px;
+}
+
+.btn-info:hover {
+    background-color: #DDDDDD;
+    border-color: #DDDDDD;
+    color: #0074D9;
+    margin-bottom: 10px;
+}
+
+/* Styling for login and registration error messages */
+.error-messages {
+    text-align: center;
+    color: #FF4136;
+}
+
+
 /* Styling for popover boxes that appear when a name is clicked */
 .popover {
     max-width: 100%;
@@ -70,12 +91,6 @@ form {
 
 .app-directory {
     overflow: auto;
-}
-
-.app-directory-dash button {
-    display: block;
-    width: 95%;
-    margin: 5px;
 }
 
 .app-directory-separator,
