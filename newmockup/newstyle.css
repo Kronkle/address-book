@@ -24,6 +24,7 @@ h4 {
     background-color: #0074D9;
 }
 
+/* Make this more specific */
 form {
     display: inline-block;
 }
@@ -44,8 +45,36 @@ form {
 
 /* Styling for login and registration error messages */
 .error-messages {
+    display: block;
+    margin: 0 auto 20px;
+    margin-top: 20px;
+    width: 250px;
+}
+
+.error-messages h4 {
     text-align: center;
+    background-color: transparent;
     color: #FF4136;
+}
+
+/* Styling for forms rendered when login or registration fails */
+.retry-form form {
+    display: block;
+    margin: 0 auto;
+    width: 500px;
+}
+
+.retry-form form input {
+    display: block;
+    margin: 0 auto 10px;
+    width: 250px;
+}
+
+.retry-form form button {
+    text-align: center;
+    display: block;
+    margin: 0 auto;
+    width: 250px;
 }
 
 
@@ -53,7 +82,7 @@ form {
 .popover {
     max-width: 100%;
 
-    /* Hack for keeping popovers at same heigh relative to photo */
+    /* Hack for keeping popovers at same height relative to photo */
     top: 15px !important;
 }
 

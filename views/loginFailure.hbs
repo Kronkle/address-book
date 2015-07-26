@@ -29,11 +29,20 @@
             <h4>Find Staff</h4>
         </div>
         <!-- Results -->
-        <div class="error-messages">
-        <h3>Error occurred during login.</h3>
-        {{#if messages}}
-        <h3>{{messages}}</h3>
-        {{/if}}
+        <div class="retry-form">
+            <div class="error-messages">
+                <h4>Error occurred during login.</h4>
+            </div>
+            <form role="form" method="post" action="/newmockup/login" accept-charset="UTF-8">
+                <input class="form-control" type="text" placeholder="Username" id="usernameL" name="username">
+                <input class="form-control" type="password" placeholder="Password" id="passwordL" name="password">          
+                <button class="btn btn-info" type="submit">Login</button>
+            </form>
+            <div class="error-messages">
+                {{#if messages}}
+                <h4>{{messages}}</h4>
+                {{/if}}
+            </div>
         </div>
     </div>
 </body>
