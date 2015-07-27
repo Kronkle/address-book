@@ -23,7 +23,7 @@ module.exports = function(passport){
 					return done(null, false, req.flash('message', 'Invalid Password'));
 				}
 				// Username is found and correct password entered
-				return done(null, user);
+				return done(null, user, req.flash('username', username));
 			}
 		);
 	}));

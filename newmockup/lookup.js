@@ -246,6 +246,7 @@ directoryView.prototype.getExperience = function(result, i) {
 	};
 };
 
+/* Potentially make a request to the server here, which will handle guest user template vs logged in user template */
 directoryView.prototype.loadProfile = function(displayName, education, workExperience, picture, dept, desc) {
 	
 	var html;

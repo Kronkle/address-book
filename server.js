@@ -59,24 +59,36 @@ app.get('/api/people', function(req, res) {
 
 /* Override default behavior with specific redirect options */
 app.post('/newmockup/login', passport.authenticate('login', {
-	successRedirect: '/newmockup/',
+	successRedirect: '/newmockup/loggedIn',
 	failureRedirect: '/newmockup/loginFailure',
 	failureFlash: true
 }));
 
 app.post('/newmockup/register', passport.authenticate('register', {
-	successRedirect: '/newmockup/',
+	successRedirect: '/newmockup/loggedIn',
 	failureRedirect: '/newmockup/registerFailure',
 	failureFlash: true
 }));
 
+app.get('/newmockup/loggedIn', function(req, res){
+	res.render('loggedIn', {username: req.flash('username')});
+});
+
 //TODO: Ensure these flash messages are getting passed in/out properly, research default view directory expectations
 app.get('/newmockup/registerFailure', function(req, res){
-	res.render('registerFailure', {messages: req.flash('message')})
+	res.render('registerFailure', {messages: req.flash('message')});
 });
 
 app.get('/newmockup/loginFailure', function(req, res){
-	res.render('loginFailure', {messages: req.flash('message')})
+	res.render('loginFailure', {messages: req.flash('message')});
+});
+
+app.post('/newmockup/contactList', function(req, res){
+	console.log("Contact list chosen");
+});
+
+app.post('/newmockup/logout', function(req, res){
+	console.log("User logged out");
 });
 
 var HTTP_PORT = 8080;

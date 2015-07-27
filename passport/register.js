@@ -36,7 +36,7 @@ module.exports = function(passport){
 								throw err;
 							}
 							console.log('Registration of new user successful');
-							return done(null, newUser);
+							return done(null, newUser, req.flash('username', username));
 						});
 					} 
 				}

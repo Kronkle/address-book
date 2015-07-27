@@ -34,6 +34,7 @@ form {
     background-color: #0074D9;
     border-color: #0074D9;
     margin-bottom: 10px;
+    text-align: center;
 }
 
 .btn-info:hover {
@@ -41,6 +42,7 @@ form {
     border-color: #DDDDDD;
     color: #0074D9;
     margin-bottom: 10px;
+    text-align: center;
 }
 
 /* Styling for login and registration error messages */
