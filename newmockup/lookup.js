@@ -250,7 +250,8 @@ directoryView.prototype.getExperience = function(result, i) {
 directoryView.prototype.loadProfile = function(displayName, education, workExperience, picture, dept, desc) {
 	
 	var html;
-
+	var loggedIn;
+	
 	// Retrieve precompiled template and set to a fn
 	var template = Handlebars.templates['profile'];
 

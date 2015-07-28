@@ -88,7 +88,12 @@ app.post('/newmockup/contactList', function(req, res){
 });
 
 app.post('/newmockup/logout', function(req, res){
-	console.log("User logged out");
+	res.render('index');
+});
+
+app.use(function (req, res, next) {
+  res.locals.login = req.isAuthenticated();
+  next();
 });
 
 var HTTP_PORT = 8080;
