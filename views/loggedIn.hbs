@@ -10,7 +10,8 @@
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.3/handlebars.runtime.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.3/handlebars.js"></script>
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.3/handlebars.runtime.js"></script>-->
     <script src="/newmockup/profile.js"></script>
     <script type="text/javascript" src="lookup.js" defer></script>
     <link rel="stylesheet" type="text/css" href="newstyle.css" />
@@ -24,7 +25,7 @@
             <h3>Employee Directory</h3>
             <!-- TODO: Make login/register tabs more responsive -->
             <ul class="nav navbar-nav navbar-right">
-                <li id="registerMenu" class="dropdown">
+                <li id="loggedInMenu" class="dropdown">
                     <a class="dropdown-toggle" href="#" data-toggle="dropdown">{{username}}<strong class="caret"></strong></a>
                     <div class="dropdown-menu" style="padding: 15px; padding-bottom: 0px;">
                         <div style="text-align:center"><span class="glyphicon glyphicon-glass"></span></div>

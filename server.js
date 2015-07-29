@@ -35,7 +35,7 @@ app.use(passport.session());
 // Initialize connect-flash
 var flash = require('connect-flash');
 
-//TODO: Display flash messages in gerneric, precompiled handlebars template for login/registration failures
+//TODO: Display flash messages in generic, precompiled handlebars template for login/registration failures
 app.use(flash());
 
 // Initialize Passport
@@ -57,6 +57,15 @@ app.get('/api/people', function(req, res) {
     res.end(JSON.stringify(people, null, '    '));
 });
 
+function loggedIn(req, res, next) {
+    if (req.user) {
+    	res.locals.login = req.user;
+        next();
+    } else {
+        next();
+    }
+}
+
 /* Override default behavior with specific redirect options */
 app.post('/newmockup/login', passport.authenticate('login', {
 	successRedirect: '/newmockup/loggedIn',
@@ -70,7 +79,10 @@ app.post('/newmockup/register', passport.authenticate('register', {
 	failureFlash: true
 }));
 
-app.get('/newmockup/loggedIn', function(req, res){
+app.get('/newmockup/loggedIn', loggedIn, function(req, res){
+	console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+	console.log(res.locals.login);
+	console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 	res.render('loggedIn', {username: req.flash('username')});
 });
 
@@ -89,11 +101,6 @@ app.post('/newmockup/contactList', function(req, res){
 
 app.post('/newmockup/logout', function(req, res){
 	res.render('index');
-});
-
-app.use(function (req, res, next) {
-  res.locals.login = req.isAuthenticated();
-  next();
 });
 
 var HTTP_PORT = 8080;

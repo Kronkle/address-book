@@ -102,6 +102,8 @@ directoryView.prototype.populateLinks = function (clickedLetter) {
 	// Clear previous search results from directory
 	$(".app-search-results").empty();
 
+	// Auth check here 
+
 	// Retrieve employee JSON data for all employees that match the search letter
 	$.getJSON("/api/people", function(result) {
         	
@@ -128,6 +130,8 @@ directoryView.prototype.populateAllLinks = function () {
 	
 	// Object to represent both education and work experience
 	var experience;
+
+	// Auth check here
 
 	// Retrieve all employee JSON data
 	console.log(performance.now());
@@ -195,6 +199,8 @@ directoryView.prototype.getSearchResults = function(input, searchType) {
 	// Object to represent both education and work experience
 	var experience;
 
+	// Auth check here
+
 	// Retrieve all employee JSON data that match search department
 	$.getJSON("/api/people", function(result) {
         var found = false;
@@ -250,10 +256,14 @@ directoryView.prototype.getExperience = function(result, i) {
 directoryView.prototype.loadProfile = function(displayName, education, workExperience, picture, dept, desc) {
 	
 	var html;
-	var loggedIn;
-	
+	var loggedIn = false;
+
+	if (document.getElementById("loggedInMenu")){
+		loggedIn = true;
+	}
+
 	// Retrieve precompiled template and set to a fn
-	var template = Handlebars.templates['profile'];
+	/*var template = Handlebars.templates['profile'];
 
 	// Format display and work names for rendering of email address
 	var emailName = displayName.toLowerCase().replace(" ",".");
@@ -262,12 +272,35 @@ directoryView.prototype.loadProfile = function(displayName, education, workExper
 	var displayURL = "mailto:" + displayEmail;
 
 	// Create data for the context argument that template will accept (gather this from params later)
-	var data = { "education": {"startYear": education.startYear, "endYear": education.endYear, "institution": education.institution, "degree": education.degree}, "workExperience": {"startYear": workExperience.startYear, "title": workExperience.title, "institution": workExperience.institution}, "desc": desc, "picture": picture, "name": displayName, "dept": dept, "emailUrl": displayURL, "email": displayEmail };
+	var data = { "education": {"startYear": education.startYear, "endYear": education.endYear, "institution": education.institution, "degree": education.degree}, "workExperience": {"startYear": workExperience.startYear, "title": workExperience.title, "institution": workExperience.institution}, "desc": desc, "picture": picture, "name": displayName, "dept": dept, "emailUrl": displayURL, "email": displayEmail, "loggedIn": loggedIn };
 
 	// Generate html using the given context
 	var result = template(data);
 	html = result;
+	*/
+	$.ajax({
+		async: false,
+		url: 'profile.handlebars', 
+		success: function (source) {
 
+		// Compile template into a function
+		var template = Handlebars.compile(source);
+
+		// Format display and work names for rendering of email address
+		var emailName = displayName.toLowerCase().replace(" ",".");
+		var workEmail = workExperience.institution.toLowerCase().replace(" ","").replace(".","");
+		var displayEmail = emailName + "@" + workEmail + ".com"
+		var displayURL = "mailto:" + displayEmail;
+
+		// Create data for the context argument that template will accept (gather this from params later)
+		var data = { "education": {"startYear": education.startYear, "endYear": education.endYear, "institution": education.institution, "degree": education.degree}, "workExperience": {"startYear": workExperience.startYear, "title": workExperience.title, "institution": workExperience.institution}, "desc": desc, "picture": picture, "name": displayName, "dept": dept, "emailUrl": displayURL, "email": displayEmail, "loggedIn": loggedIn };
+
+		// Generate html using the given context
+		var result = template(data);
+		html = result;
+		}
+		
+	});
 	return html;
 };
 

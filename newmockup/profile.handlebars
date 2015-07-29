@@ -3,6 +3,7 @@
 		<div class="app-person-profile-photo" style="background-image: url({{picture}})" data-placement="right" data-content="{{desc}}" title="" data-toggle="popover" data-trigger="hover" href="#" data-original-title="Bio"></div>
 		<h2>{{name}}</h2>
 		<div class="app-person-profile-department">{{dept}}</div>
+		<div>{{#if loggedIn}}<span class="glyphicon glyphicon-star-empty"></span>{{/if}}</div>
 		<div class="app-person-profile-phone-number">919-555-5555</div>
 		<div class="app-person-profile-email"><a href="{{emailUrl}}">{{email}}</a></div>
 	</div>
