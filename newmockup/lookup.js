@@ -144,8 +144,10 @@ directoryView.prototype.populateAllLinks = function () {
 			html += me.loadProfile(val.name, experience.education, experience.workExperience, val.picture, val.department, val.description); 
 			console.log(performance.now()); 				
 		});	
-
 		me.sortProfiles(html);
+			
+		/* If user is logged in, initialize behavior for star icons (TEST) */
+		me.initializeFavoriteIcons();
     });
 };
 
@@ -227,7 +229,7 @@ directoryView.prototype.getSearchResults = function(input, searchType) {
 			alert("No search results found");
 		}
     });
-}
+};
 
 directoryView.prototype.getExperience = function(result, i) {
 
@@ -255,6 +257,7 @@ directoryView.prototype.getExperience = function(result, i) {
 /* Potentially make a request to the server here, which will handle guest user template vs logged in user template */
 directoryView.prototype.loadProfile = function(displayName, education, workExperience, picture, dept, desc) {
 	
+	var me = this;
 	var html;
 	var loggedIn = false;
 
@@ -298,10 +301,18 @@ directoryView.prototype.loadProfile = function(displayName, education, workExper
 		// Generate html using the given context
 		var result = template(data);
 		html = result;
-		}
-		
+		}	
 	});
+
 	return html;
+};
+
+directoryView.prototype.initializeFavoriteIcons = function() {
+	alert("Initializing favIcons");
+	$("[id=favIcon]").on("click", function() {
+		alert("This person will be added to your contact list");
+		//Change color of this clicked icon here
+    });
 };
 
 directoryView.prototype.sortProfiles = function(html) {
