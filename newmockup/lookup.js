@@ -21,6 +21,7 @@ var directoryView = function () {
 
 directoryView.prototype.initDirectory = function () {
 	var me = this;
+	var favIconsHtml = me.initializeFavoriteIcons();
 
 	// Select empty heading which will contain search letters
 	var alphabetLinks = $( ".alphabet-links > h5" ).text();
@@ -124,6 +125,7 @@ directoryView.prototype.populateAllLinks = function () {
 
 	var me = this;
 	var html = "";
+	var favIconsHtml;
 
 	// Clear previous search results from directory
 	$(".app-search-results").empty();
@@ -147,7 +149,7 @@ directoryView.prototype.populateAllLinks = function () {
 		me.sortProfiles(html);
 			
 		/* If user is logged in, initialize behavior for star icons (TEST) */
-		me.initializeFavoriteIcons();
+		favIconsHtml = me.initializeFavoriteIcons();
     });
 };
 
@@ -281,6 +283,8 @@ directoryView.prototype.loadProfile = function(displayName, education, workExper
 	var result = template(data);
 	html = result;
 	*/
+
+	// Since user template is being edited, compile at runtime for now:
 	$.ajax({
 		async: false,
 		url: 'profile.handlebars', 
@@ -308,11 +312,16 @@ directoryView.prototype.loadProfile = function(displayName, education, workExper
 };
 
 directoryView.prototype.initializeFavoriteIcons = function() {
+	//TODO: Maybe make a pull from the db here to preserve the state of the favIcons per user login?
 	alert("Initializing favIcons");
 	$("[id=favIcon]").on("click", function() {
 		alert("This person will be added to your contact list");
 		//Change color of this clicked icon here
+		$(this).replaceWith("<span id=\"favIcon\" class=\"glyphicon glyphicon-star\"></span>");
     });
+
+    var favIconsHtml = $("[id=favIcon]").toArray();
+    return favIconsHtml;
 };
 
 directoryView.prototype.sortProfiles = function(html) {
