@@ -12,7 +12,18 @@
  *		getExperience - retrieves education and work experience info from JSON object
  *      getSearchResults - iterate through JSON and return any employee that matches search
  *      sortProfiles - sorts rendered employee profiles by first name in ascending profile
+ *		initializeFavoriteIcons - defines behavior for favorite icons next to each profile when user is logged in
  */
+
+ /* TODO List (8/10/15)
+  * Fix CSS in preferences menu (center and align buttons/heading)
+  * Retain username at title of preferences menu upon page refresh
+  * Retain favIcon states (empty or filled-in after click) for logged in user
+  * Avoid parseHTML error log when letter with no associated employees in clicked in search
+  * Move all hbs templates to views
+  * Precompile profiles.handlebars when finalized
+  * Avoid loading JSON when loginFailure and registerFailure views are loaded
+  */
 
 var directoryView = function () {
 	var me = this;
@@ -21,6 +32,8 @@ var directoryView = function () {
 
 directoryView.prototype.initDirectory = function () {
 	var me = this;
+
+	// Save array of HTML #favIcon elements for now
 	var favIconsHtml = me.initializeFavoriteIcons();
 
 	// Select empty heading which will contain search letters
@@ -267,6 +280,8 @@ directoryView.prototype.loadProfile = function(displayName, education, workExper
 		loggedIn = true;
 	}
 
+	// TODO: Precompile final profile.handlebars and uncomment code here
+
 	// Retrieve precompiled template and set to a fn
 	/*var template = Handlebars.templates['profile'];
 
@@ -321,6 +336,7 @@ directoryView.prototype.initializeFavoriteIcons = function() {
     });
 
     var favIconsHtml = $("[id=favIcon]").toArray();
+    console.log("favIconsHtml is \n" + favIconsHtml);
     return favIconsHtml;
 };
 
