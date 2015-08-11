@@ -16,13 +16,14 @@
  */
 
  /* TODO List (8/10/15)
-  * Fix CSS in preferences menu (center and align buttons/heading)
+  * Fix CSS in preferences menu (center and align buttons/heading) --- DONE
   * Retain username at title of preferences menu upon page refresh
   * Retain favIcon states (empty or filled-in after click) for logged in user
   * Avoid parseHTML error log when letter with no associated employees in clicked in search
   * Move all hbs templates to views
   * Precompile profiles.handlebars when finalized
   * Avoid loading JSON when loginFailure and registerFailure views are loaded
+  * Fix CSS workarounds in HTML
   */
 
 var directoryView = function () {

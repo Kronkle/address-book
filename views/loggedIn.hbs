@@ -30,14 +30,18 @@
                     <div class="dropdown-menu" style="padding: 15px; padding-bottom: 0px;">
                         <div style="text-align:center"><span class="glyphicon glyphicon-glass"></span></div>
                         <br>
-                        <p class="preferenceText">Preferences</p>
-                        <form method="post" action="/newmockup/contactList" accept-charset="UTF-8">        
+                        <p class="preference-menu-header">Preferences</p>
+                        <form class="contact-list-form" method="post" action="/newmockup/contactList" accept-charset="UTF-8">        
                             <!--<a id="registerBtn" href="#register" class="btn btn-info">Register</a>-->
-                            <button class="btn btn-info" type="submit">Contact List</button>    
+                            <div style="text-align:center">
+                            <button class="btn btn-info contact-list-form-btn" type="submit">Contact List</button>  
+                            </div>  
                         </form>
-                        <form method="post" action="/newmockup/logout" accept-charset="UTF-8">        
+                        <form class="logout-form" method="post" action="/newmockup/logout" accept-charset="UTF-8">
+                            <div style="text-align:center">        
                             <!--<a id="registerBtn" href="#register" class="btn btn-info">Register</a>-->
-                            <button class="btn btn-info" type="submit">Logout</button>    
+                            <button class="btn btn-info logout-form-btn" type="submit">Logout</button> 
+                            </div>   
                         </form>
                         <br>
                     </div>

@@ -222,3 +222,28 @@ form {
 .app-history-item-title {
     font-weight: bold;
 }
+
+/* styling for elements in user preferences dropdown */
+.preference-menu-header {
+    display: block;
+    text-align: center;
+}
+
+.logout-form {
+    display: block;
+}
+
+.contact-list-form {
+    display: block;
+}
+
+.logout-form-btn {
+    max-width: 100px;
+    width: 100px;
+}
+
+.contact-list-form-btn {
+    max-width: 100px;
+    width: 200px;
+
+}
