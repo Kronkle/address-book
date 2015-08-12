@@ -16,14 +16,17 @@
  */
 
  /* TODO List (8/10/15)
+  * Retain favIcon states (empty or filled-in after click) for logged in user
+  *		-Current plan - edit HTML id to preserve favIcon state, push to server when new contact is added
+  *						and pull from server when entire contact list is requested
   * Fix CSS in preferences menu (center and align buttons/heading) --- DONE
   * Retain username at title of preferences menu upon page refresh
-  * Retain favIcon states (empty or filled-in after click) for logged in user
   * Avoid parseHTML error log when letter with no associated employees in clicked in search
   * Move all hbs templates to views
   * Precompile profiles.handlebars when finalized
   * Avoid loading JSON when loginFailure and registerFailure views are loaded
   * Fix CSS workarounds in HTML
+  * Final cleanup/wrap-up of all code (JSHint, Jasmine?)
   */
 
 var directoryView = function () {
@@ -333,7 +336,7 @@ directoryView.prototype.initializeFavoriteIcons = function() {
 	$("[id=favIcon]").on("click", function() {
 		alert("This person will be added to your contact list");
 		//Change color of this clicked icon here
-		$(this).replaceWith("<span id=\"favIcon\" class=\"glyphicon glyphicon-star\"></span>");
+		$(this).replaceWith("<span id=\"favIconClicked\" class=\"glyphicon glyphicon-star\"></span>");
     });
 
     var favIconsHtml = $("[id=favIcon]").toArray();

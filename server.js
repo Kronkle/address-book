@@ -79,6 +79,17 @@ app.post('/newmockup/register', passport.authenticate('register', {
 	failureFlash: true
 }));
 
+/* TODO: Add favorite to contact list */
+app.post('/newmockup/addContact', function(req, res){
+	alert("added");
+	console.log("Contact added");
+});
+
+/* TODO: Display contact list when chosen in preferences menu */
+app.post('/newmockup/contactList', function(req, res){
+	console.log("Contact list chosen");
+});
+
 app.get('/newmockup/loggedIn', loggedIn, function(req, res){
 	console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 	console.log(res.locals.login);
@@ -93,10 +104,6 @@ app.get('/newmockup/registerFailure', function(req, res){
 
 app.get('/newmockup/loginFailure', function(req, res){
 	res.render('loginFailure', {messages: req.flash('message')});
-});
-
-app.post('/newmockup/contactList', function(req, res){
-	console.log("Contact list chosen");
 });
 
 app.post('/newmockup/logout', function(req, res){
