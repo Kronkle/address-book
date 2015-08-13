@@ -81,8 +81,8 @@ app.post('/newmockup/register', passport.authenticate('register', {
 
 /* TODO: Add favorite to contact list */
 app.post('/newmockup/addContact', function(req, res){
-	alert("added");
 	console.log("Contact added");
+	res.end("Contact added");
 });
 
 /* TODO: Display contact list when chosen in preferences menu */

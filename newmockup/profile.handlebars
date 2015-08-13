@@ -2,7 +2,7 @@
 	<div class="app-person-profile-header">
 		<div class="app-person-profile-photo" style="background-image: url({{picture}})" data-placement="right" data-content="{{desc}}" title="" data-toggle="popover" data-trigger="hover" href="#" data-original-title="Bio"></div>
 		<h2>{{name}}</h2>
-		{{#if loggedIn}}<form class="addContact" method="post" action="/newmockup/addContact" accept-charset="UTF-8"><span id="favIcon" class="glyphicon glyphicon-star-empty" type="submit"></span></form>{{/if}}
+		{{#if loggedIn}}<form class="addContactForm"><button type="button" class="favIconBtn btn btn-default">Add Contact</button></form>{{/if}}
 		<div class="app-person-profile-department">{{dept}}</div>
 		<div class="app-person-profile-phone-number">919-555-5555</div>
 		<div class="app-person-profile-email"><a href="{{emailUrl}}">{{email}}</a></div>

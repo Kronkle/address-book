@@ -120,7 +120,7 @@ directoryView.prototype.populateLinks = function (clickedLetter) {
 	// Clear previous search results from directory
 	$(".app-search-results").empty();
 
-	// Auth check here 
+	// Auth check here
 
 	// Retrieve employee JSON data for all employees that match the search letter
 	$.getJSON("/api/people", function(result) {
@@ -331,17 +331,18 @@ directoryView.prototype.loadProfile = function(displayName, education, workExper
 };
 
 directoryView.prototype.initializeFavoriteIcons = function() {
-	//TODO: Maybe make a pull from the db here to preserve the state of the favIcons per user login?
-	alert("Initializing favIcons");
-	$("[id=favIcon]").on("click", function() {
+	// Indicate when a contact has been added
+    $(".favIconBtn").on("click", function() {
 		alert("This person will be added to your contact list");
 		//Change color of this clicked icon here
-		$(this).replaceWith("<span id=\"favIconClicked\" class=\"glyphicon glyphicon-star\"></span>");
+		$(this).html("Remove Contact");
     });
 
-    var favIconsHtml = $("[id=favIcon]").toArray();
-    console.log("favIconsHtml is \n" + favIconsHtml);
-    return favIconsHtml;
+    // Don't refresh the page when contact is added
+    $(".addContactForm").submit(function(event) {
+    	alert("Form submit handler triggered");
+    	event.preventDefault();  	
+    });
 };
 
 directoryView.prototype.sortProfiles = function(html) {
