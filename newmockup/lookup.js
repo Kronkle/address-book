@@ -333,9 +333,13 @@ directoryView.prototype.loadProfile = function(displayName, education, workExper
 directoryView.prototype.initializeFavoriteIcons = function() {
 	// Indicate when a contact has been added
     $(".favIconBtn").on("click", function() {
-		alert("This person will be added to your contact list");
-		//Change color of this clicked icon here
-		$(this).html("Remove Contact");
+
+		// Reverse text value of button after add or remove
+		if ($(this).text() == "Add Contact") {		
+			$(this).html("Remove Contact");
+		} else {
+			$(this).html("Add Contact");
+		}
     });
 
     // Don't refresh the page when contact is added
@@ -346,9 +350,20 @@ directoryView.prototype.initializeFavoriteIcons = function() {
 };
 
 directoryView.prototype.sortProfiles = function(html) {
+
+	// Tracking pre and post-sort performance for now
 	console.log(performance.now());
+
+	// Provide specific return values for compareFunction for the most stability in browsers
 	var aToZDivs = $.parseHTML(html).sort(function (a, b) {	
-		return $(a).find("h2").text() > $(b).find("h2").text();	
+
+		if ($(a).find("h2").text() > $(b).find("h2").text()) {
+			return 1;
+		}
+		if ($(a).find("h2").text() < $(b).find("h2").text()) {
+			return -1;
+		}
+		return 0;
 	});
 
 	$("div.app-search-results").html(aToZDivs);
@@ -358,6 +373,7 @@ directoryView.prototype.sortProfiles = function(html) {
 		placement: 'right',
 		viewport: '#viewport'
 	});
+
 	console.log(performance.now());
 };
 
