@@ -334,10 +334,41 @@ directoryView.prototype.initializeFavoriteIcons = function() {
 	// Indicate when a contact has been added
     $(".favIconBtn").on("click", function() {
 
-		// Reverse text value of button after add or remove
-		if ($(this).text() == "Add Contact") {		
+    	// Retrieve name of contact that favIconBtn is attached to and attach to object
+    	var name = $(this).parent().prev().text();
+    	var data = { "name": name };
+
+		// Reverse text value of button after add or remove and push to server
+		if ($(this).text() == "Add Contact") {
+
+			// Push contact name to server
+			$.ajax({
+				async: false,
+				type: "POST",
+				url: '/newmockup/addContact',
+				data: data,
+				//dataType: 'json',
+				success: function () {
+					alert("Contact added");
+				}
+			});
+			
 			$(this).html("Remove Contact");
+
 		} else {
+
+			// Push contact removal to server
+			$.ajax({
+				async: false,
+				type: "POST",
+				url: '/newmockup/deleteContact',
+				data: data,
+				//dataType: 'json',
+				success: function () {
+					alert("Contact deleted");
+				}
+			});
+		
 			$(this).html("Add Contact");
 		}
     });
@@ -347,7 +378,7 @@ directoryView.prototype.initializeFavoriteIcons = function() {
     	alert("Form submit handler triggered");
     	event.preventDefault();  	
     });
-};
+}
 
 directoryView.prototype.sortProfiles = function(html) {
 
