@@ -349,7 +349,7 @@ directoryView.prototype.initializeFavoriteIcons = function() {
 				data: data,
 				//dataType: 'json',
 				success: function () {
-					alert("Contact added");
+					alert( name + " has been added to your contact list.");
 				}
 			});
 			
@@ -365,7 +365,7 @@ directoryView.prototype.initializeFavoriteIcons = function() {
 				data: data,
 				//dataType: 'json',
 				success: function () {
-					alert("Contact deleted");
+					alert( name + " has been removed from your contact list.");
 				}
 			});
 		

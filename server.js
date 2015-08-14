@@ -48,6 +48,10 @@ var dbConfig = require(path.join(__dirname, 'newmockup/db'));
 var mongoose = require('mongoose');
 mongoose.connect(dbConfig.url);
 
+/* Configure contact list modules */
+var addContact = require(path.join(__dirname,'newmockup/addContact'));
+
+
 app.set('view engine', 'hbs');
 
 /* Routes */
@@ -79,16 +83,18 @@ app.post('/newmockup/register', passport.authenticate('register', {
 	failureFlash: true
 }));
 
-/* TODO: Add favorite to contact list */
+/* TODO: Add favorite to contact list. Is this the best way to do this? */
 app.post('/newmockup/addContact', function(req, res){
-	console.log("Contact added: " + req.body.name);
-	res.end("Contact added");
+	addContact(function() {
+		console.log("Contact added: " + req.body.name);
+		res.end("Contact added");
+	});		
 });
 
 /* TODO: Remove favorite from contact list */
 app.post('/newmockup/deleteContact', function(req,res){
 	console.log("Contact deleted: " + req.body.name);
-	res.end("Contact added");
+	res.end("Contact deleted");
 });
 
 /* TODO: Display contact list when chosen in preferences menu */
