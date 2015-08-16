@@ -95,8 +95,12 @@ app.post('/newmockup/addContact', function(req, res){
 
 /* TODO: Remove favorite from contact list */
 app.post('/newmockup/deleteContact', function(req,res){
-	console.log("Contact deleted: " + req.body.name);
-	res.end("Contact deleted");
+	console.log("Current user is " + req.user.username);
+	console.log("Contact to be deleted is " + req.body.name);
+	deleteContact(function() {
+		console.log("Contact deleted: " + req.body.name);
+		res.end("Contact deleted");
+	}, req.user.username, req.body.name);	
 });
 
 /* TODO: Display contact list when chosen in preferences menu */
