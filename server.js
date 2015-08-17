@@ -83,7 +83,7 @@ app.post('/newmockup/register', passport.authenticate('register', {
 	failureFlash: true
 }));
 
-/* TODO: Add favorite to contact list. Is this the best way to do this? */
+/* Add favorite to contact list. */
 app.post('/newmockup/addContact', function(req, res){
 	console.log("Current user is " + req.user.username);
 	console.log("Contact to be added is " + req.body.name);
@@ -93,7 +93,7 @@ app.post('/newmockup/addContact', function(req, res){
 	}, req.user.username, req.body.name);		
 });
 
-/* TODO: Remove favorite from contact list */
+/* Remove favorite from contact list */
 app.post('/newmockup/deleteContact', function(req,res){
 	console.log("Current user is " + req.user.username);
 	console.log("Contact to be deleted is " + req.body.name);
@@ -103,8 +103,13 @@ app.post('/newmockup/deleteContact', function(req,res){
 	}, req.user.username, req.body.name);	
 });
 
+/* TODO: Pull contact list for logged in users before rendering profiles to display proper state */
+app.post('/newmockup/pullContactList', function(req, res){
+	console.log("Pulling contact list for" + res.locals.login.username);
+});
+
 /* TODO: Display contact list when chosen in preferences menu */
-app.post('/newmockup/contactList', function(req, res){
+app.post('/newmockup/renderContactList', function(req, res){
 	console.log("Contact list chosen");
 });
 
@@ -112,7 +117,7 @@ app.get('/newmockup/loggedIn', loggedIn, function(req, res){
 	console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 	console.log(res.locals.login);
 	console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-	res.render('loggedIn', {username: req.flash('username')});
+	res.render('loggedIn', {username: res.locals.login.username});
 });
 
 //TODO: Ensure these flash messages are getting passed in/out properly, research default view directory expectations

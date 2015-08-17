@@ -15,8 +15,8 @@
  *		initializeFavoriteIcons - defines behavior for favorite icons next to each profile when user is logged in
  */
 
- /* TODO List (8/10/15)
-  * Retain favIcon states (empty or filled-in after click) for logged in user
+ /* TODO List (8/17/15)
+  * Retain favIconBtn states ("Add Contact" after click or "Remove Contact") for logged in user
   *		-Current plan - edit HTML id to preserve favIcon state, push to server when new contact is added
   *						and pull from server when entire contact list is requested
   * Fix CSS in preferences menu (center and align buttons/heading) --- DONE
@@ -26,6 +26,7 @@
   * Precompile profiles.handlebars when finalized
   * Avoid loading JSON when loginFailure and registerFailure views are loaded
   * Fix CSS workarounds in HTML
+  * Put routes into separate module
   * Final cleanup/wrap-up of all code (JSHint, Jasmine?)
   */
 
@@ -144,6 +145,36 @@ directoryView.prototype.populateAllLinks = function () {
 	var html = "";
 	var favIconsHtml;
 
+
+	/* 
+	 * TEST: Make a single call to server for user's contact list if logged in.
+	 * 		- Pass this string to each call to loadProfile so that user's contacts appear 
+	 * 		  with the correct options.
+	 */ 
+
+	var loggedIn = false;
+
+	if (document.getElementById("loggedInMenu")){
+		loggedIn = true;
+	}
+
+	var contactList;
+
+	// Pull contact list from server if user is logged in before rendering profiles
+	if (loggedIn) {
+	
+			$.ajax({
+				async: false,
+				type: "POST",
+				url: '/newmockup/pullContactList',
+				data: {},
+				//dataType: 'json',
+				success: function () {
+					alert("Contact list has been pulled for this user.");
+				}
+			});
+	}
+
 	// Clear previous search results from directory
 	$(".app-search-results").empty();
 	
@@ -154,6 +185,11 @@ directoryView.prototype.populateAllLinks = function () {
 
 	// Retrieve all employee JSON data
 	console.log(performance.now());
+
+	// Call to retrieve contact list if logged in
+
+
+
 	$.getJSON("/api/people", function(result) {
         	
 		$.each(result.people, function(i, val) {
