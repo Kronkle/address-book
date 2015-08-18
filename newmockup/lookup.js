@@ -16,6 +16,7 @@
  */
 
  /* TODO List (8/17/15)
+  * Edit all loadProfile calls to contain favorites parameter for goal item below
   * Retain favIconBtn states ("Add Contact" after click or "Remove Contact") for logged in user
   *		-Current plan - edit HTML id to preserve favIcon state, push to server when new contact is added
   *						and pull from server when entire contact list is requested
@@ -158,7 +159,7 @@ directoryView.prototype.populateAllLinks = function () {
 		loggedIn = true;
 	}
 
-	var contactList;
+	var contactList = "";
 
 	// Pull contact list from server if user is logged in before rendering profiles
 	if (loggedIn) {
@@ -169,9 +170,9 @@ directoryView.prototype.populateAllLinks = function () {
 				url: '/newmockup/pullContactList',
 				data: {},
 				//dataType: 'json',
-				success: function () {
-					alert("Contact list has been pulled for this user.");
-				}
+				success: function (favorites) {
+					console.log("Contact list has been pulled for this user.");
+					contactList = favorites;				}
 			});
 	}
 
@@ -196,7 +197,7 @@ directoryView.prototype.populateAllLinks = function () {
 				
 			experience = me.getExperience(result, i);
 			// Render profile for selected person
-			html += me.loadProfile(val.name, experience.education, experience.workExperience, val.picture, val.department, val.description); 
+			html += me.loadProfile(val.name, experience.education, experience.workExperience, val.picture, val.department, val.description, contactList); 
 			console.log(performance.now()); 				
 		});	
 		me.sortProfiles(html);
@@ -310,14 +311,21 @@ directoryView.prototype.getExperience = function(result, i) {
 };
 
 /* Potentially make a request to the server here, which will handle guest user template vs logged in user template */
-directoryView.prototype.loadProfile = function(displayName, education, workExperience, picture, dept, desc) {
+directoryView.prototype.loadProfile = function(displayName, education, workExperience, picture, dept, desc, contactList) {
 	
 	var me = this;
 	var html;
 	var loggedIn = false;
+	var isContact = false;
 
+	// Determine whether there is a current user who is logged in
 	if (document.getElementById("loggedInMenu")){
 		loggedIn = true;
+	}
+
+	// Determine whether user to be rendered is a contact of current user
+	if (contactList.indexOf(displayName) >= 1) {
+		isContact = true;
 	}
 
 	// TODO: Precompile final profile.handlebars and uncomment code here
@@ -355,7 +363,7 @@ directoryView.prototype.loadProfile = function(displayName, education, workExper
 		var displayURL = "mailto:" + displayEmail;
 
 		// Create data for the context argument that template will accept (gather this from params later)
-		var data = { "education": {"startYear": education.startYear, "endYear": education.endYear, "institution": education.institution, "degree": education.degree}, "workExperience": {"startYear": workExperience.startYear, "title": workExperience.title, "institution": workExperience.institution}, "desc": desc, "picture": picture, "name": displayName, "dept": dept, "emailUrl": displayURL, "email": displayEmail, "loggedIn": loggedIn };
+		var data = { "education": {"startYear": education.startYear, "endYear": education.endYear, "institution": education.institution, "degree": education.degree}, "workExperience": {"startYear": workExperience.startYear, "title": workExperience.title, "institution": workExperience.institution}, "desc": desc, "picture": picture, "name": displayName, "dept": dept, "emailUrl": displayURL, "email": displayEmail, "loggedIn": loggedIn, "isContact": isContact };
 
 		// Generate html using the given context
 		var result = template(data);

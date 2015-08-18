@@ -105,7 +105,9 @@ app.post('/newmockup/deleteContact', function(req,res){
 
 /* TODO: Pull contact list for logged in users before rendering profiles to display proper state */
 app.post('/newmockup/pullContactList', function(req, res){
-	console.log("Pulling contact list for" + res.locals.login.username);
+	console.log("Pulling contact list for " + req.user.username);
+	// Test without the separate module for now
+	res.send(req.user.favorites)
 });
 
 /* TODO: Display contact list when chosen in preferences menu */
@@ -115,7 +117,7 @@ app.post('/newmockup/renderContactList', function(req, res){
 
 app.get('/newmockup/loggedIn', loggedIn, function(req, res){
 	console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-	console.log(res.locals.login);
+	console.log("Currently logged in as " + res.locals.login.username);
 	console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 	res.render('loggedIn', {username: res.locals.login.username});
 });
