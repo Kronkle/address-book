@@ -21,6 +21,8 @@ NewMockup Objectives::
 * Improved name and department searches - DONE (Search accounts for case errors and first and last names for name search - 7/5/15)
 * Make renderProfile more efficient - DONE (loadProfile for rendering via Handlebars template - 6/30/15)
 * Optimize new renderProfile - DONE (precompiled Handlebars template - 7/1/15)
-* User login system with editable contact lists for each user account - IN PROGRESS (7/6/15)
-* Final refactoring with all code in lookup.js separated into modular subroutines
+* User login system with editable contact lists for each user account - DONE (modules for pulling and editing user's contact list - 8/19/15)
+* Final refactoring with all code in lookup.js separated into modular subroutines - IN PROGRESS (8/19/15)
+* Final refactoring of all other client-side code (including CSS tweaks)
+* Final refactoring of all server-side code
 

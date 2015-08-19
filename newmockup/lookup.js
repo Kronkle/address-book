@@ -15,20 +15,23 @@
  *		initializeFavoriteIcons - defines behavior for favorite icons next to each profile when user is logged in
  */
 
- /* TODO List (8/17/15)
-  * Edit all loadProfile calls to contain favorites parameter for goal item below
+ /* TODO List (8/19/15)
+  * Edit all loadProfile calls to contain favorites parameter for goal item below --- DONE
   * Retain favIconBtn states ("Add Contact" after click or "Remove Contact") for logged in user
   *		-Current plan - edit HTML id to preserve favIcon state, push to server when new contact is added
-  *						and pull from server when entire contact list is requested
+  *						and pull from server when entire contact list is requested --- DONE
   * Fix CSS in preferences menu (center and align buttons/heading) --- DONE
-  * Retain username at title of preferences menu upon page refresh
-  * Avoid parseHTML error log when letter with no associated employees in clicked in search
-  * Move all hbs templates to views
-  * Precompile profiles.handlebars when finalized
-  * Avoid loading JSON when loginFailure and registerFailure views are loaded
-  * Fix CSS workarounds in HTML
-  * Put routes into separate module
-  * Final cleanup/wrap-up of all code (JSHint, Jasmine?)
+  * Retain username at title of preferences menu upon page refresh --- DONE
+  *
+  * Final refactoring with all code in lookup.js separated into modular subroutines - IN PROGRESS (8/19/15)
+  *     -Avoid parseHTML error log when letter with no associated employees in clicked in search
+  * 	-Precompile profiles.handlebars when finalized
+  * 	-Fix CSS workarounds in HTML
+  * Final refactoring of all other client-side code (including CSS tweaks)
+  * Final refactoring of all server-side code	
+  * 	-Move all hbs templates to views
+  * 	-Avoid loading JSON when loginFailure and registerFailure views are loaded
+  * 	-Put routes into separate module
   */
 
 var directoryView = function () {
@@ -119,6 +122,29 @@ directoryView.prototype.populateLinks = function (clickedLetter) {
 
 	var html = "";
 
+	var loggedIn = false;
+
+	if (document.getElementById("loggedInMenu")){
+		loggedIn = true;
+	}
+
+	var contactList = "";
+
+	// Pull contact list from server if user is logged in before rendering profiles
+	if (loggedIn) {
+	
+			$.ajax({
+				async: false,
+				type: "POST",
+				url: '/newmockup/pullContactList',
+				data: {},
+				//dataType: 'json',
+				success: function (favorites) {
+					console.log("Contact list has been pulled for this user.");
+					contactList = favorites;				}
+			});
+	}
+
 	// Clear previous search results from directory
 	$(".app-search-results").empty();
 
@@ -133,7 +159,7 @@ directoryView.prototype.populateLinks = function (clickedLetter) {
 			experience = me.getExperience(result, i);
 
 			// Render profile for selected person
-			html += me.loadProfile(val.name, experience.education, experience.workExperience, val.picture, val.department, val.description);  	
+			html += me.loadProfile(val.name, experience.education, experience.workExperience, val.picture, val.department, val.description, contactList);  	
 			}			
 		});	
 		me.sortProfiles(html);
@@ -148,7 +174,7 @@ directoryView.prototype.populateAllLinks = function () {
 
 
 	/* 
-	 * TEST: Make a single call to server for user's contact list if logged in.
+	 * Make a single call to server for user's contact list if logged in.
 	 * 		- Pass this string to each call to loadProfile so that user's contacts appear 
 	 * 		  with the correct options.
 	 */ 
@@ -251,6 +277,29 @@ directoryView.prototype.getSearchResults = function(input, searchType) {
 	var html = "";
 	var searchType = searchType;
 
+	var loggedIn = false;
+
+	if (document.getElementById("loggedInMenu")){
+		loggedIn = true;
+	}
+
+	var contactList = "";
+
+	// Pull contact list from server if user is logged in before rendering profiles
+	if (loggedIn) {
+	
+			$.ajax({
+				async: false,
+				type: "POST",
+				url: '/newmockup/pullContactList',
+				data: {},
+				//dataType: 'json',
+				success: function (favorites) {
+					console.log("Contact list has been pulled for this user.");
+					contactList = favorites;				}
+			});
+	}
+
 	// Clear previous search results
 	$(".app-search-results").empty();
 	
@@ -272,7 +321,7 @@ directoryView.prototype.getSearchResults = function(input, searchType) {
 				experience = me.getExperience(result, i);
 
 				// Render profile for selected employee
-				html += me.loadProfile(val.name, experience.education, experience.workExperience, val.picture, val.department, val.description);
+				html += me.loadProfile(val.name, experience.education, experience.workExperience, val.picture, val.department, val.description, contactList);
 
 				found = true;			
 			}
