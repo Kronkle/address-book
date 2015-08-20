@@ -24,11 +24,11 @@
   * Retain username at title of preferences menu upon page refresh --- DONE
   *
   * Final refactoring with all code in lookup.js separated into modular subroutines - IN PROGRESS (8/19/15)
-  *     -Avoid parseHTML error log when letter with no associated employees in clicked in search
-  * 	-Precompile profiles.handlebars when finalized
+  *     -Avoid parseHTML error log when letter with no associated employees in clicked in search --- DONE
+  * 	-Precompile profiles.handlebars when finalized --- DONE
   * 	-Fix CSS workarounds in HTML
   * Final refactoring of all other client-side code (including CSS tweaks)
-  * Final refactoring of all server-side code	
+  * Final refactoring of all server-side code
   * 	-Move all hbs templates to views
   * 	-Avoid loading JSON when loginFailure and registerFailure views are loaded
   * 	-Put routes into separate module
@@ -162,7 +162,11 @@ directoryView.prototype.populateLinks = function (clickedLetter) {
 			html += me.loadProfile(val.name, experience.education, experience.workExperience, val.picture, val.department, val.description, contactList);  	
 			}			
 		});	
-		me.sortProfiles(html);
+
+		// Sort profiles if found
+		if(html){
+			me.sortProfiles(html);
+		}
     });
 };
 
@@ -377,10 +381,8 @@ directoryView.prototype.loadProfile = function(displayName, education, workExper
 		isContact = true;
 	}
 
-	// TODO: Precompile final profile.handlebars and uncomment code here
-
 	// Retrieve precompiled template and set to a fn
-	/*var template = Handlebars.templates['profile'];
+	var template = Handlebars.templates['profile'];
 
 	// Format display and work names for rendering of email address
 	var emailName = displayName.toLowerCase().replace(" ",".");
@@ -389,36 +391,11 @@ directoryView.prototype.loadProfile = function(displayName, education, workExper
 	var displayURL = "mailto:" + displayEmail;
 
 	// Create data for the context argument that template will accept (gather this from params later)
-	var data = { "education": {"startYear": education.startYear, "endYear": education.endYear, "institution": education.institution, "degree": education.degree}, "workExperience": {"startYear": workExperience.startYear, "title": workExperience.title, "institution": workExperience.institution}, "desc": desc, "picture": picture, "name": displayName, "dept": dept, "emailUrl": displayURL, "email": displayEmail, "loggedIn": loggedIn };
+	var data = { "education": {"startYear": education.startYear, "endYear": education.endYear, "institution": education.institution, "degree": education.degree}, "workExperience": {"startYear": workExperience.startYear, "title": workExperience.title, "institution": workExperience.institution}, "desc": desc, "picture": picture, "name": displayName, "dept": dept, "emailUrl": displayURL, "email": displayEmail, "loggedIn": loggedIn, "isContact": isContact };
 
 	// Generate html using the given context
 	var result = template(data);
 	html = result;
-	*/
-
-	// Since user template is being edited, compile at runtime for now:
-	$.ajax({
-		async: false,
-		url: 'profile.handlebars', 
-		success: function (source) {
-
-		// Compile template into a function
-		var template = Handlebars.compile(source);
-
-		// Format display and work names for rendering of email address
-		var emailName = displayName.toLowerCase().replace(" ",".");
-		var workEmail = workExperience.institution.toLowerCase().replace(" ","").replace(".","");
-		var displayEmail = emailName + "@" + workEmail + ".com"
-		var displayURL = "mailto:" + displayEmail;
-
-		// Create data for the context argument that template will accept (gather this from params later)
-		var data = { "education": {"startYear": education.startYear, "endYear": education.endYear, "institution": education.institution, "degree": education.degree}, "workExperience": {"startYear": workExperience.startYear, "title": workExperience.title, "institution": workExperience.institution}, "desc": desc, "picture": picture, "name": displayName, "dept": dept, "emailUrl": displayURL, "email": displayEmail, "loggedIn": loggedIn, "isContact": isContact };
-
-		// Generate html using the given context
-		var result = template(data);
-		html = result;
-		}	
-	});
 
 	return html;
 };
