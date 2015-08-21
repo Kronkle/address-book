@@ -27,17 +27,16 @@
             <ul class="nav navbar-nav navbar-right">
                 <li id="registerMenu" class="dropdown">
                     <a class="dropdown-toggle" href="#" data-toggle="dropdown">Sign Up <strong class="caret"></strong></a>
-                    <div class="dropdown-menu" style="padding: 15px; padding-bottom: 0px;">
-                        <div style="text-align:center"><span class="glyphicon glyphicon-heart"></span></div>
+                    <div class="dropdown-menu">
+                        <div class="glyphicon-container"><span class="glyphicon glyphicon-heart"></span></div>
                         <br>
                         <p class="signUpInText">Register Here:</p>
                         <form method="post" action="/newmockup/register" accept-charset="UTF-8">
-                            <input style="margin-bottom: 15px;" type="text" placeholder="Username" id="usernameR" name="username">
-                            <input style="margin-bottom: 15px;" type="password" placeholder="Password" id="passwordR" name="password">
-                            <input style="margin-bottom: 15px;" type="text" placeholder="Email" id="emailR" name="email">
-                            <div style="text-align:center">
-                            <!--<a id="registerBtn" href="#register" class="btn btn-info">Register</a>-->
-                            <button class="btn btn-info" type="submit">Register</button>
+                            <input class="form-inputs" type="text" placeholder="Username" id="usernameR" name="username">
+                            <input class="form-inputs" type="password" placeholder="Password" id="passwordR" name="password">
+                            <input class="form-inputs" type="text" placeholder="Email" id="emailR" name="email">
+                            <div class="btn-container">
+                                <button class="btn btn-info" type="submit">Register</button>
                             </div>             
                         </form>
                         <br>
@@ -45,15 +44,15 @@
                 </li>
                 <li id="loginMenu" class="dropdown">
                     <a class="dropdown-toggle" href="#" data-toggle="dropdown">Sign In <strong class="caret"></strong></a>
-                    <div class="dropdown-menu" style="padding: 15px; padding-bottom: 0px;">
-                        <div style="text-align:center"><span class="glyphicon glyphicon-thumbs-up"></span></div>
+                    <div class="dropdown-menu">
+                        <div class="glyphicon-container"><span class="glyphicon glyphicon-thumbs-up"></span></div>
                         <br>
                         <p class="signUpInText">Welcome Back!</p>   
                         <form method="post" action="/newmockup/login" accept-charset="UTF-8">
-                            <input style="margin-bottom: 15px;" type="text" placeholder="Username" id="usernameL" name="username">
-                            <input style="margin-bottom: 15px;" type="password" placeholder="Password" id="passwordL" name="password">
-                            <div style="text-align:center">
-                            <button class="btn btn-info" type="submit">Login</button>
+                            <input class="form-inputs" type="text" placeholder="Username" id="usernameL" name="username">
+                            <input class="form-inputs" type="password" placeholder="Password" id="passwordL" name="password">
+                            <div class="btn-container">
+                                <button class="btn btn-info" type="submit">Login</button>
                             </div>
                         </form>
                         <br>

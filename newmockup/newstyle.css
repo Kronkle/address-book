@@ -93,6 +93,18 @@ form {
     margin: 0 auto;
 }
 
+.glyphicon-container {
+    text-align: center;
+}
+
+.btn-container {
+    text-align: center;
+}
+
+.form-inputs {
+    margin-bottom: 10px;
+}
+
 .search-forms {
     position: block; 
 }
@@ -148,6 +160,8 @@ form {
 }
 
 .dropdown-menu {
+    padding: 15px; 
+    padding-bottom: 0px;
     top: -1px;
 }
 

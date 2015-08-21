@@ -26,7 +26,7 @@
   * Final refactoring with all code in lookup.js separated into modular subroutines - IN PROGRESS (8/19/15)
   *     -Avoid parseHTML error log when letter with no associated employees in clicked in search --- DONE
   * 	-Precompile profiles.handlebars when finalized --- DONE
-  * 	-Fix CSS workarounds in HTML
+  * 	-Fix CSS workarounds in HTML --- DONE
   * Final refactoring of all other client-side code (including CSS tweaks)
   * Final refactoring of all server-side code
   * 	-Move all hbs templates to views

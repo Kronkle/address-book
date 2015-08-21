@@ -27,20 +27,18 @@
             <ul class="nav navbar-nav navbar-right">
                 <li id="loggedInMenu" class="dropdown">
                     <a class="dropdown-toggle" href="#" data-toggle="dropdown">{{username}}<strong class="caret"></strong></a>
-                    <div class="dropdown-menu" style="padding: 15px; padding-bottom: 0px;">
-                        <div style="text-align:center"><span class="glyphicon glyphicon-glass"></span></div>
+                    <div class="dropdown-menu">
+                        <div class="glyphicon-container"><span class="glyphicon glyphicon-glass"></span></div>
                         <br>
                         <p class="preference-menu-header">Preferences</p>
                         <form class="contact-list-form" method="post" action="/newmockup/contactList" accept-charset="UTF-8">        
-                            <!--<a id="registerBtn" href="#register" class="btn btn-info">Register</a>-->
-                            <div style="text-align:center">
-                            <button class="btn btn-info contact-list-form-btn" type="submit">Contact List</button>  
+                            <div class="btn-container">
+                                <button class="btn btn-info contact-list-form-btn" type="submit">Contact List</button>  
                             </div>  
                         </form>
                         <form class="logout-form" method="post" action="/newmockup/logout" accept-charset="UTF-8">
-                            <div style="text-align:center">        
-                            <!--<a id="registerBtn" href="#register" class="btn btn-info">Register</a>-->
-                            <button class="btn btn-info logout-form-btn" type="submit">Logout</button> 
+                            <div class="btn-container">        
+                                <button class="btn btn-info logout-form-btn" type="submit">Logout</button> 
                             </div>   
                         </form>
                         <br>
