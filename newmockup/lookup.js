@@ -1,18 +1,17 @@
 /* 
- *  lookup.js - Defines and instantiates directory view for homepage
+ *  lookup.js - controls directory view for homepage
  *
- *  	directoryView: 
- *
- *  	initDirectory - retrieves people data and populates directory component with all names
- *		loadProfile - renders employee profile on the directory via Handlebars template with associated context
- *		populateLinks - calls loadProfile on all names that begin with the search letter selected
- *		populateAllLinks - calls loadProfile on all employees
- *		searchByName - calls loadProfile on all employees that contain search string in their names
- *		searchByDept - calls loadProfile on all employees that contain search string in their departments
- *		getExperience - retrieves education and work experience info from JSON object
- *      getSearchResults - iterate through JSON and return any employee that matches search
- *      sortProfiles - sorts rendered employee profiles by first name in ascending profile
- *		initializeFavoriteIcons - defines behavior for favorite icons next to each profile when user is logged in
+ *  	initDirectory -           retrieves people data and populates directory component with all names
+ *		loadProfile -             renders employee profile on the directory via Handlebars template with associated context
+ *		populateLinks -           calls loadProfile on all names that begin with the search letter selected
+ *		populateAllLinks -        calls loadProfile on all employees
+ *		searchByName -            calls loadProfile on all employees that contain search string in their names
+ *		searchByDept -            calls loadProfile on all employees that contain search string in their departments
+ *      getSearchResults -        iterate through JSON and return any employee that matches search
+ *		getExperience -           retrieves education and work experience info from JSON object
+ *      initializeFavoriteIcons - defines behavior for favorite icons next to each profile when user is logged in
+ *      sortProfiles -            sorts rendered employee profiles by first name in ascending profile
+ *		
  */
 
  /* TODO List (8/19/15)
@@ -27,7 +26,7 @@
   *     -Avoid parseHTML error log when letter with no associated employees in clicked in search --- DONE
   * 	-Precompile profiles.handlebars when finalized --- DONE
   * 	-Fix CSS workarounds in HTML --- DONE
-  * Final refactoring of all other client-side code (including CSS tweaks)
+  * Final refactoring of all other client-side code (including CSS tweaks) --- IN PROGRESS
   * Final refactoring of all server-side code
   * 	-Move all hbs templates to views
   * 	-Avoid loading JSON when loginFailure and registerFailure views are loaded
@@ -111,6 +110,42 @@ directoryView.prototype.initDirectory = function () {
     $(".deptSearchForm").submit(function(event) {
      	event.preventDefault();
     });
+};
+
+directoryView.prototype.loadProfile = function(displayName, education, workExperience, picture, dept, desc, contactList) {
+	
+	var me = this;
+	var html;
+	var loggedIn = false;
+	var isContact = false;
+
+	// Determine whether there is a current user who is logged in
+	if (document.getElementById("loggedInMenu")){
+		loggedIn = true;
+	}
+
+	// Determine whether user to be rendered is a contact of current user
+	if (contactList.indexOf(displayName) >= 1) {
+		isContact = true;
+	}
+
+	// Retrieve precompiled template and set to a fn
+	var template = Handlebars.templates['profile'];
+
+	// Format display and work names for rendering of email address
+	var emailName = displayName.toLowerCase().replace(" ",".");
+	var workEmail = workExperience.institution.toLowerCase().replace(" ","").replace(".","");
+	var displayEmail = emailName + "@" + workEmail + ".com"
+	var displayURL = "mailto:" + displayEmail;
+
+	// Create data for the context argument that template will accept (gather this from params later)
+	var data = { "education": {"startYear": education.startYear, "endYear": education.endYear, "institution": education.institution, "degree": education.degree}, "workExperience": {"startYear": workExperience.startYear, "title": workExperience.title, "institution": workExperience.institution}, "desc": desc, "picture": picture, "name": displayName, "dept": dept, "emailUrl": displayURL, "email": displayEmail, "loggedIn": loggedIn, "isContact": isContact };
+
+	// Generate html using the given context
+	var result = template(data);
+	html = result;
+
+	return html;
 };
 
 directoryView.prototype.populateLinks = function (clickedLetter) {
@@ -218,8 +253,6 @@ directoryView.prototype.populateAllLinks = function () {
 	console.log(performance.now());
 
 	// Call to retrieve contact list if logged in
-
-
 
 	$.getJSON("/api/people", function(result) {
         	
@@ -361,43 +394,6 @@ directoryView.prototype.getExperience = function(result, i) {
 		education: education,
 		workExperience: workExperience
 	};
-};
-
-/* Potentially make a request to the server here, which will handle guest user template vs logged in user template */
-directoryView.prototype.loadProfile = function(displayName, education, workExperience, picture, dept, desc, contactList) {
-	
-	var me = this;
-	var html;
-	var loggedIn = false;
-	var isContact = false;
-
-	// Determine whether there is a current user who is logged in
-	if (document.getElementById("loggedInMenu")){
-		loggedIn = true;
-	}
-
-	// Determine whether user to be rendered is a contact of current user
-	if (contactList.indexOf(displayName) >= 1) {
-		isContact = true;
-	}
-
-	// Retrieve precompiled template and set to a fn
-	var template = Handlebars.templates['profile'];
-
-	// Format display and work names for rendering of email address
-	var emailName = displayName.toLowerCase().replace(" ",".");
-	var workEmail = workExperience.institution.toLowerCase().replace(" ","").replace(".","");
-	var displayEmail = emailName + "@" + workEmail + ".com"
-	var displayURL = "mailto:" + displayEmail;
-
-	// Create data for the context argument that template will accept (gather this from params later)
-	var data = { "education": {"startYear": education.startYear, "endYear": education.endYear, "institution": education.institution, "degree": education.degree}, "workExperience": {"startYear": workExperience.startYear, "title": workExperience.title, "institution": workExperience.institution}, "desc": desc, "picture": picture, "name": displayName, "dept": dept, "emailUrl": displayURL, "email": displayEmail, "loggedIn": loggedIn, "isContact": isContact };
-
-	// Generate html using the given context
-	var result = template(data);
-	html = result;
-
-	return html;
 };
 
 directoryView.prototype.initializeFavoriteIcons = function() {
