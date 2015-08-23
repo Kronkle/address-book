@@ -1,21 +1,20 @@
 /* 
  *  lookup.js - controls directory view for homepage
  *
- *  	initDirectory -           retrieves people data and populates directory component with all names
- *		loadProfile -             renders employee profile on the directory via Handlebars template with associated context
- *		populateLinks -           calls loadProfile on all names that begin with the search letter selected
- *		populateAllLinks -        calls loadProfile on all employees
- *		searchByName -            calls loadProfile on all employees that contain search string in their names
- *		searchByDept -            calls loadProfile on all employees that contain search string in their departments
- *      getSearchResults -        iterate through JSON and return any employee that matches search
- *		getExperience -           retrieves education and work experience info from JSON object
- *      initializeFavoriteIcons - defines behavior for favorite icons next to each profile when user is logged in
- *      sortProfiles -            sorts rendered employee profiles by first name in ascending profile
+ *  	initDirectory -           populates directory with all profiles and defines search behavior
+ *		renderProfile -             renders a profile
+ *		renderProfilesByClick -           populates directory with profiles that contain clicked letter as first letter of name
+ *		renderAllProfiles -        populates directory with all profiles
+ *		searchByName -            request a search for profiles that contain search string in name field
+ *		searchByDept -            request a search for profiles that contain search string in department field
+ *      renderProfilesBySearch -        populates directory with profiles that match search criteria
+ *		getExperience -           retrieves education and work experience for a profile
+ *      initFavButtons -          defines behavior for favorite icons next to each profile when user is logged in
  *		
  */
 
  /* TODO List (8/19/15)
-  * Edit all loadProfile calls to contain favorites parameter for goal item below --- DONE
+  * Edit all renderProfile calls to contain favorites parameter for goal item below --- DONE
   * Retain favIconBtn states ("Add Contact" after click or "Remove Contact") for logged in user
   *		-Current plan - edit HTML id to preserve favIcon state, push to server when new contact is added
   *						and pull from server when entire contact list is requested --- DONE
@@ -42,7 +41,7 @@ directoryView.prototype.initDirectory = function () {
 	var me = this;
 
 	// Save array of HTML #favIcon elements for now
-	var favIconsHtml = me.initializeFavoriteIcons();
+	me.initFavButtons();
 
 	// Select empty heading which will contain search letters
 	var alphabetLinks = $( ".alphabet-links > h5" ).text();
@@ -59,7 +58,7 @@ directoryView.prototype.initDirectory = function () {
 	$(".alphabet-links > h5").append('<a class=\"all-link\">All</a>');
 
 	// Populate all employees upon first loading the directory
-	me.populateAllLinks();
+	me.renderAllProfiles();
 
 	// When specific search letter is clicked, populate employees with names starting with the clicked letter
     $(".name-link").on("click", function() {
@@ -67,12 +66,12 @@ directoryView.prototype.initDirectory = function () {
     	// Return value of clicked letter without extra whitespace
 		var clickedLetter = $(this).text().trim();
 
-		me.populateLinks(clickedLetter);
+		me.renderProfilesByClick(clickedLetter);
     });
 
     // When "All" is clicked, repopulate directory with all employees 
     $(".all-link").on("click", function() {
-    	me.populateAllLinks();
+    	me.renderAllProfiles();
     });
 
     // When "Search by Name" is clicked, repopulate directory with employees that have searched name
@@ -112,7 +111,7 @@ directoryView.prototype.initDirectory = function () {
     });
 };
 
-directoryView.prototype.loadProfile = function(displayName, education, workExperience, picture, dept, desc, contactList) {
+directoryView.prototype.renderProfile = function(displayName, education, workExperience, picture, dept, desc, contactList) {
 	
 	var me = this;
 	var html;
@@ -148,7 +147,7 @@ directoryView.prototype.loadProfile = function(displayName, education, workExper
 	return html;
 };
 
-directoryView.prototype.populateLinks = function (clickedLetter) {
+directoryView.prototype.renderProfilesByClick = function (clickedLetter) {
 
 	var me = this;
 
@@ -194,7 +193,7 @@ directoryView.prototype.populateLinks = function (clickedLetter) {
 			experience = me.getExperience(result, i);
 
 			// Render profile for selected person
-			html += me.loadProfile(val.name, experience.education, experience.workExperience, val.picture, val.department, val.description, contactList);  	
+			html += me.renderProfile(val.name, experience.education, experience.workExperience, val.picture, val.department, val.description, contactList);  	
 			}			
 		});	
 
@@ -205,18 +204,11 @@ directoryView.prototype.populateLinks = function (clickedLetter) {
     });
 };
 
-directoryView.prototype.populateAllLinks = function () {
+directoryView.prototype.renderAllProfiles = function () {
 
 	var me = this;
 	var html = "";
 	var favIconsHtml;
-
-
-	/* 
-	 * Make a single call to server for user's contact list if logged in.
-	 * 		- Pass this string to each call to loadProfile so that user's contacts appear 
-	 * 		  with the correct options.
-	 */ 
 
 	var loggedIn = false;
 
@@ -247,8 +239,6 @@ directoryView.prototype.populateAllLinks = function () {
 	// Object to represent both education and work experience
 	var experience;
 
-	// Auth check here
-
 	// Retrieve all employee JSON data
 	console.log(performance.now());
 
@@ -260,13 +250,12 @@ directoryView.prototype.populateAllLinks = function () {
 				
 			experience = me.getExperience(result, i);
 			// Render profile for selected person
-			html += me.loadProfile(val.name, experience.education, experience.workExperience, val.picture, val.department, val.description, contactList); 
+			html += me.renderProfile(val.name, experience.education, experience.workExperience, val.picture, val.department, val.description, contactList); 
 			console.log(performance.now()); 				
 		});	
 		me.sortProfiles(html);
-			
-		/* If user is logged in, initialize behavior for star icons (TEST) */
-		favIconsHtml = me.initializeFavoriteIcons();
+
+		//favIconsHtml = me.initFavButtons();
     });
 };
 
@@ -293,7 +282,7 @@ directoryView.prototype.searchByName = function (name) {
 		}
 	}
 
-	me.getSearchResults(name, "name");
+	me.renderProfilesBySearch(name, "name");
 };
 
 directoryView.prototype.searchByDept = function (dept) {
@@ -305,10 +294,10 @@ directoryView.prototype.searchByDept = function (dept) {
 	dept = dept.substring(0,1).toUpperCase() + dept.substring(1).toLowerCase();
 
 	// Get search results for sanitized input
-	me.getSearchResults(dept, "department");
+	me.renderProfilesBySearch(dept, "department");
 };
 
-directoryView.prototype.getSearchResults = function(input, searchType) {
+directoryView.prototype.renderProfilesBySearch = function(input, searchType) {
 
 	var me = this;
 	var html = "";
@@ -350,7 +339,7 @@ directoryView.prototype.getSearchResults = function(input, searchType) {
         var found = false;
 		$.each(result.people, function(i, val) {
 
-			// NOTE - after v39 FireFox will support the "includes" function
+			// NOTE - after v39 FireFox will support the "includes" function, Chrome doesn't support contains
 			// Avoid searching for strings in the middle of a name
 			if (val[searchType][0].contains(input[0]) && val[searchType].contains(input)) {
 				
@@ -358,7 +347,7 @@ directoryView.prototype.getSearchResults = function(input, searchType) {
 				experience = me.getExperience(result, i);
 
 				// Render profile for selected employee
-				html += me.loadProfile(val.name, experience.education, experience.workExperience, val.picture, val.department, val.description, contactList);
+				html += me.renderProfile(val.name, experience.education, experience.workExperience, val.picture, val.department, val.description, contactList);
 
 				found = true;			
 			}
@@ -396,54 +385,56 @@ directoryView.prototype.getExperience = function(result, i) {
 	};
 };
 
-directoryView.prototype.initializeFavoriteIcons = function() {
+directoryView.prototype.initFavButtons = function() {
 	// Indicate when a contact has been added
-    $(".favIconBtn").on("click", function() {
+	$( function() {
+	    $(".app-search-results").on("click", ".favIconBtn", function() {
 
-    	// Retrieve name of contact that favIconBtn is attached to and attach to object
-    	var name = $(this).parent().prev().text();
-    	var data = { "name": name };
+	    	// Retrieve name of contact that favIconBtn is attached to and assign to AJAX data object
+	    	var name = $(this).parent().prev().text();
+	    	var data = { "name": name };
 
-		// Reverse text value of button after add or remove and push to server
-		if ($(this).text() == "Add Contact") {
+			// Push contact change to server and update button text
+			if ($(this).text() == "Add Contact") {
 
-			// Push contact name to server
-			$.ajax({
-				async: false,
-				type: "POST",
-				url: '/newmockup/addContact',
-				data: data,
-				//dataType: 'json',
-				success: function () {
-					alert( name + " has been added to your contact list.");
-				}
-			});
+				// Push contact name to server
+				$.ajax({
+					async: false,
+					type: "POST",
+					url: '/newmockup/addContact',
+					data: data,
+					//dataType: 'json',
+					success: function () {
+						alert( name + " has been added to your contact list.");
+					}
+				});
+				
+				$(this).html("Remove Contact");
+
+			} else {
 			
-			$(this).html("Remove Contact");
+				// Push contact removal to server
+				$.ajax({
+					async: false,
+					type: "POST",
+					url: '/newmockup/deleteContact',
+					data: data,
+					//dataType: 'json',
+					success: function () {
+						alert( name + " has been removed from your contact list.");
+					}
+				});
+			
+				$(this).html("Add Contact");
+			}
+    	});
 
-		} else {
-
-			// Push contact removal to server
-			$.ajax({
-				async: false,
-				type: "POST",
-				url: '/newmockup/deleteContact',
-				data: data,
-				//dataType: 'json',
-				success: function () {
-					alert( name + " has been removed from your contact list.");
-				}
-			});
-		
-			$(this).html("Add Contact");
-		}
-    });
-
-    // Don't refresh the page when contact is added
-    $(".addContactForm").submit(function(event) {
-    	alert("Form submit handler triggered");
-    	event.preventDefault();  	
-    });
+	    // Don't refresh the page when contact is added
+	    $(".addContactForm").submit(function(event) {
+	    	alert("Form submit handler triggered");
+	    	event.preventDefault();  	
+	    });
+	});
 }
 
 directoryView.prototype.sortProfiles = function(html) {
