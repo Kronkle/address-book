@@ -2,12 +2,12 @@
  *  lookup.js - controls directory view for homepage
  *
  *  	initDirectory -           populates directory with all profiles and defines search behavior
- *		renderProfile -             renders a profile
- *		renderProfilesByClick -           populates directory with profiles that contain clicked letter as first letter of name
- *		renderAllProfiles -        populates directory with all profiles
+ *		renderProfile -           renders a profile
+ *		renderProfilesByClick -   populates directory with profiles that contain clicked letter as first letter of name
+ *		renderAllProfiles -       populates directory with all profiles
  *		searchByName -            request a search for profiles that contain search string in name field
  *		searchByDept -            request a search for profiles that contain search string in department field
- *      renderProfilesBySearch -        populates directory with profiles that match search criteria
+ *      renderProfilesBySearch -  populates directory with profiles that match search criteria
  *		getExperience -           retrieves education and work experience for a profile
  *      initFavButtons -          defines behavior for favorite icons next to each profile when user is logged in
  *		
@@ -40,7 +40,7 @@ var directoryView = function () {
 directoryView.prototype.initDirectory = function () {
 	var me = this;
 
-	// Save array of HTML #favIcon elements for now
+	// Define behavior for "Add/Remove Contact" buttons
 	me.initFavButtons();
 
 	// Select empty heading which will contain search letters
@@ -87,11 +87,6 @@ directoryView.prototype.initDirectory = function () {
     	$("#nameSearchInput").val('');
     });
 
-    // Don't refresh the page when name search is run
-    $(".nameSearchForm").submit(function(event) {
-    	event.preventDefault();
-    });
-
     // When "Search By Department" is clicked, repopulate directory with employees that have searched department
     $(".deptSearch").on("click", function() {
 
@@ -105,10 +100,11 @@ directoryView.prototype.initDirectory = function () {
     	$("#deptSearchInput").val('');
     });
 
-    // Don't refresh the page when dept search is run
-    $(".deptSearchForm").submit(function(event) {
+    // Don't refresh the page when dept and name searches are run
+    $(".deptSearchForm, .nameSearchForm").submit(function(event) {
      	event.preventDefault();
     });
+
 };
 
 directoryView.prototype.renderProfile = function(displayName, education, workExperience, picture, dept, desc, contactList) {
