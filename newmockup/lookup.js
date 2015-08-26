@@ -114,30 +114,29 @@ directoryView.prototype.renderProfile = function(displayName, education, workExp
 	// Determine whether there is a current user who is logged in
 	if (document.getElementById("loggedInMenu")){
 		loggedIn = true;
+
+		// If logged in, determine if profile to be displayed is a contact of current user
+		if (contactList.indexOf(displayName) >= 1) {
+			isContact = true;
+		}
 	}
 
-	// Determine whether user to be rendered is a contact of current user
-	if (contactList.indexOf(displayName) >= 1) {
-		isContact = true;
-	}
-
-	// Retrieve precompiled template and set to a fn
+	// Assign precompiled profile template to a function
 	var template = Handlebars.templates['profile'];
 
-	// Format display and work names for rendering of email address
+	// Format profile email address and email url
 	var emailName = displayName.toLowerCase().replace(" ",".");
 	var workEmail = workExperience.institution.toLowerCase().replace(" ","").replace(".","");
 	var displayEmail = emailName + "@" + workEmail + ".com"
 	var displayURL = "mailto:" + displayEmail;
 
-	// Create data for the context argument that template will accept (gather this from params later)
+	// Create context data with all profile info for handlebars function to process
 	var data = { "education": {"startYear": education.startYear, "endYear": education.endYear, "institution": education.institution, "degree": education.degree}, "workExperience": {"startYear": workExperience.startYear, "title": workExperience.title, "institution": workExperience.institution}, "desc": desc, "picture": picture, "name": displayName, "dept": dept, "emailUrl": displayURL, "email": displayEmail, "loggedIn": loggedIn, "isContact": isContact };
 
 	// Generate html using the given context
 	var result = template(data);
-	html = result;
 
-	return html;
+	return result;
 };
 
 directoryView.prototype.renderProfilesByClick = function (clickedLetter) {
