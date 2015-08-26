@@ -74,30 +74,27 @@ directoryView.prototype.initDirectory = function () {
     	me.renderAllProfiles();
     });
 
-    // When "Search by Name" is clicked, repopulate directory with employees that have searched name
-    $(".nameSearch").on("click", function() {
+    // When a search button is clicked, repopulate directory with employees that fit search criteria
+    $(".nameSearch, .deptSearch").on("click", function() {
+
+    	// Retrieve user input from the previous input element
+    	var input = $(this).prev().children("#searchInput").val();
 
     	// Ensure that a proper search has been run
-    	if ($("#nameSearchInput").val() == '') {
+    	if ( input == '' ) {
     		alert("Please enter at least one letter to run a search");
+    		return;
+    	} 
+
+    	// Determine which search to run
+    	if ( $(this).hasClass("nameSearch") ) {
+    		me.searchByName(input);
     	} else {
-    		me.searchByName($("#nameSearchInput").val());
+    		me.searchByDept(input);
     	}
 
-    	$("#nameSearchInput").val('');
-    });
-
-    // When "Search By Department" is clicked, repopulate directory with employees that have searched department
-    $(".deptSearch").on("click", function() {
-
-    	// Ensure that a proper search has been run
-    	if ($("#deptSearchInput").val() == '') {
-    		alert("Please enter at least one letter to run a search");
-    	} else {
-    		me.searchByDept($("#deptSearchInput").val());
-    	}
-
-    	$("#deptSearchInput").val('');
+    	// Clear user input from input element
+    	$(this).prev().children("#searchInput").val('');
     });
 
     // Don't refresh the page when dept and name searches are run
