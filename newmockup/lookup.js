@@ -5,12 +5,13 @@
  *		renderProfile -           renders a profile
  *		renderProfilesByClick -   populates directory with profiles that contain clicked letter as first letter of name
  *		renderAllProfiles -       populates directory with all profiles
+ *      pullContactList -         pull contact list from server if user is logged in
  *		searchByName -            request a search for profiles that contain search string in name field
  *		searchByDept -            request a search for profiles that contain search string in department field
  *      renderProfilesBySearch -  populates directory with profiles that match search criteria
  *		getExperience -           retrieves education and work experience for a profile
  *      initFavButtons -          defines behavior for favorite icons next to each profile when user is logged in
- *		
+ *		sortProfiles -            sort profiles to be rendered in alphabetical order and append them to the DOM
  */
 
  /* TODO List (8/19/15)
@@ -106,8 +107,6 @@ directoryView.prototype.initDirectory = function () {
 
 directoryView.prototype.renderProfile = function(displayName, education, workExperience, picture, dept, desc, contactList) {
 	
-	var me = this;
-	var html;
 	var loggedIn = false;
 	var isContact = false;
 
@@ -148,33 +147,10 @@ directoryView.prototype.renderProfilesByClick = function (clickedLetter) {
 
 	var html = "";
 
-	var loggedIn = false;
-
-	if (document.getElementById("loggedInMenu")){
-		loggedIn = true;
-	}
-
-	var contactList = "";
-
-	// Pull contact list from server if user is logged in before rendering profiles
-	if (loggedIn) {
-	
-			$.ajax({
-				async: false,
-				type: "POST",
-				url: '/newmockup/pullContactList',
-				data: {},
-				//dataType: 'json',
-				success: function (favorites) {
-					console.log("Contact list has been pulled for this user.");
-					contactList = favorites;				}
-			});
-	}
+	var contactList = me.pullContactList();
 
 	// Clear previous search results from directory
 	$(".app-search-results").empty();
-
-	// Auth check here
 
 	// Retrieve employee JSON data for all employees that match the search letter
 	$.getJSON("/api/people", function(result) {
@@ -202,28 +178,7 @@ directoryView.prototype.renderAllProfiles = function () {
 	var html = "";
 	var favIconsHtml;
 
-	var loggedIn = false;
-
-	if (document.getElementById("loggedInMenu")){
-		loggedIn = true;
-	}
-
-	var contactList = "";
-
-	// Pull contact list from server if user is logged in before rendering profiles
-	if (loggedIn) {
-	
-			$.ajax({
-				async: false,
-				type: "POST",
-				url: '/newmockup/pullContactList',
-				data: {},
-				//dataType: 'json',
-				success: function (favorites) {
-					console.log("Contact list has been pulled for this user.");
-					contactList = favorites;				}
-			});
-	}
+	var contactList = me.pullContactList();
 
 	// Clear previous search results from directory
 	$(".app-search-results").empty();
@@ -249,6 +204,34 @@ directoryView.prototype.renderAllProfiles = function () {
 
 		//favIconsHtml = me.initFavButtons();
     });
+};
+
+directoryView.prototype.pullContactList = function () {
+
+	var loggedIn = false;
+	var contactList = "";
+
+	if (document.getElementById("loggedInMenu")){
+		loggedIn = true;
+	}
+
+	var contactList = "";
+
+	// Pull contact list from server if user is logged in before rendering profiles
+	if (loggedIn) {
+	
+			$.ajax({
+				async: false,
+				type: "POST",
+				url: '/newmockup/pullContactList',
+				data: {},
+				success: function (favorites) {
+					console.log("Contact list has been pulled for this user.");
+					contactList = favorites;				}
+			});
+	}
+
+	return contactList;
 };
 
 directoryView.prototype.searchByName = function (name) {
@@ -295,28 +278,7 @@ directoryView.prototype.renderProfilesBySearch = function(input, searchType) {
 	var html = "";
 	var searchType = searchType;
 
-	var loggedIn = false;
-
-	if (document.getElementById("loggedInMenu")){
-		loggedIn = true;
-	}
-
-	var contactList = "";
-
-	// Pull contact list from server if user is logged in before rendering profiles
-	if (loggedIn) {
-	
-			$.ajax({
-				async: false,
-				type: "POST",
-				url: '/newmockup/pullContactList',
-				data: {},
-				//dataType: 'json',
-				success: function (favorites) {
-					console.log("Contact list has been pulled for this user.");
-					contactList = favorites;				}
-			});
-	}
+	var contactList = me.pullContactList();
 
 	// Clear previous search results
 	$(".app-search-results").empty();
