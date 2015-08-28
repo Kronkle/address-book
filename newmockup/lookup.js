@@ -8,6 +8,7 @@
  *      pullContactList -         pull contact list from server if user is logged in
  *		searchByName -            request a search for profiles that contain search string in name field
  *		searchByDept -            request a search for profiles that contain search string in department field
+ *      sanitizeSearchInput -     replaces special characters and numbers in search input with whitespace
  *      renderProfilesBySearch -  populates directory with profiles that match search criteria
  *		getExperience -           retrieves education and work experience for a profile
  *      initFavButtons -          defines behavior for favorite icons next to each profile when user is logged in
@@ -237,19 +238,28 @@ directoryView.prototype.pullContactList = function () {
 directoryView.prototype.searchByName = function (name) {
 
 	var me = this;
-	var name = name;
 
-	// Capitalize first letter and any letters after whitespace, lowercase all other letters
-	for(i = 0; i < name.length; i++) {
+	// Sanitize search input by replacing all special characters and numbers with whitespace via regex
+	name = me.sanitizeSearchInput(name);
+
+	// Transform search input into "Firstname Lastname" format
+	for (i = 0; i < name.length; i++) {
 
 		// Capitalize the first letter
 		if (i == 0) {
-			name = name.substring(0,1).toUpperCase() + name.substring(1); 
+			name = name.substring(0,1).toUpperCase() + name.substring(1);
 
-		// Capitalize the first letter after whitespace (assuming this is last name), skip past it
+		// Capitalize the first letter immediately after whitespace (assume this is last name)
 		} else if (name[i] == " " && name[i+1] != " ") {
 			name = name.substring(0,i+1) + name.substring(i+1,i+2).toUpperCase() + name.substring(i+2);
+			// Iterate twice to skip over the newly capitalized letter
 			i++;
+
+		// Remove contiguous whitespace
+        } else if (name[i] == " " && name[i+1] == " ") {
+        	name = name.substring(0,i) + name.substring(i+1);
+        	// Retain current iterator value since string has been shortened by one element
+        	i--;
 
 		// Lowercase all other letters
 		} else {
@@ -257,19 +267,28 @@ directoryView.prototype.searchByName = function (name) {
 		}
 	}
 
+	// Run search with processed input and render matched profiles to DOM
 	me.renderProfilesBySearch(name, "name");
 };
 
 directoryView.prototype.searchByDept = function (dept) {
 
 	var me = this;
-	var dept = dept;
 
-	// Capitalize first letter and lowercase the following letters for department matching
+	// Sanitize search input by replacing all special characters and numbers with whitespace via regex
+	dept = me.sanitizeSearchInput(dept);
+
+	// Transform search input into "Department" format
 	dept = dept.substring(0,1).toUpperCase() + dept.substring(1).toLowerCase();
 
-	// Get search results for sanitized input
+	// Run search with processed input and render matched profiles to DOM
 	me.renderProfilesBySearch(dept, "department");
+};
+
+directoryView.prototype.sanitizeSearchInput = function (searchInput) {
+
+	searchInput = searchInput.replace(/[&\/\\#,+()@$~%.'":;*?<>{}|!=^123456789]/g,' ');
+	return searchInput;
 };
 
 directoryView.prototype.renderProfilesBySearch = function(input, searchType) {
