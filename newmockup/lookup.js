@@ -42,68 +42,64 @@ var directoryView = function () {
 directoryView.prototype.initDirectory = function () {
 	var me = this;
 
-	// Define behavior for "Add/Remove Contact" buttons
-	me.initFavButtons();
+	$( document ).ready(function() {
+		// Define behavior for "Add/Remove Contact" buttons
+		me.initFavButtons();
 
-	// Select empty heading which will contain search letters
-	var alphabetLinks = $( ".alphabet-links > h5" ).text();
+		// Select empty heading which will contain search letters
+		var alphabetLinks = $( ".alphabet-links > h5" ).text();
 
-	// Create array of letters wrapped within link tags for name searching
-	var links = jQuery.map(('ABCDEFGHIJKLMNOPQRSTUVWXYZ').split(''), function(i) {
-		return '<a class=\"name-link\">' + i + '</a>&nbsp';
+		// Create array of letters wrapped within link tags for name searching
+		var links = jQuery.map(('ABCDEFGHIJKLMNOPQRSTUVWXYZ').split(''), function(i) {
+			return '<a class=\"name-link\">' + i + '</a>&nbsp';
+		});
+
+		// Populate empty heading with search letters
+		$(".alphabet-links > h5").html(links);
+
+		// Add an "All" link to the set of search letters
+		$(".alphabet-links > h5").append('<a class=\"all-link\">All</a>');
+
+		// Populate all employees upon first loading the directory
+		me.renderAllProfiles();
+
+		// When specific search letter is clicked, populate employees with names starting with the clicked letter
+	    $(".name-link").on("click", function() {
+
+	    	// Return value of clicked letter without extra whitespace
+			var clickedLetter = $(this).text().trim();
+
+			me.renderProfilesByClick(clickedLetter);
+	    });
+
+	    // When "All" is clicked, repopulate directory with all employees 
+	    $(".all-link").on("click", function() {
+	    	me.renderAllProfiles();
+	    });
+
+	    // When a search button is clicked, repopulate directory with employees that fit search criteria
+	    $(".nameSearch, .deptSearch").on("click", function() {
+
+	    	// Retrieve user input from the previous input element
+	    	var input = $(this).prev().children("#searchInput").val();
+
+	    	// Ensure that a proper search has been run
+	    	if ( input == '' ) {
+	    		alert("Please enter at least one letter to run a search");
+	    		return;
+	    	} 
+
+	    	// Determine which search to run
+	    	if ( $(this).hasClass("nameSearch") ) {
+	    		me.searchByName(input);
+	    	} else {
+	    		me.searchByDept(input);
+	    	}
+
+	    	// Clear user input from input element
+	    	$(this).prev().children("#searchInput").val('');
+	    });
 	});
-
-	// Populate empty heading with search letters
-	$(".alphabet-links > h5").html(links);
-
-	// Add an "All" link to the set of search letters
-	$(".alphabet-links > h5").append('<a class=\"all-link\">All</a>');
-
-	// Populate all employees upon first loading the directory
-	me.renderAllProfiles();
-
-	// When specific search letter is clicked, populate employees with names starting with the clicked letter
-    $(".name-link").on("click", function() {
-
-    	// Return value of clicked letter without extra whitespace
-		var clickedLetter = $(this).text().trim();
-
-		me.renderProfilesByClick(clickedLetter);
-    });
-
-    // When "All" is clicked, repopulate directory with all employees 
-    $(".all-link").on("click", function() {
-    	me.renderAllProfiles();
-    });
-
-    // When a search button is clicked, repopulate directory with employees that fit search criteria
-    $(".nameSearch, .deptSearch").on("click", function() {
-
-    	// Retrieve user input from the previous input element
-    	var input = $(this).prev().children("#searchInput").val();
-
-    	// Ensure that a proper search has been run
-    	if ( input == '' ) {
-    		alert("Please enter at least one letter to run a search");
-    		return;
-    	} 
-
-    	// Determine which search to run
-    	if ( $(this).hasClass("nameSearch") ) {
-    		me.searchByName(input);
-    	} else {
-    		me.searchByDept(input);
-    	}
-
-    	// Clear user input from input element
-    	$(this).prev().children("#searchInput").val('');
-    });
-
-    // Don't refresh the page when dept and name searches are run
-    $(".deptSearchForm, .nameSearchForm").submit(function(event) {
-     	event.preventDefault();
-    });
-
 };
 
 directoryView.prototype.renderProfile = function(displayName, education, workExperience, picture, dept, desc, contactList) {
@@ -142,16 +138,15 @@ directoryView.prototype.renderProfile = function(displayName, education, workExp
 directoryView.prototype.renderProfilesByClick = function (clickedLetter) {
 
 	var me = this;
-
-	// Object to represent both education and work experience
-	var experience;
-
 	var html = "";
 
 	var contactList = me.pullContactList();
 
 	// Clear previous search results from directory
 	$(".app-search-results").empty();
+
+	// Object to represent both education and work experience
+	var experience;
 
 	// Retrieve employee JSON data for all employees that match the search letter
 	$.getJSON("/api/people", function(result) {
@@ -167,7 +162,7 @@ directoryView.prototype.renderProfilesByClick = function (clickedLetter) {
 		});	
 
 		// Sort profiles if found
-		if(html){
+		if (html){
 			me.sortProfiles(html);
 		}
     });
@@ -177,7 +172,6 @@ directoryView.prototype.renderAllProfiles = function () {
 
 	var me = this;
 	var html = "";
-	var favIconsHtml;
 
 	var contactList = me.pullContactList();
 
@@ -188,22 +182,16 @@ directoryView.prototype.renderAllProfiles = function () {
 	var experience;
 
 	// Retrieve all employee JSON data
-	console.log(performance.now());
-
-	// Call to retrieve contact list if logged in
-
 	$.getJSON("/api/people", function(result) {
         	
 		$.each(result.people, function(i, val) {
 				
 			experience = me.getExperience(result, i);
+
 			// Render profile for selected person
-			html += me.renderProfile(val.name, experience.education, experience.workExperience, val.picture, val.department, val.description, contactList); 
-			console.log(performance.now()); 				
+			html += me.renderProfile(val.name, experience.education, experience.workExperience, val.picture, val.department, val.description, contactList); 				
 		});	
 		me.sortProfiles(html);
-
-		//favIconsHtml = me.initFavButtons();
     });
 };
 
@@ -216,22 +204,19 @@ directoryView.prototype.pullContactList = function () {
 		loggedIn = true;
 	}
 
-	var contactList = "";
-
 	// Pull contact list from server if user is logged in before rendering profiles
 	if (loggedIn) {
 	
-			$.ajax({
-				async: false,
-				type: "POST",
-				url: '/newmockup/pullContactList',
-				data: {},
-				success: function (favorites) {
-					console.log("Contact list has been pulled for this user.");
-					contactList = favorites;				}
-			});
+		$.ajax({
+			async: false,
+			type: "POST",
+			url: '/newmockup/pullContactList',
+			data: {},
+			success: function (favorites) {
+				contactList = favorites;			
+			}
+		});
 	}
-
 	return contactList;
 };
 
@@ -295,7 +280,6 @@ directoryView.prototype.renderProfilesBySearch = function(input, searchType) {
 
 	var me = this;
 	var html = "";
-	var searchType = searchType;
 
 	var contactList = me.pullContactList();
 
@@ -305,17 +289,18 @@ directoryView.prototype.renderProfilesBySearch = function(input, searchType) {
 	// Object to represent both education and work experience
 	var experience;
 
-	// Auth check here
+	// Represents either a "name" search or "department" search
+	var searchType = searchType;
 
 	// Retrieve all employee JSON data that match search department
 	$.getJSON("/api/people", function(result) {
         var found = false;
+
 		$.each(result.people, function(i, val) {
 
-			// NOTE - after v39 FireFox will support the "includes" function, Chrome doesn't support contains
-			// Avoid searching for strings in the middle of a name
-			if (val[searchType][0].contains(input[0]) && val[searchType].contains(input)) {
-				
+			// Search for input string within either "name" or "department" field
+			if (val[searchType].indexOf(input) >= 0) {
+
 				// Gather employee's education and work experience
 				experience = me.getExperience(result, i);
 
@@ -359,83 +344,71 @@ directoryView.prototype.getExperience = function(result, i) {
 };
 
 directoryView.prototype.initFavButtons = function() {
+
 	// Indicate when a contact has been added
-	$( function() {
-	    $(".app-search-results").on("click", ".favIconBtn", function() {
+    $(".app-search-results").on("click", ".favIconBtn", function() {
 
-	    	// Retrieve name of contact that favIconBtn is attached to and assign to AJAX data object
-	    	var name = $(this).parent().prev().text();
-	    	var data = { "name": name };
+    	// Retrieve name of contact that favIconBtn is attached to and assign to AJAX data object
+    	var name = $(this).parent().prev().text();
+    	var data = { "name": name };
 
-			// Push contact change to server and update button text
-			if ($(this).text() == "Add Contact") {
+		// Push contact change to server and update button text
+		if ($(this).text() == "Add Contact") {
 
-				// Push contact name to server
-				$.ajax({
-					async: false,
-					type: "POST",
-					url: '/newmockup/addContact',
-					data: data,
-					//dataType: 'json',
-					success: function () {
-						alert( name + " has been added to your contact list.");
-					}
-				});
-				
-				$(this).html("Remove Contact");
-
-			} else {
+			// Push contact name to server
+			$.ajax({
+				async: false,
+				type: "POST",
+				url: '/newmockup/addContact',
+				data: data,
+				success: function () {
+					alert( name + " has been added to your contact list.");
+				}
+			});
 			
-				// Push contact removal to server
-				$.ajax({
-					async: false,
-					type: "POST",
-					url: '/newmockup/deleteContact',
-					data: data,
-					//dataType: 'json',
-					success: function () {
-						alert( name + " has been removed from your contact list.");
-					}
-				});
-			
-				$(this).html("Add Contact");
-			}
-    	});
+			$(this).html("Remove Contact");
 
-	    // Don't refresh the page when contact is added
-	    $(".addContactForm").submit(function(event) {
-	    	alert("Form submit handler triggered");
-	    	event.preventDefault();  	
-	    });
+		} else {
+		
+			// Push contact removal to server
+			$.ajax({
+				async: false,
+				type: "POST",
+				url: '/newmockup/deleteContact',
+				data: data,
+				success: function () {
+					alert( name + " has been removed from your contact list.");
+				}
+			});
+		
+			$(this).html("Add Contact");
+		}
 	});
 }
 
 directoryView.prototype.sortProfiles = function(html) {
 
-	// Tracking pre and post-sort performance for now
-	console.log(performance.now());
-
-	// Provide specific return values for compareFunction for the most stability in browsers
+	// Convert html string into DOM nodes and sort profiles by name
 	var aToZDivs = $.parseHTML(html).sort(function (a, b) {	
 
 		if ($(a).find("h2").text() > $(b).find("h2").text()) {
 			return 1;
 		}
+
 		if ($(a).find("h2").text() < $(b).find("h2").text()) {
 			return -1;
 		}
+
 		return 0;
 	});
 
+	// Populate search results container with sorted profile divs
 	$("div.app-search-results").html(aToZDivs);
 
-	// Name headers reveal a popover when clicked
-	$('[data-toggle="popover"]').popover({
+	// Attach popover handlers to profile pictures that are triggered by mouse hover
+	$('[data-toggle=popover]').popover({
 		placement: 'right',
-		viewport: '#viewport'
 	});
-
-	console.log(performance.now());
 };
 
 // Initialize directory view
