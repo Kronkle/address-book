@@ -1,9 +1,3 @@
-/* Test user:
-Kronk
-kronk
-mkronk7@gmail.com
-*/
-
 require('colors');
 var path = require('path');
 var express = require('express'),
@@ -69,6 +63,10 @@ function loggedIn(req, res, next) {
         next();
     }
 }
+
+app.get('/newmockup', function(req, res){
+	res.render('index');
+});
 
 /* Override default behavior with specific redirect options */
 app.post('/newmockup/login', passport.authenticate('login', {
@@ -143,7 +141,6 @@ app.listen(HTTP_PORT, function(err) {
     }
 
 	console.log(('HTTP server listening on port ' + HTTP_PORT).green);
-
 	console.log('Mockup:'.bold + ' http://localhost:' + HTTP_PORT + '/mockup/');
 	console.log('New Mockup:'.bold + ' http://localhost:' + HTTP_PORT + '/newmockup/');
 	console.log('People data:'.bold + ' http://localhost:' + HTTP_PORT + '/api/people');
