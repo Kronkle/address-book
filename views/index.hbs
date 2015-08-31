@@ -24,66 +24,60 @@
         <div class="app-directory-container">
             <h3>Employee Directory</h3>
             <!-- TODO: Make login/register tabs more responsive -->
-            <ul class="nav navbar-nav navbar-right">
-                <li id="registerMenu" class="dropdown">
-                    <a class="dropdown-toggle" href="#" data-toggle="dropdown">Sign Up <strong class="caret"></strong></a>
-                    <div class="dropdown-menu">
-                        <div class="glyphicon-container"><span class="glyphicon glyphicon-heart"></span></div>
-                        <br>
-                        <p class="signUpInText">Register Here:</p>
-                        <form method="post" action="/newmockup/register" accept-charset="UTF-8">
-                            <input class="form-inputs" type="text" placeholder="Username" id="usernameR" name="username">
-                            <input class="form-inputs" type="password" placeholder="Password" id="passwordR" name="password">
-                            <input class="form-inputs" type="text" placeholder="Email" id="emailR" name="email">
-                            <div class="btn-container">
-                                <button class="btn btn-info" type="submit">Register</button>
-                            </div>             
-                        </form>
-                        <br>
-                    </div>
-                </li>
-                <li id="loginMenu" class="dropdown">
-                    <a class="dropdown-toggle" href="#" data-toggle="dropdown">Sign In <strong class="caret"></strong></a>
-                    <div class="dropdown-menu">
-                        <div class="glyphicon-container"><span class="glyphicon glyphicon-thumbs-up"></span></div>
-                        <br>
-                        <p class="signUpInText">Welcome Back!</p>   
-                        <form method="post" action="/newmockup/login" accept-charset="UTF-8">
-                            <input class="form-inputs" type="text" placeholder="Username" id="usernameL" name="username">
-                            <input class="form-inputs" type="password" placeholder="Password" id="passwordL" name="password">
-                            <div class="btn-container">
-                                <button class="btn btn-info" type="submit">Login</button>
-                            </div>
-                        </form>
-                        <br>
-                </div>
-                </li>
-            </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li id="registerMenu" class="dropdown">
+                        <a class="dropdown-toggle" href="#" data-toggle="dropdown">Sign Up <strong class="caret"></strong></a>
+                        <div class="dropdown-menu">
+                            <div class="glyphicon-container"><span class="glyphicon glyphicon-heart"></span></div>
+                            <br>
+                            <p class="signUpInText">Register Here:</p>
+                            <form method="post" action="/newmockup/register" accept-charset="UTF-8">
+                                <input class="form-inputs" type="text" placeholder="Username" id="usernameR" name="username">
+                                <input class="form-inputs" type="password" placeholder="Password" id="passwordR" name="password">
+                                <input class="form-inputs" type="text" placeholder="Email" id="emailR" name="email">
+                                <div class="btn-container">
+                                    <button class="btn btn-info" type="submit">Register</button>
+                                </div>             
+                            </form>                          
+                        </div>
+                    </li>
+                    <li id="loginMenu" class="dropdown">
+                        <a class="dropdown-toggle" href="#" data-toggle="dropdown">Sign In <strong class="caret"></strong></a>
+                        <div class="dropdown-menu">
+                            <div class="glyphicon-container"><span class="glyphicon glyphicon-thumbs-up"></span></div>
+                            <br>
+                            <p class="signUpInText">Welcome Back!</p>   
+                            <form method="post" action="/newmockup/login" accept-charset="UTF-8">
+                                <input class="form-inputs" type="text" placeholder="Username" id="usernameL" name="username">
+                                <input class="form-inputs" type="password" placeholder="Password" id="passwordL" name="password">
+                                <div class="btn-container">
+                                    <button class="btn btn-info" type="submit">Login</button>
+                                </div>
+                            </form>                           
+                    </li>
+                </ul>
+            </div>
+            <!-- Search -->
             <h4>Find Staff</h4>
             <div class="alphabet-links">
-                <h5>
-                </h5>
+                <h5></h5>
             </div>
             <div class="search-forms">
-                    <form class="nameSearchForm">
-                        <div class="form-group app-search-form">
-                            <input type="text" class="form-control" id="searchInput">
-                        </div>
-                        <button type="button" class="nameSearch btn btn-default app-search-form">Search by Name</button>
-                    </form>
-                
-                    <form class="deptSearchForm">
-                        <div class="form-group app-search-form">
-                            <input type="text" class="form-control" id="searchInput">
-                        </div>
-                        <button type="button" class="deptSearch btn btn-default app-search-form">Search by Department</button>
-                    </form>
+                <form class="nameSearchForm">
+                    <div class="form-group app-search-form">
+                        <input type="text" class="form-control" id="searchInput">
+                    </div>
+                    <button type="button" class="nameSearch btn btn-default app-search-form">Search by Name</button>
+                </form>           
+                <form class="deptSearchForm">
+                    <div class="form-group app-search-form">
+                        <input type="text" class="form-control" id="searchInput">
+                    </div>
+                    <button type="button" class="deptSearch btn btn-default app-search-form">Search by Department</button>
+                </form>
             </div>
         </div>
-        <!-- Results Sort Dash will be here -->
-        <div>
-        </div>
-        <!-- Results -->
+        <!-- Profiles -->
         <div class="app-search-results">
         </div>
     </div>
