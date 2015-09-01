@@ -1,24 +1,23 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <meta charset="utf-8">
+    <meta name="description" content="Address Book application for viewing, searching, and saving contacts stored in a JSON file">
     <title>Address Book</title>
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <!-- jQuery and Bootstrap -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-    <!-- Latest compiled and minified CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.3/handlebars.js"></script>-->
+    <!-- Handlebars Runtime and profile template -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.3/handlebars.runtime.js"></script>
     <script src="/newmockup/profile.js"></script>
+    <!-- Custom JS and CSS -->
     <script type="text/javascript" src="lookup.js" defer></script>
     <link rel="stylesheet" type="text/css" href="newstyle.css" />
+    <!-- Open-Sans font and favicon -->
     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans:300,400,700" />
-    <link rel="shortcut icon" href="/newmockup/paper.ico">
+    <link rel="shortcut icon" href="/newmockup/paper.ico" type="image/x-icon">
 </head>
-
 <body>
     <div class="app-address-book">
         <!-- Navbar -->
@@ -46,31 +45,28 @@
                     </div>
                 </li>
             </ul>
+            <!-- Search -->
             <h4>Find Staff</h4>
             <div class="alphabet-links">
                 <h5>
                 </h5>
             </div>
             <div class="search-forms">
-                    <form class="nameSearchForm">
-                        <div class="form-group app-search-form">
-                            <input type="text" class="form-control" id="searchInput">
-                        </div>
-                        <button type="button" class="nameSearch btn btn-default app-search-form">Search by Name</button>
-                    </form>
-                
-                    <form class="deptSearchForm">
-                        <div class="form-group app-search-form">
-                            <input type="text" class="form-control" id="searchInput">
-                        </div>
-                        <button type="button" class="deptSearch btn btn-default app-search-form">Search by Department</button>
-                    </form>
+                <form class="nameSearchForm">
+                    <div class="form-group app-search-form">
+                        <input type="text" class="form-control" id="searchInput">
+                    </div>
+                    <button type="button" class="nameSearch btn btn-default app-search-form">Search by Name</button>
+                </form>         
+                <form class="deptSearchForm">
+                    <div class="form-group app-search-form">
+                        <input type="text" class="form-control" id="searchInput">
+                    </div>
+                    <button type="button" class="deptSearch btn btn-default app-search-form">Search by Department</button>
+                </form>
             </div>
         </div>
-        <!-- Results Sort Dash will be here -->
-        <div>
-        </div>
-        <!-- Results -->
+        <!-- Profiles -->
         <div class="app-search-results">
         </div>
     </div>

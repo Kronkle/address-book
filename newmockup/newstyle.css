@@ -165,6 +165,13 @@ form {
     top: -1px;
 }
 
+/* Adjust how Sign Up/Sign In dropdowns collapse when Bootstrap adjusts for mobile */
+@media (max-width: 767px) {
+    .navbar-right {
+        padding-top: 50px;
+    }
+}
+
 /* the detailed view of person profile and directory intro */
 .app-person-profile-container, .app-directory-intro {
     position: block;
