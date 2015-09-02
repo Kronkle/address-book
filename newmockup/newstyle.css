@@ -170,6 +170,14 @@ form {
     .navbar-right {
         padding-top: 50px;
     }
+
+    .form-inputs {
+        margin-right: 500px;
+    }
+
+    #registerMenu {
+        padding-top: 0px;
+    }
 }
 
 /* the detailed view of person profile and directory intro */
