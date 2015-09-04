@@ -44,8 +44,9 @@
                 <input class="form-control" type="password" placeholder="Password" id="passwordL" name="password">          
                 <button class="btn btn-info" type="submit">Login</button>
             </form>
+            {{/if}}
 
-            {{else}}
+            {{#if registerFailure}}
             <div class="error-messages">
                 <h4>Error occurred during registration.</h4>
             </div>

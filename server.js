@@ -120,13 +120,13 @@ app.get('/newmockup/loggedIn', loggedIn, function(req, res){
 	res.render('loggedIn', {username: res.locals.login.username});
 });
 
-//TODO: Ensure these flash messages are getting passed in/out properly, research default view directory expectations
+//TODO: Ensure these flash messages are getting passed in/out properly
 app.get('/newmockup/registerFailure', function(req, res){
-	res.render('registerFailure', {messages: req.flash('message')});
+	res.render('userFailure', {messages: req.flash('message'), registerFailure: true});
 });
 
 app.get('/newmockup/loginFailure', function(req, res){
-	res.render('loginFailure', {messages: req.flash('message')});
+	res.render('userFailure', {messages: req.flash('message'), loginFailure: true});
 });
 
 app.post('/newmockup/logout', function(req, res){
