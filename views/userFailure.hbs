@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="Address Book application for viewing, searching, and saving contacts stored in a JSON file">
+    <title>Address Book</title>
+    <!-- jQuery and Bootstrap -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <!-- Handlebars Runtime and profile template -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.3/handlebars.runtime.js"></script>
+    <script src="/newmockup/profile.js"></script>
+    <!-- Custom JS and CSS -->
+    <script type="text/javascript" src="lookup.js" defer></script>
+    <link rel="stylesheet" type="text/css" href="newstyle.css" />
+    <!-- Open-Sans font and favicon -->
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans:300,400,700" />
+    <link rel="shortcut icon" href="/newmockup/paper.ico" type="image/x-icon">
+</head>
+<body>
+ 	<div class="app-address-book">
+        <!-- Navbar -->
+        <div class="app-directory-container">
+            <h3>Employee Directory</h3>
+            <!-- TODO: Make login/register tabs more responsive -->
+            <ul class="nav navbar-nav navbar-right">
+                <li id="registerMenu" class="dropdown">
+                    <a class="dropdown-toggle" href="/newmockup/">Home</a>
+                </li>
+            </ul>
+            <h4>Find Staff</h4>
+        </div>
+        <!-- Error Header -->
+        <div class="retry-form">
+
+            {{#if loginFailure}}
+            <div class="error-messages">
+                <h4>Error occurred during login.</h4>
+            </div>
+            <!-- Login Form -->
+            <form role="form" method="post" action="/newmockup/login" accept-charset="UTF-8">
+                <input class="form-control" type="text" placeholder="Username" id="usernameL" name="username">
+                <input class="form-control" type="password" placeholder="Password" id="passwordL" name="password">          
+                <button class="btn btn-info" type="submit">Login</button>
+            </form>
+
+            {{else}}
+            <div class="error-messages">
+                <h4>Error occurred during registration.</h4>
+            </div>
+             <!-- Registration Form -->
+            <form role="form" method="post" action="/newmockup/register" accept-charset="UTF-8">
+                <input class="form-control" type="text" placeholder="Username" id="usernameR" name="username">
+                <input class="form-control" type="password" placeholder="Password" id="passwordR" name="password">
+                <input class="form-control" type="text" placeholder="Email" id="emailR" name="email">
+                <button class="btn btn-info" type="submit">Register</button>          
+            </form>
+            {{/if}}
+
+            <!-- Error Messages -->
+            <div class="error-messages">
+                {{#if messages}}
+                <h4>{{messages}}</h4>
+                {{/if}}
+            </div>
+        </div>
+    </div>
+</body>
+</html>
