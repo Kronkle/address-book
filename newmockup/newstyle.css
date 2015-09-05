@@ -1,3 +1,5 @@
+/* ---------------------------------------------General CSS--------------------------------------------- */
+
 /* resize the viewport to 100% width and height */
 html, body {
     height: 100%;
@@ -8,6 +10,7 @@ html, body {
     overflow: hidden;
 }
 
+/* Lock horizontal scrollbar into place */
 body {
     overflow-y: scroll;
 }
@@ -19,14 +22,15 @@ body {
     box-sizing: border-box;
 }
 
-h4 {
-    color: #FFFFFF;
-    background-color: #0074D9;
-}
+/* ---------------------------------------------Navbar-------------------------------------------------- */
 
 /* Make this more specific */
 form {
     display: inline-block;
+}
+
+.form-inputs {
+    margin-bottom: 10px;
 }
 
 /* Styling for login and registration buttons */
@@ -45,54 +49,6 @@ form {
     text-align: center;
 }
 
-/* Styling for login and registration error messages */
-.error-messages {
-    display: block;
-    margin: 0 auto 20px;
-    margin-top: 20px;
-    width: 250px;
-}
-
-.error-messages h4 {
-    text-align: center;
-    background-color: transparent;
-    color: #FF4136;
-}
-
-/* Styling for forms rendered when login or registration fails */
-.retry-form form {
-    display: block;
-    margin: 0 auto;
-    width: 500px;
-}
-
-.retry-form form input {
-    display: block;
-    margin: 0 auto 10px;
-    width: 250px;
-}
-
-.retry-form form button {
-    text-align: center;
-    display: block;
-    margin: 0 auto;
-    width: 250px;
-}
-
-
-/* Styling for popover boxes that appear when a name is clicked */
-.popover {
-    max-width: 100%;
-
-    /* Hack for keeping popovers at same height relative to photo */
-    top: 15px !important;
-}
-
-.alphabet-links {
-    max-width: 350px;
-    margin: 0 auto;
-}
-
 .glyphicon-container {
     text-align: center;
 }
@@ -101,8 +57,65 @@ form {
     text-align: center;
 }
 
-.form-inputs {
-    margin-bottom: 10px;
+.dropdown-toggle {
+    bottom: 50px;
+}
+
+.dropdown-menu {
+    padding: 15px; 
+    padding-bottom: 0px;
+    top: -1px;
+}
+
+/* Adjust how Sign Up/Sign In dropdowns collapse when Bootstrap adjusts for mobile */
+@media (max-width: 767px) {
+    .navbar-right {
+        padding-top: 50px;
+    }
+
+    .form-inputs {
+        margin-right: 500px;
+    }
+
+    #registerMenu {
+        padding-top: 0px;
+    }
+}
+
+/* styling for elements in user preferences dropdown */
+.preference-menu-header {
+    display: block;
+    text-align: center;
+}
+
+.logout-form {
+    display: block;
+}
+
+.contact-list-form {
+    display: block;
+}
+
+.logout-form-btn {
+    max-width: 100px;
+    width: 100px;
+}
+
+.contact-list-form-btn {
+    max-width: 100px;
+    width: 200px;
+}
+
+/* ---------------------------------------------Search-------------------------------------------------- */
+
+h4 {
+    color: #FFFFFF;
+    background-color: #0074D9;
+}
+
+.alphabet-links {
+    max-width: 350px;
+    margin: 0 auto;
 }
 
 .search-forms {
@@ -113,6 +126,16 @@ form {
     margin: 0 auto;
     width: 250px;
     margin-left: 85px;
+}
+
+/* ---------------------------------------------Profiles------------------------------------------------ */
+
+/* Styling for popover boxes that appear when a name is clicked */
+.popover {
+    max-width: 100%;
+
+    /* Hack for keeping popovers at same height relative to photo */
+    top: 15px !important;
 }
 
 .app-person-profile h2,
@@ -153,31 +176,6 @@ form {
 .app-directory-item:hover {
     background-color: #eef;
     cursor: pointer;
-}
-
-.dropdown-toggle {
-    bottom: 50px;
-}
-
-.dropdown-menu {
-    padding: 15px; 
-    padding-bottom: 0px;
-    top: -1px;
-}
-
-/* Adjust how Sign Up/Sign In dropdowns collapse when Bootstrap adjusts for mobile */
-@media (max-width: 767px) {
-    .navbar-right {
-        padding-top: 50px;
-    }
-
-    .form-inputs {
-        margin-right: 500px;
-    }
-
-    #registerMenu {
-        padding-top: 0px;
-    }
 }
 
 /* the detailed view of person profile and directory intro */
@@ -252,27 +250,38 @@ form {
     font-weight: bold;
 }
 
-/* styling for elements in user preferences dropdown */
-.preference-menu-header {
+/* ---------------------------------------------User Error---------------------------------------------- */
+
+/* Styling for login and registration error messages */
+.error-messages {
     display: block;
+    margin: 0 auto 20px;
+    margin-top: 20px;
+    width: 250px;
+}
+
+.error-messages h4 {
     text-align: center;
+    background-color: transparent;
+    color: #FF4136;
 }
 
-.logout-form {
+/* Styling for forms rendered when login or registration fails */
+.retry-form form {
     display: block;
+    margin: 0 auto;
+    width: 500px;
 }
 
-.contact-list-form {
+.retry-form form input {
     display: block;
+    margin: 0 auto 10px;
+    width: 250px;
 }
 
-.logout-form-btn {
-    max-width: 100px;
-    width: 100px;
-}
-
-.contact-list-form-btn {
-    max-width: 100px;
-    width: 200px;
-
+.retry-form form button {
+    text-align: center;
+    display: block;
+    margin: 0 auto;
+    width: 250px;
 }
