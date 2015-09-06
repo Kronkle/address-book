@@ -24,7 +24,18 @@ body {
 
 /* ---------------------------------------------Navbar-------------------------------------------------- */
 
-/* Make this more specific */
+/* Styling for nav dropdowns */
+.dropdown-toggle {
+    bottom: 50px;
+}
+
+.dropdown-menu {
+    padding: 15px; 
+    padding-bottom: 0px;
+    top: -1px;
+}
+
+/* Styling for user account forms within dropdowns */
 form {
     display: inline-block;
 }
@@ -33,7 +44,11 @@ form {
     margin-bottom: 10px;
 }
 
-/* Styling for login and registration buttons */
+.glyphicon-container {
+    text-align: center;
+}
+
+/* Styling for all form buttons */
 .btn-info {
     background-color: #0074D9;
     border-color: #0074D9;
@@ -49,61 +64,53 @@ form {
     text-align: center;
 }
 
-.glyphicon-container {
-    text-align: center;
-}
-
 .btn-container {
     text-align: center;
 }
 
-.dropdown-toggle {
-    bottom: 50px;
-}
-
-.dropdown-menu {
-    padding: 15px; 
-    padding-bottom: 0px;
-    top: -1px;
-}
-
-/* Adjust how Sign Up/Sign In dropdowns collapse when Bootstrap adjusts for mobile */
-@media (max-width: 767px) {
-    .navbar-right {
-        padding-top: 50px;
-    }
-
-    .form-inputs {
-        margin-right: 500px;
-    }
-
-    #registerMenu {
-        padding-top: 0px;
-    }
-}
-
-/* styling for elements in user preferences dropdown */
+/* Styling for elements in user preferences dropdown */
 .preference-menu-header {
     display: block;
     text-align: center;
 }
 
-.logout-form {
+.logout-form, .contact-list-form {
     display: block;
 }
 
-.contact-list-form {
-    display: block;
-}
-
-.logout-form-btn {
+.logout-form-btn, .contact-list-form-btn {
     max-width: 100px;
     width: 100px;
 }
 
-.contact-list-form-btn {
-    max-width: 100px;
-    width: 200px;
+/* Styling for nav dropdowns while collapsed */
+@media (max-width: 767px) {
+
+    /* Ensure that dropdowns don't overlap heading above */
+    .dropdown-toggle {
+        bottom: 0px;
+    }
+
+    /* Adjust glyphicon placement */
+    .glyphicon-container {
+        display: inline-block;
+        padding-left: 10px;
+    }
+
+    /* Condense form width */
+    .dropdown-menu > form {
+        width: 175px;
+    }
+
+    /* Condense user preferences dropdown header width */
+    .preference-menu-header {      
+        width: 175px;
+    }
+
+    /* Adjust user preferences glyphicon width */
+    .glyphicon-container span[class="glyphicon glyphicon-glass"] {
+        width: 165px;
+    }
 }
 
 /* ---------------------------------------------Search-------------------------------------------------- */
