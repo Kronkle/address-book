@@ -1,17 +1,19 @@
 /* ---------------------------------------------General CSS--------------------------------------------- */
 
-/* resize the viewport to 100% width and height */
+/* Set document text to Open Sans and set scrolling behavior */
 html, body {
-    height: 100%;
-    width: 100%;
-    margin: 0;
-    padding: 0;
     font-family: 'Open Sans', sans-serif;
-    overflow: hidden;
+
+    /* Enable scrolling when rendered profiles in <body> extend below the page */
+    height: 100%; 
+
+    /* Disable scrolling when rendered profiles in <body> don't extend below the page */
+    overflow: hidden; 
 }
 
-/* Lock horizontal scrollbar into place */
+/* Lock in x and y scrollbars for scrolling when <body> elements extend past or below the page  */
 body {
+    overflow-x: scroll;
     overflow-y: scroll;
 }
 
