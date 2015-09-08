@@ -26,7 +26,7 @@ templates['profile'] = template({"1":function(depth0,helpers,partials,data) {
     + alias3(((helper = (helper = helpers.emailUrl || (depth0 != null ? depth0.emailUrl : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"emailUrl","hash":{},"data":data}) : helper)))
     + "\">"
     + alias3(((helper = (helper = helpers.email || (depth0 != null ? depth0.email : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"email","hash":{},"data":data}) : helper)))
-    + "</a></div>\r\n	</div>\r\n	<div class=\"app-section\">\r\n		<div class=\"app-section-header\">\r\n			<h3>Education</h3>\r\n		</div>\r\n		<div class=\"app-section-body\">\r\n			<div class=\"app-history-item\"></div>\r\n			<div class=\"app-history-item\">\r\n				<div class=\"app-history-item-dates-edu\">"
+    + "</a></div>\r\n	</div>\r\n	<div class=\"app-section\">\r\n		<div class=\"app-section-header\">\r\n			<h3>Education</h3>\r\n		</div>\r\n		<div class=\"app-section-body\">\r\n			<div class=\"app-history-item\">\r\n				<div class=\"app-history-item-dates-edu\">"
     + alias3(alias4(((stack1 = (depth0 != null ? depth0.education : depth0)) != null ? stack1.startYear : stack1), depth0))
     + "-"
     + alias3(alias4(((stack1 = (depth0 != null ? depth0.education : depth0)) != null ? stack1.endYear : stack1), depth0))
@@ -34,12 +34,12 @@ templates['profile'] = template({"1":function(depth0,helpers,partials,data) {
     + alias3(alias4(((stack1 = (depth0 != null ? depth0.education : depth0)) != null ? stack1.institution : stack1), depth0))
     + "</div>\r\n					<div class=\"app-history-item-degree\">"
     + alias3(alias4(((stack1 = (depth0 != null ? depth0.education : depth0)) != null ? stack1.degree : stack1), depth0))
-    + "</div>\r\n				</div>\r\n			</div>\r\n		</div>\r\n	</div>\r\n	<div class=\"app-section\">\r\n		<div class=\"app-section-header\">\r\n			<h3>Experience</h3>\r\n		</div>\r\n		<div class=\"app-section-body\">\r\n			<div class=\"app-history-item\"></div>\r\n			<div class=\"app-history-item\">\r\n				<div class=\"app-history-item-dates-work\">"
+    + "</div>\r\n				</div>\r\n			</div>\r\n		</div>\r\n	</div>\r\n	<div class=\"app-section\">\r\n		<div class=\"app-section-header\">\r\n			<h3>Experience</h3>\r\n		</div>\r\n		<div class=\"app-section-body\">\r\n			<div class=\"app-history-item\">\r\n				<div class=\"app-history-item-dates-work\">"
     + alias3(alias4(((stack1 = (depth0 != null ? depth0.workExperience : depth0)) != null ? stack1.startYear : stack1), depth0))
-    + "-Present</div>\r\n			</div>\r\n			<div class=\"app-history-item-body\">\r\n				<div class=\"app-history-item-title-work\">"
+    + "-Present</div>\r\n				<div class=\"app-history-item-body\">\r\n					<div class=\"app-history-item-title-work\">"
     + alias3(alias4(((stack1 = (depth0 != null ? depth0.workExperience : depth0)) != null ? stack1.institution : stack1), depth0))
-    + "</div>\r\n				<div class=\"app-history-item-position\">"
+    + "</div>\r\n					<div class=\"app-history-item-position\">"
     + alias3(alias4(((stack1 = (depth0 != null ? depth0.workExperience : depth0)) != null ? stack1.title : stack1), depth0))
-    + "</div>\r\n			</div>\r\n		</div>\r\n	</div>\r\n</div>";
+    + "</div>\r\n				</div>\r\n			</div>\r\n		</div>\r\n	</div>\r\n</div>";
 },"useData":true});
 })();
