@@ -104,6 +104,7 @@ directoryView.prototype.initDirectory = function () {
 
 directoryView.prototype.renderProfile = function(displayName, education, workExperience, picture, dept, desc, contactList) {
 	
+	
 	var loggedIn = false;
 	var isContact = false;
 

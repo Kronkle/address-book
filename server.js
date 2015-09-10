@@ -51,6 +51,10 @@ app.set('view engine', 'hbs');
 /* Routes */
 app.use('/mockup/', express.static(path.join(__dirname, 'mockup')));
 app.use('/newmockup/', express.static(path.join(__dirname, 'newmockup')));
+
+// Adding this route in for retrieving profile.js on the client-side (maybe temporarily)
+app.use('/views/', express.static(path.join(__dirname, 'views')));
+
 app.get('/api/people', function(req, res) {
     res.end(JSON.stringify(people, null, '    '));
 });

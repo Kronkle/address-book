@@ -1,0 +1,44 @@
+<div class="app-person-profile docs-highlight docs-blue" data-intro="Person Profile" data-position="bottom">
+	<div class="app-person-profile-header">
+		<div class="app-person-profile-photo" style="background-image: url({{picture}})" data-placement="right" data-content="{{desc}}" title="" data-toggle="popover" data-trigger="hover" href="#" data-original-title="Bio"></div>
+		<h2>{{name}}</h2>
+		{{#if loggedIn}}<form class="addContactForm">
+			{{#if isContact}}
+				<button type="button" class="favIconBtn btn btn-default">Remove Contact</button></form>
+			{{else}}
+				<button type="button" class="favIconBtn btn btn-default">Add Contact</button></form>
+			{{/if}}
+		{{/if}}
+		<div class="app-person-profile-department">{{dept}}</div>
+		<div class="app-person-profile-phone-number">919-555-5555</div>
+		<div class="app-person-profile-email"><a href="{{emailUrl}}">{{email}}</a></div>
+	</div>
+	<div class="app-section">
+		<div class="app-section-header">
+			<h3>Education</h3>
+		</div>
+		<div class="app-section-body">
+			<div class="app-history-item">
+				<div class="app-history-item-dates-edu">{{education.startYear}}-{{education.endYear}}</div>
+				<div class="app-history-item-body">
+					<div class="app-history-item-title-edu">{{education.institution}}</div>
+					<div class="app-history-item-degree">{{education.degree}}</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="app-section">
+		<div class="app-section-header">
+			<h3>Experience</h3>
+		</div>
+		<div class="app-section-body">
+			<div class="app-history-item">
+				<div class="app-history-item-dates-work">{{workExperience.startYear}}-Present</div>
+				<div class="app-history-item-body">
+					<div class="app-history-item-title-work">{{workExperience.institution}}</div>
+					<div class="app-history-item-position">{{workExperience.title}}</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
