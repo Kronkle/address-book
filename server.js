@@ -1,12 +1,14 @@
 require('colors');
-var path = require('path');
-var express = require('express'),
+var path = require('path'),
+    express = require('express'),
 	routes = require('./routes'),
     session = require('express-session'),
+    flash = require('connect-flash'),
     passport = require('passport'),
     logger = require('morgan'),
-    cookieParser = require('cookie-parser');
-    bodyParser = require('body-parser');
+    cookieParser = require('cookie-parser'),
+    bodyParser = require('body-parser'),
+    initPassport = require('./passport/init'),
     LocalStrategy = require('passport-local'),
     people = require(path.join(__dirname, 'data/people.json'));
 
@@ -27,15 +29,10 @@ app.use(session({secret: 'desktop dog', resave: true, saveUninitialized: true}))
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Initialize connect-flash
-var flash = require('connect-flash');
-
 //TODO: Display flash messages in generic, precompiled handlebars template for login/registration failures
 app.use(flash());
 
 // Initialize Passport
-var initPassport = require('./passport/init');
-console.log("Initializing passport");
 initPassport(passport);
 
 /* Configure db */
@@ -56,7 +53,7 @@ app.listen(HTTP_PORT, function(err) {
     }
 
 	console.log(('HTTP server listening on port ' + HTTP_PORT).green);
-	console.log('Mockup:'.bold + ' http://localhost:' + HTTP_PORT + '/mockup/');
-	console.log('New Mockup:'.bold + ' http://localhost:' + HTTP_PORT + '/newmockup/');
-	console.log('People data:'.bold + ' http://localhost:' + HTTP_PORT + '/api/people');
+	console.log(('Mockup:'.bold + ' http://localhost:' + HTTP_PORT + '/mockup/').yellow);
+	console.log(('New Mockup:'.bold + ' http://localhost:' + HTTP_PORT + '/newmockup/').cyan);
+	console.log(('People data:'.bold + ' http://localhost:' + HTTP_PORT + '/api/people').magenta);
 });
