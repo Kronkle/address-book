@@ -43,7 +43,7 @@ mongoose.connect(dbConfig.url);
 app.set('view engine', 'hbs');
 
 // Import routes here
-app.use('/', routes);
+app.use(routes);
 
 var HTTP_PORT = 8080;
 
@@ -52,7 +52,7 @@ app.listen(HTTP_PORT, function(err) {
         throw err;
     }
 
-	console.log(('HTTP server listening on port ' + HTTP_PORT).green);
+	console.log(('HTTP server listening on port ' + HTTP_PORT).green.bold);
 	console.log(('Mockup:'.bold + ' http://localhost:' + HTTP_PORT + '/mockup/').yellow);
 	console.log(('New Mockup:'.bold + ' http://localhost:' + HTTP_PORT + '/newmockup/').cyan);
 	console.log(('People data:'.bold + ' http://localhost:' + HTTP_PORT + '/api/people').magenta);

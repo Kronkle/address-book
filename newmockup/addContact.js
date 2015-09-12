@@ -14,8 +14,8 @@ module.exports = function(callback, username, userToAdd){
 						//TODO: pass in param indicating failure
 						callback();
 					}
+
 					if (user) {
-						//TODO: parse favorites string here and don't add if user is already added ("Add Contact" button should never show up, though)
 						user.favorites = user.favorites + userToAdd + ", ";
 						console.log(userToAdd + ' has been added to ' + username + '\'s contact list');
 						console.log(username + '\'s contact list is: ' + user.favorites);
@@ -28,15 +28,14 @@ module.exports = function(callback, username, userToAdd){
 
 							console.log('New contact list has been saved to the database');
 
-							// Log contact to the console and end HTTP response
-							callback();
-						});					
-
+						// Log contact to the console and end HTTP response
+						callback();
+						});
 					} else {
-							console.log('Current user doesn\'t exist in database');
+						console.log('Current user doesn\'t exist in database');
 
-							//TODO: pass in param indicating failure
-							callback();
+						//TODO: pass in param indicating failure
+						callback();
 					}
 				}
 	);

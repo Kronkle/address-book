@@ -1,13 +1,14 @@
-var express = require('express');
-var app = express.Router();
-var path = require('path');
-var passport = require('passport');
+require('colors');
+var express = require('express'),
+    path = require('path'),
+    passport = require('passport'),
+    addContact = require(path.join(__dirname,'newmockup/addContact')),
+    deleteContact = require(path.join(__dirname,'newmockup/deleteContact')),
+    people = require(path.join(__dirname, 'data/people.json'));
 
-/* Configure contact list modules */
-var addContact = require(path.join(__dirname,'newmockup/addContact'));
-var deleteContact = require(path.join(__dirname,'newmockup/deleteContact'));
+var router = express.Router();
 
-
+// Retrive username for response when user sends a request to login 
 function loggedIn(req, res, next) {
     if (req.user) {
     	res.locals.login = req.user;
@@ -17,39 +18,36 @@ function loggedIn(req, res, next) {
     }
 }
 
-
 /* Routes */
-app.use('/mockup/', express.static(path.join(__dirname, 'mockup')));
-app.use('/newmockup/', express.static(path.join(__dirname, 'newmockup')));
+router.use('/mockup/', express.static(path.join(__dirname, 'mockup')));
+router.use('/newmockup/', express.static(path.join(__dirname, 'newmockup')));
 
 // Adding this route in for retrieving profile.js on the client-side (maybe temporarily)
-app.use('/views/', express.static(path.join(__dirname, 'views')));
+router.use('/views/', express.static(path.join(__dirname, 'views')));
 
-app.get('/api/people', function(req, res) {
+router.get('/api/people', function(req, res) {
     res.end(JSON.stringify(people, null, '    '));
 });
 
-
-
-app.get('/newmockup', function(req, res){
+router.get('/newmockup', function(req, res){
 	res.render('index');
 });
 
 /* Override default behavior with specific redirect options */
-app.post('/newmockup/login', passport.authenticate('login', {
+router.post('/newmockup/login', passport.authenticate('login', {
 	successRedirect: '/newmockup/loggedIn',
 	failureRedirect: '/newmockup/loginFailure',
 	failureFlash: true
 }));
 
-app.post('/newmockup/register', passport.authenticate('register', {
+router.post('/newmockup/register', passport.authenticate('register', {
 	successRedirect: '/newmockup/loggedIn',
 	failureRedirect: '/newmockup/registerFailure',
 	failureFlash: true
 }));
 
 /* Add favorite to contact list. */
-app.post('/newmockup/addContact', function(req, res){
+router.post('/newmockup/addContact', function(req, res){
 	console.log("Current user is " + req.user.username);
 	console.log("Contact to be added is " + req.body.name);
 	addContact(function() {
@@ -59,7 +57,7 @@ app.post('/newmockup/addContact', function(req, res){
 });
 
 /* Remove favorite from contact list */
-app.post('/newmockup/deleteContact', function(req,res){
+router.post('/newmockup/deleteContact', function(req,res){
 	console.log("Current user is " + req.user.username);
 	console.log("Contact to be deleted is " + req.body.name);
 	deleteContact(function() {
@@ -68,36 +66,36 @@ app.post('/newmockup/deleteContact', function(req,res){
 	}, req.user.username, req.body.name);	
 });
 
-/* TODO: Pull contact list for logged in users before rendering profiles to display proper state */
-app.post('/newmockup/pullContactList', function(req, res){
+/* Pull contact list for logged in users before rendering profiles to display proper state */
+router.post('/newmockup/pullContactList', function(req, res){
 	console.log("Pulling contact list for " + req.user.username);
-	// Test without the separate module for now
 	res.send(req.user.favorites)
 });
 
 /* TODO: Display contact list when chosen in preferences menu */
-app.post('/newmockup/renderContactList', function(req, res){
-	console.log("Contact list chosen");
+router.post('/newmockup/renderContactList', function(req, res){
+	console.log("Rendering contact list for " + req.user.username);
+	res.end("Contact list will be rendered here");
 });
 
-app.get('/newmockup/loggedIn', loggedIn, function(req, res){
-	console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-	console.log("Currently logged in as " + res.locals.login.username);
-	console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+router.get('/newmockup/loggedIn', loggedIn, function(req, res){
+	console.log(("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!").red);
+	console.log(("Currently logged in as " + res.locals.login.username).red);
+	console.log(("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!").red);
 	res.render('loggedIn', {username: res.locals.login.username});
 });
 
 //TODO: Ensure these flash messages are getting passed in/out properly
-app.get('/newmockup/registerFailure', function(req, res){
+router.get('/newmockup/registerFailure', function(req, res){
 	res.render('userFailure', {messages: req.flash('message'), registerFailure: true});
 });
 
-app.get('/newmockup/loginFailure', function(req, res){
+router.get('/newmockup/loginFailure', function(req, res){
 	res.render('userFailure', {messages: req.flash('message'), loginFailure: true});
 });
 
-app.post('/newmockup/logout', function(req, res){
+router.post('/newmockup/logout', function(req, res){
 	res.render('index');
 });
 
-module.exports = app;
+module.exports = router;
