@@ -72,12 +72,6 @@ router.post('/newmockup/pullContactList', function(req, res){
 	res.send(req.user.favorites)
 });
 
-/* TODO: Display contact list when chosen in preferences menu */
-router.post('/newmockup/renderContactList', function(req, res){
-	console.log("Rendering contact list for " + req.user.username);
-	res.end("Contact list will be rendered here");
-});
-
 router.get('/newmockup/loggedIn', loggedIn, function(req, res){
 	console.log(("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!").red);
 	console.log(("Currently logged in as " + res.locals.login.username).red);

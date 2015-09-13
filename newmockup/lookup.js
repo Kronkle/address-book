@@ -5,6 +5,7 @@
  *		renderProfile -           renders a profile
  *		renderProfilesByClick -   populates directory with profiles that contain clicked letter as first letter of name
  *		renderAllProfiles -       populates directory with all profiles
+ *		renderContactList - 	  renders contacts of currently logged in user after contact list button is clicked
  *      pullContactList -         pull contact list from server if user is logged in
  *		searchByName -            request a search for profiles that contain search string in name field
  *		searchByDept -            request a search for profiles that contain search string in department field
@@ -12,6 +13,7 @@
  *      renderProfilesBySearch -  populates directory with profiles that match search criteria
  *		getExperience -           retrieves education and work experience for a profile
  *      initFavButtons -          defines behavior for favorite icons next to each profile when user is logged in
+ *		initContactListButton -   defines behavior for contact list button in user dropdown
  *		sortProfiles -            sort profiles to be rendered in alphabetical order and append them to the DOM
  */
 
@@ -43,8 +45,12 @@ directoryView.prototype.initDirectory = function () {
 	var me = this;
 
 	$( document ).ready(function() {
+
 		// Define behavior for "Add/Remove Contact" buttons
 		me.initFavButtons();
+
+		// Define behavior for "Contact List" button
+		me.initContactListButton();
 
 		// Select empty heading which will contain search letters
 		var alphabetLinks = $( ".alphabet-links > h5" ).text();
@@ -193,6 +199,50 @@ directoryView.prototype.renderAllProfiles = function () {
 			html += me.renderProfile(val.name, experience.education, experience.workExperience, val.picture, val.department, val.description, contactList); 				
 		});	
 		me.sortProfiles(html);
+    });
+};
+
+directoryView.prototype.renderContactList = function (contacts) {
+
+	var me = this;
+	var html = "";
+
+	var contactList = contacts;
+
+	// Clear previous search results
+	$(".app-search-results").empty();
+	
+	// Object to represent both education and work experience
+	var experience;
+
+	// Represents either a "name" search or "department" search
+	var searchType = searchType;
+
+	// Retrieve all employee JSON data that match search department
+	$.getJSON("/api/people", function(result) {
+        var found = false;
+
+		$.each(result.people, function(i, val) {
+
+			// If profile is a contact of current user, render it
+			if (contactList.indexOf(val.name) >= 1) {
+		
+				// Gather employee's education and work experience
+				experience = me.getExperience(result, i);
+
+				// Render profile for selected employee
+				html += me.renderProfile(val.name, experience.education, experience.workExperience, val.picture, val.department, val.description, contactList);
+
+				found = true;			
+			}	
+		});
+
+		// Sort profiles if search results are found, otherwise alert user
+		if (found == true) {
+			me.sortProfiles(html);
+		} else {
+			alert("Your contact list is empty.");
+		}
     });
 };
 
@@ -385,7 +435,24 @@ directoryView.prototype.initFavButtons = function() {
 			$(this).html("Add Contact");
 		}
 	});
-}
+};
+
+directoryView.prototype.initContactListButton = function () {
+	
+	var me = this;
+
+	$(".app-directory-container").on("click", ".contact-list-form-btn", function() {
+
+		// Close active dropdown
+		$('.dropdown-toggle').dropdown("toggle");
+
+		// Pull contact list to be passed to render function
+		var contactList = me.pullContactList();
+
+		// Render all contacts for current user
+		me.renderContactList(contactList);
+	});
+};
 
 directoryView.prototype.sortProfiles = function(html) {
 
