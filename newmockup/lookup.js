@@ -18,22 +18,7 @@
  */
 
  /* TODO List (8/19/15)
-  * Edit all renderProfile calls to contain favorites parameter for goal item below --- DONE
-  * Retain favIconBtn states ("Add Contact" after click or "Remove Contact") for logged in user
-  *		-Current plan - edit HTML id to preserve favIcon state, push to server when new contact is added
-  *						and pull from server when entire contact list is requested --- DONE
-  * Fix CSS in preferences menu (center and align buttons/heading) --- DONE
-  * Retain username at title of preferences menu upon page refresh --- DONE
-  *
-  * Final refactoring with all code in lookup.js separated into modular subroutines - IN PROGRESS (8/19/15)
-  *     -Avoid parseHTML error log when letter with no associated employees in clicked in search --- DONE
-  * 	-Precompile profiles.handlebars when finalized --- DONE
-  * 	-Fix CSS workarounds in HTML --- DONE
-  * Final refactoring of all other client-side code (including CSS tweaks) --- IN PROGRESS
-  * Final refactoring of all server-side code
-  * 	-Move all hbs templates to views
-  * 	-Avoid loading JSON when loginFailure and registerFailure views are loaded
-  * 	-Put routes into separate module
+  * 	- Server-side refactoring/tweaks
   */
 
 var directoryView = function () {
