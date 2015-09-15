@@ -1,4 +1,3 @@
-//Tutsplus code (for now)
 var LocalStrategy = require('passport-local').Strategy;
 var User = require('../newmockup/user');
 var bCrypt = require('bcrypt-nodejs');
@@ -12,18 +11,22 @@ module.exports = function(passport){
 		// verify that username exists in mongo
 		User.findOne({ 'username' : username },
 			function(err, user) {
-				if (err)
-					return done(err);
+				if (err) {
+					console.log("Error retrieving username from database");
+					return done(err, false, { message: 'Error retrieving username from database.' });
+				}
+
 				if (!user) {
 					console.log('Username not found: ' + username);
-					return done(null, false, req.flash('message', 'User not found'));
+					return done(null, false, { message: 'Username ' + username + ' not found.' });
 				}
+
 				if (!isValidPassword(user, password)){
-					console.log('Incorrect password entered');
-					return done(null, false, req.flash('message', 'Invalid Password'));
+					console.log('Invalid password entered');
+					return done(null, false, { message: 'Invalid password entered.'});
 				}
 				// Username is found and correct password entered
-				return done(null, user, req.flash('username', username));
+				return done(null, user);
 			}
 		);
 	}));

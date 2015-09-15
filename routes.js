@@ -1,6 +1,7 @@
 require('colors');
 var express = require('express'),
     path = require('path'),
+    // flash = require('connect-flash'),
     passport = require('passport'),
     addContact = require(path.join(__dirname,'newmockup/addContact')),
     deleteContact = require(path.join(__dirname,'newmockup/deleteContact')),
@@ -8,7 +9,7 @@ var express = require('express'),
 
 var router = express.Router();
 
-// Retrive username for response when user sends a request to login 
+// Retrieve username for response when user sends a request to login 
 function loggedIn(req, res, next) {
     if (req.user) {
     	res.locals.login = req.user;
@@ -25,7 +26,7 @@ router.use('/newmockup/', express.static(path.join(__dirname, 'newmockup')));
 // Adding this route in for retrieving profile.js on the client-side (maybe temporarily)
 router.use('/views/', express.static(path.join(__dirname, 'views')));
 
-router.get('/api/people', function(req, res) {
+router.get('/api/people', function(req, res){
     res.end(JSON.stringify(people, null, '    '));
 });
 
@@ -79,13 +80,12 @@ router.get('/newmockup/loggedIn', loggedIn, function(req, res){
 	res.render('loggedIn', {username: res.locals.login.username});
 });
 
-//TODO: Ensure these flash messages are getting passed in/out properly
 router.get('/newmockup/registerFailure', function(req, res){
-	res.render('userFailure', {messages: req.flash('message'), registerFailure: true});
+	res.render('userFailure', {messages: req.flash('error'), registerFailure: true});
 });
 
 router.get('/newmockup/loginFailure', function(req, res){
-	res.render('userFailure', {messages: req.flash('message'), loginFailure: true});
+	res.render('userFailure', {messages: req.flash('error'), loginFailure: true});
 });
 
 router.post('/newmockup/logout', function(req, res){

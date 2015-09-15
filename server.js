@@ -12,41 +12,46 @@ var path = require('path'),
     LocalStrategy = require('passport-local'),
     people = require(path.join(__dirname, 'data/people.json'));
 
+// Create Express instance
 var app = express();
+
+// HTTP request logger middleware
 app.use(logger('dev'));
 
-//TODO: These were needed to call passport.authenticate properly. Research why:
+// Parses encoded JSON urls that are used with Passport
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
 	extended: true
 }));
 
-//TODO: Read documentation for this
+// Cookie parsing middleware that allows a user to pass a "secret" session string
 app.use(cookieParser());
 
-// Configure Passport
+// Configure Passport sessions
 app.use(session({secret: 'desktop dog', resave: true, saveUninitialized: true}));
 app.use(passport.initialize());
 app.use(passport.session());
 
-//TODO: Display flash messages in generic, precompiled handlebars template for login/registration failures
+// Store flash messages in a session if appropriate for rendering user account errors
 app.use(flash());
 
 // Initialize Passport
 initPassport(passport);
 
-/* Configure db */
+// Configure MongoDB with Mongoose ODM
 var dbConfig = require(path.join(__dirname, 'newmockup/db'));
 var mongoose = require('mongoose');
 mongoose.connect(dbConfig.url);
 
+// Configure the hbs template rendering engine
 app.set('view engine', 'hbs');
 
-// Import routes here
+// Import HTTP routes
 app.use(routes);
 
 var HTTP_PORT = 8080;
 
+// Start server on port 8080
 app.listen(HTTP_PORT, function(err) {
     if (err) {
         throw err;

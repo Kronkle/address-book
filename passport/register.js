@@ -16,14 +16,13 @@ module.exports = function(passport){
 				function(err, user) {
 					if (err) {
 						console.log("Error during registration" + err);
-						return done(null, false, req.flash('message', 'Unexpected error occurred.'));
+						return done(null, false, { message: 'Unexpected error occurred.'});
 					}
 					if (user) {
 						console.log('Username already exists in database: ' + username);
-						return done(null, false, req.flash('message', 'Username already exists.'));
+						return done(null, false, { message: 'Username already exists.'});
 					} else {
 						// create new user with credentials
-						console.log("Creating new user");
 						var newUser = new User();
 
 						newUser.username = username;
@@ -37,13 +36,12 @@ module.exports = function(passport){
 								throw err;
 							}
 							console.log('Registration of new user successful');
-							return done(null, newUser, req.flash('username', username));
+							return done(null, newUser);
 						});
 					} 
 				}
 			);
 		};
-		console.log("About to call findOrCreateUser");
 		// Delay executing findOrCreateUser until next event loop revolution
 		process.nextTick(findOrCreateUser);
 	}));
