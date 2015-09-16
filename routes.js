@@ -1,15 +1,15 @@
 require('colors');
 var express = require('express'),
     path = require('path'),
-    // flash = require('connect-flash'),
     passport = require('passport'),
     addContact = require(path.join(__dirname,'newmockup/addContact')),
     deleteContact = require(path.join(__dirname,'newmockup/deleteContact')),
     people = require(path.join(__dirname, 'data/people.json'));
 
+// Create an Express Router to utilize HTTP routing methods
 var router = express.Router();
 
-// Retrieve username for response when user sends a request to login 
+// Set response's login object to request's user object for displaying username in views
 function loggedIn(req, res, next) {
     if (req.user) {
     	res.locals.login = req.user;
@@ -19,22 +19,24 @@ function loggedIn(req, res, next) {
     }
 }
 
-/* Routes */
+// Serve static assets for both versions of app
 router.use('/mockup/', express.static(path.join(__dirname, 'mockup')));
 router.use('/newmockup/', express.static(path.join(__dirname, 'newmockup')));
 
-// Adding this route in for retrieving profile.js on the client-side (maybe temporarily)
+// Serve profile.js and other views for retrieval on the client-side
 router.use('/views/', express.static(path.join(__dirname, 'views')));
 
+// Return people data as a set of JSON objects
 router.get('/api/people', function(req, res){
     res.end(JSON.stringify(people, null, '    '));
 });
 
+// Render index view when /newmockup is requested
 router.get('/newmockup', function(req, res){
 	res.render('index');
 });
 
-/* Override default behavior with specific redirect options */
+// Authenticate login and registration via Passport
 router.post('/newmockup/login', passport.authenticate('login', {
 	successRedirect: '/newmockup/loggedIn',
 	failureRedirect: '/newmockup/loginFailure',
@@ -47,7 +49,7 @@ router.post('/newmockup/register', passport.authenticate('register', {
 	failureFlash: true
 }));
 
-/* Add favorite to contact list. */
+// Attempt to add/delete person to user's contact list via addContact/deleteContact middleware
 router.post('/newmockup/addContact', function(req, res){
 	console.log("Current user is " + req.user.username);
 	console.log("Contact to be added is " + req.body.name);
@@ -57,7 +59,6 @@ router.post('/newmockup/addContact', function(req, res){
 	}, req.user.username, req.body.name);		
 });
 
-/* Remove favorite from contact list */
 router.post('/newmockup/deleteContact', function(req,res){
 	console.log("Current user is " + req.user.username);
 	console.log("Contact to be deleted is " + req.body.name);
@@ -67,12 +68,13 @@ router.post('/newmockup/deleteContact', function(req,res){
 	}, req.user.username, req.body.name);	
 });
 
-/* Pull contact list for logged in users before rendering profiles to display proper state */
+// Retrieve contact list for rendering profiles properly after user login
 router.post('/newmockup/pullContactList', function(req, res){
 	console.log("Pulling contact list for " + req.user.username);
 	res.send(req.user.favorites)
 });
 
+// Render customized view after user login
 router.get('/newmockup/loggedIn', loggedIn, function(req, res){
 	console.log(("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!").red);
 	console.log(("Currently logged in as " + res.locals.login.username).red);
@@ -80,16 +82,19 @@ router.get('/newmockup/loggedIn', loggedIn, function(req, res){
 	res.render('loggedIn', {username: res.locals.login.username});
 });
 
-router.get('/newmockup/registerFailure', function(req, res){
-	res.render('userFailure', {messages: req.flash('error'), registerFailure: true});
-});
-
+// Render special view for login/registration failures
 router.get('/newmockup/loginFailure', function(req, res){
 	res.render('userFailure', {messages: req.flash('error'), loginFailure: true});
 });
 
+router.get('/newmockup/registerFailure', function(req, res){
+	res.render('userFailure', {messages: req.flash('error'), registerFailure: true});
+});
+
+// Render index view after user logout
 router.post('/newmockup/logout', function(req, res){
 	res.render('index');
 });
 
+// Assign configured router object to module.exports for importing into other files
 module.exports = router;
