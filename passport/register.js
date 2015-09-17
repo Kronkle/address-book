@@ -1,4 +1,3 @@
-//Tutsplus code (for now)
 var LocalStrategy = require('passport-local').Strategy;
 var User = require('../newmockup/user');
 var bCrypt = require('bcrypt-nodejs');
@@ -8,21 +7,26 @@ module.exports = function(passport){
 	passport.use('register', new LocalStrategy({
 		passReqToCallback: true 
 	},
-	//TODO: find a way to validate that username and password fields have values on front or backend
 	function(req, username, password, done) {
 		findOrCreateUser = function(){
-			// check if username exists in mongo
+
+			// Check if username exists in database
 			User.findOne({ 'username' : username },
 				function(err, user) {
+
+					// Handle for various error scenarios
 					if (err) {
 						console.log("Error during registration" + err);
 						return done(null, false, { message: 'Unexpected error occurred.'});
 					}
+
 					if (user) {
 						console.log('Username already exists in database: ' + username);
 						return done(null, false, { message: 'Username already exists.'});
+
+					// Create new user with credentials if username isn't already in database
 					} else {
-						// create new user with credentials
+
 						var newUser = new User();
 
 						newUser.username = username;
@@ -42,11 +46,12 @@ module.exports = function(passport){
 				}
 			);
 		};
-		// Delay executing findOrCreateUser until next event loop revolution
+
+		// Run findOrCreate user asynchronously (but before other I/O events)
 		process.nextTick(findOrCreateUser);
 	}));
 	
-	// User bCrypt to encrypt new user password
+	// Encrypt password for new user to store in database
 	var createHash = function(password){
 		return bCrypt.hashSync(password, bCrypt.genSaltSync(10), null);
 	}
