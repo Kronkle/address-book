@@ -1,28 +1,25 @@
-Working example of using jQuery, Express, and Node to provide an address book interface that polls
-a JSON file for employee information.
+Simple address book interface that pulls and renders employee information from a JSON file. Supports various forms of search and user accounts with custom contact lists. 
 
-**Mockup:** (Completed first version)
-http://localhost:8080/mockup/
+Technologies:
+  * HTML 
+  * CSS 
+  * Handlebars 
+  * JavaScript 
+  * jQuery 
+  * Node 
+  * Express
+  * Passport
+  * Mongoose
+  * MongoDB
 
-**NewMockup:** (Style redesign, in progress)
-http://localhost:8080/newmockup/
-
-**Employee Data:**
-http://localhost:8080/api/people
-
-Mockup Objectives: 
-* Display intro text on homepage instead of static profile - DONE (6/3/15)
-* Button in directory component for sorting names - DONE (6/6/15)
-
-NewMockup Objectives::
-* Styling redesign via Bootstrap with same functionality as previous version - DONE (Letter, name, and department searches instead of A-Z/Z-A sort - 6/19/15)
-* Consistent ordering of employees for both homepage and search results - DONE (Ascending order for any search - 6/25/15)
-* "Detailed view" for each individual employee - DONE (Bio popovers for each employee - 6/28/15) 
-* Improved name and department searches - DONE (Search accounts for case errors and first and last names for name search - 7/5/15)
-* Make renderProfile more efficient - DONE (loadProfile for rendering via Handlebars template - 6/30/15)
-* Optimize new renderProfile - DONE (precompiled Handlebars template - 7/1/15)
-* User login system with editable contact lists for each user account - DONE (modules for pulling and editing user's contact list - 8/19/15)
-* Final refactoring with all code in lookup.js separated into modular subroutines - DONE (9/14/15)
-* Final refactoring of all other client-side code (including CSS tweaks) - DONE (9/14/15)
-* Final refactoring of all server-side code - IN PROGRESS (9/14/15)
-
+Setup:
+  1. Clone repository
+  2. Install MongoDB
+  3. Run "mongod /*yourPathToRepo*/data/db" to setup database
+  4. Run "node /*yourPathToRepo*/server.js" to start app
+  5. Navigate to either: 
+    * http://localhost:8080/mockup (Demo Version)
+    * OR
+    * http://localhost:8080/newmockup (Final Version)
+  6. Optionally, view employee data at:
+    * http://localhost:8080/api/people

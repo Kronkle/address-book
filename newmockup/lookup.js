@@ -7,8 +7,7 @@
  *		renderAllProfiles -       populates directory with all profiles
  *		renderContactList - 	  renders contacts of currently logged in user after contact list button is clicked
  *      pullContactList -         pull contact list from server if user is logged in
- *		searchByName -            request a search for profiles that contain search string in name field
- *		searchByDept -            request a search for profiles that contain search string in department field
+ *		searchProfiles -          request a search for profiles that contain search string in name or department field
  *      sanitizeSearchInput -     replaces special characters and numbers in search input with whitespace
  *      renderProfilesBySearch -  populates directory with profiles that match search criteria
  *		getExperience -           retrieves education and work experience for a profile
@@ -17,8 +16,8 @@
  *		sortProfiles -            sort profiles to be rendered in alphabetical order and append them to the DOM
  */
 
- /* TODO List (8/19/15)
-  * 	- Server-side refactoring/tweaks
+ /* TODO List (9/18/15)
+  * Final testing
   */
 
 var directoryView = function () {
@@ -82,9 +81,9 @@ directoryView.prototype.initDirectory = function () {
 
 	    	// Determine which search to run
 	    	if ( $(this).hasClass("nameSearch") ) {
-	    		me.searchByName(input);
+	    		me.searchProfiles(input, "name");
 	    	} else {
-	    		me.searchByDept(input);
+	    		me.searchProfiles(input, "department");
 	    	}
 
 	    	// Clear user input from input element
@@ -255,54 +254,40 @@ directoryView.prototype.pullContactList = function () {
 	return contactList;
 };
 
-directoryView.prototype.searchByName = function (name) {
+directoryView.prototype.searchProfiles = function (input, searchType) {
 
 	var me = this;
 
 	// Sanitize search input by replacing all special characters and numbers with whitespace via regex
-	name = me.sanitizeSearchInput(name);
+	input = me.sanitizeSearchInput(input);
 
-	// Transform search input into "Firstname Lastname" format
-	for (i = 0; i < name.length; i++) {
+	// Transform search input into "First Last" format
+	for (i = 0; i < input.length; i++) {
 
 		// Capitalize the first letter
 		if (i == 0) {
-			name = name.substring(0,1).toUpperCase() + name.substring(1);
+			input = input.substring(0,1).toUpperCase() + input.substring(1);
 
-		// Capitalize the first letter immediately after whitespace (assume this is last name)
-		} else if (name[i] == " " && name[i+1] != " ") {
-			name = name.substring(0,i+1) + name.substring(i+1,i+2).toUpperCase() + name.substring(i+2);
+		// Capitalize the first letter immediately after whitespace (assume this is last word)
+		} else if (input[i] == " " && input[i+1] != " ") {
+			input = input.substring(0,i+1) + input.substring(i+1,i+2).toUpperCase() + input.substring(i+2);
 			// Iterate twice to skip over the newly capitalized letter
 			i++;
 
 		// Remove contiguous whitespace
-        } else if (name[i] == " " && name[i+1] == " ") {
-        	name = name.substring(0,i) + name.substring(i+1);
+        } else if (input[i] == " " && input[i+1] == " ") {
+        	input = input.substring(0,i) + input.substring(i+1);
         	// Retain current iterator value since string has been shortened by one element
         	i--;
 
 		// Lowercase all other letters
 		} else {
-			name = name.substring(0,i) + name.substring(i,i+1).toLowerCase() + name.substring(i+1);
+			input = input.substring(0,i) + input.substring(i,i+1).toLowerCase() + input.substring(i+1);
 		}
 	}
 
 	// Run search with processed input and render matched profiles to DOM
-	me.renderProfilesBySearch(name, "name");
-};
-
-directoryView.prototype.searchByDept = function (dept) {
-
-	var me = this;
-
-	// Sanitize search input by replacing all special characters and numbers with whitespace via regex
-	dept = me.sanitizeSearchInput(dept);
-
-	// Transform search input into "Department" format
-	dept = dept.substring(0,1).toUpperCase() + dept.substring(1).toLowerCase();
-
-	// Run search with processed input and render matched profiles to DOM
-	me.renderProfilesBySearch(dept, "department");
+    me.renderProfilesBySearch(input, searchType);
 };
 
 directoryView.prototype.sanitizeSearchInput = function (searchInput) {
